@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { ProductCard } from '@/components/product/ProductCard';
+import { ProductListCard } from '@/components/product/ProductListCard';
 import { products, categories, brands } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -132,9 +132,9 @@ export default function ShopPage() {
           </Card>
         </aside>
         <main className="md:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductListCard key={product.id} product={product} />
             ))}
           </div>
           {filteredProducts.length === 0 && (
