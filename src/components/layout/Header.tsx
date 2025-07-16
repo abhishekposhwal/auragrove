@@ -37,15 +37,17 @@ export function Header() {
           AuraGrove
         </Link>
         
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-1">
           {allNavLinks.map((link) => (
-            <Link 
-              key={link.href} 
-              href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.href ? 'text-primary' : 'text-muted-foreground'}`}
-            >
-              {link.label}
-            </Link>
+            <Button key={link.href} variant="ghost" asChild className={`transition-colors ${pathname === link.href ? 'bg-muted' : ''}`}>
+               <Link 
+                href={link.href}
+                className={`flex items-center gap-2 text-sm font-medium ${pathname === link.href ? 'text-primary' : 'text-muted-foreground'}`}
+              >
+                {link.icon}
+                {link.label}
+              </Link>
+            </Button>
           ))}
         </nav>
 
