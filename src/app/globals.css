@@ -72,7 +72,11 @@
   body {
     @apply text-foreground;
     background-color: hsl(var(--background));
-    background-image: linear-gradient(to bottom, hsl(var(--secondary)), hsl(var(--background)));
+    background-image: linear-gradient(to bottom, hsl(var(--secondary)) 10%, hsl(var(--background)) 50%);
+  }
+  
+  .dark body {
+     background-image: linear-gradient(to bottom, hsl(var(--secondary)) 10%, hsl(var(--background)) 50%);
   }
 }
 

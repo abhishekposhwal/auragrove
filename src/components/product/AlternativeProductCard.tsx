@@ -8,7 +8,7 @@ interface AlternativeProductCardProps {
 
 export function AlternativeProductCard({ alternative }: AlternativeProductCardProps) {
   return (
-    <Card className="h-full flex flex-col bg-secondary/50 border-primary/50">
+    <Card className="h-full flex flex-col bg-gradient-to-br from-secondary/50 to-background/30 border-primary/50">
       <CardHeader>
         <CardTitle className="text-secondary-foreground">{alternative.name}</CardTitle>
         <div className="flex items-center gap-4 text-sm font-medium pt-2">

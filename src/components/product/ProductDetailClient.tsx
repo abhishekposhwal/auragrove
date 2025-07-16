@@ -138,7 +138,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </Card>
         </div>
         <div className="md:col-span-1 flex flex-col gap-6">
-            <Card className="bg-muted">
+            <Card className="bg-gradient-to-br from-muted to-background/50">
                 <CardHeader>
                     <CardTitle>Purchase Options</CardTitle>
                 </CardHeader>
