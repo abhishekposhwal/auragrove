@@ -38,15 +38,15 @@ export default function InspirationPage() {
   return (
     <div className="container mx-auto max-w-2xl px-4 md:px-6 py-12">
       <div className="space-y-4 text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">Eco-Inspiration Generator</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline">3D Eco-Concept Studio</h1>
         <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
-          Have an idea for a sustainable product? Describe it below and let our AI bring it to life!
+          Have an idea for a sustainable product? Describe it below and let our AI create a 3D rendering of it!
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Describe Your Concept</CardTitle>
+          <CardTitle>Describe Your 3D Concept</CardTitle>
           <CardDescription>
             For example: "a stylish backpack made from recycled ocean plastic" or "a set of biodegradable bamboo cutlery".
           </CardDescription>
@@ -68,7 +68,7 @@ export default function InspirationPage() {
             ) : (
               <>
                 <Sparkles className="mr-2 h-4 w-4" />
-                Generate Image
+                Generate 3D Image
               </>
             )}
           </Button>
@@ -84,7 +84,7 @@ export default function InspirationPage() {
 
       {imageUrl && (
         <div className="mt-8">
-          <h3 className="text-2xl font-bold text-center mb-4 font-headline">Your Eco-Inspiration!</h3>
+          <h3 className="text-2xl font-bold text-center mb-4 font-headline">Your 3D Eco-Inspiration!</h3>
           <div className="rounded-lg overflow-hidden shadow-xl">
              <Image
                 src={imageUrl}
