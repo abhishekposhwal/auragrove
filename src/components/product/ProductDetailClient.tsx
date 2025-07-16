@@ -68,12 +68,45 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <CarouselNext />
       </Carousel>
 
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
+      <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
+        <div className="md:col-span-2 space-y-6">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
+            <p className="text-xl text-muted-foreground">{product.brand}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+              <Star className="h-5 w-5 text-accent" fill="currentColor" />
+              <span className="font-medium">{product.reviews.rating}</span>
+              <span className="text-muted-foreground">({reviews.length} reviews)</span>
+            </div>
+            <Separator orientation="vertical" className="h-6" />
+            <div className="flex items-center gap-2">
+              <Leaf className="h-5 w-5 text-green-600" />
+              <span className="font-medium">Green Score: {product.greenScore}/10</span>
+            </div>
+          </div>
+          
+          <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
+         
+          <Button size="lg" className="w-full max-w-xs" onClick={handleAddToCart}>Add to Cart</Button>
+
+           <div className="grid grid-cols-2 gap-4 text-sm max-w-md">
+             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+              <Truck className="h-5 w-5 text-muted-foreground" />
+              <span>Carbon-neutral shipping</span>
+            </div>
+             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+              <Recycle className="h-5 w-5 text-muted-foreground" />
+              <span>Eco-friendly packaging</span>
+            </div>
+          </div>
+        </div>
         <div className="space-y-6">
            <Tabs defaultValue="description" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="description">Product Description</TabsTrigger>
-                <TabsTrigger value="details">Details & Certifications</TabsTrigger>
+                <TabsTrigger value="details">Details & Certs</TabsTrigger>
               </TabsList>
               <TabsContent value="description">
                   <Card>
@@ -84,7 +117,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
               </TabsContent>
               <TabsContent value="details">
                 <Card>
-                      <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <CardContent className="pt-6 grid grid-cols-1 gap-4">
                           <div className="flex items-start gap-3">
                               <Tag className="h-5 w-5 mt-1 text-primary" />
                               <div>
@@ -117,39 +150,6 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   </Card>
               </TabsContent>
             </Tabs>
-        </div>
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
-            <p className="text-xl text-muted-foreground">{product.brand}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1">
-              <Star className="h-5 w-5 text-accent" fill="currentColor" />
-              <span className="font-medium">{product.reviews.rating}</span>
-              <span className="text-muted-foreground">({reviews.length} reviews)</span>
-            </div>
-            <Separator orientation="vertical" className="h-6" />
-            <div className="flex items-center gap-2">
-              <Leaf className="h-5 w-5 text-green-600" />
-              <span className="font-medium">Green Score: {product.greenScore}/10</span>
-            </div>
-          </div>
-          
-          <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
-         
-          <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
-
-           <div className="grid grid-cols-2 gap-4 text-sm">
-             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Truck className="h-5 w-5 text-muted-foreground" />
-              <span>Carbon-neutral shipping</span>
-            </div>
-             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Recycle className="h-5 w-5 text-muted-foreground" />
-              <span>Eco-friendly packaging</span>
-            </div>
-          </div>
         </div>
       </div>
       
