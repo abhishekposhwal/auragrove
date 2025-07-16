@@ -4,6 +4,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/CartContext';
+import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/layout/Sidebar';
 
 export const metadata: Metadata = {
   title: 'AuraGrove',
@@ -24,12 +26,19 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <CartProvider>
-            <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-            </div>
+          <SidebarProvider>
+              <Sidebar>
+                <AppSidebar />
+              </Sidebar>
+              <SidebarInset>
+                <div className="flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-grow">{children}</main>
+                  <Footer />
+                </div>
+              </SidebarInset>
             <Toaster />
+          </SidebarProvider>
         </CartProvider>
       </body>
     </html>

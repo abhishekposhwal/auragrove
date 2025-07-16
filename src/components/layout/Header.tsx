@@ -2,45 +2,28 @@
 "use client";
 
 import Link from 'next/link';
-import { Leaf, ShoppingCart, User, Menu, X, Users, Store, Sparkles, Info, Newspaper } from 'lucide-react';
+import { ShoppingCart, User, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useCart } from '@/context/CartContext';
 import { Badge } from '@/components/ui/badge';
-
-const navLinks = [
-  { href: '/shop', label: 'Shop', icon: <Store /> },
-  { href: '/inspiration', label: 'Inspiration', icon: <Sparkles /> },
-  { href: '/about', label: 'About', icon: <Info /> },
-  { href: '/blog', label: 'Blog', icon: <Newspaper /> },
-];
+import { SidebarTrigger } from '../ui/sidebar';
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user] = useAuthState(auth);
   const { getCartItemCount } = useCart();
   const cartItemCount = getCartItemCount();
 
-  const allNavLinks = user ? [...navLinks, { href: '/community', label: 'Community', icon: <Users /> }] : navLinks;
-
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 w-full border-b">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2" aria-label="AuraGrove Home">
-          <Leaf className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold text-foreground font-headline">AuraGrove</span>
-        </Link>
-        <nav className="hidden md:flex items-center gap-6 text-lg font-medium">
-          {allNavLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground">
-              {link.icon}
-              <span>{link.label}</span>
-            </Link>
-          ))}
-        </nav>
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+        <div className="flex items-center gap-2">
+           <SidebarTrigger className="md:hidden" />
+           <Link href="/" className="hidden md:flex items-center gap-2 font-headline text-2xl font-bold">
+            AuraGrove
+           </Link>
+        </div>
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/cart" aria-label="Shopping Cart" className="relative">
@@ -55,28 +38,8 @@ export function Header() {
               {user ? <Users className="h-6 w-6 text-primary" /> : <User className="h-6 w-6" />}
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
         </div>
       </div>
-      {isMenuOpen && (
-        <div
-          className={cn(
-            'md:hidden absolute top-20 left-0 w-full bg-background/95 backdrop-blur-sm z-30 transition-all duration-300 ease-in-out',
-            isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-          )}
-        >
-          <nav className="flex flex-col items-center gap-6 py-8">
-            {allNavLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="flex items-center gap-2 text-xl font-medium text-muted-foreground transition-colors hover:text-foreground" onClick={() => setIsMenuOpen(false)}>
-                {link.icon}
-                <span>{link.label}</span>
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
     </header>
   );
 }
