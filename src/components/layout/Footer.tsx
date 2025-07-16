@@ -4,7 +4,7 @@ import { Leaf } from 'lucide-react';
 export function Footer() {
   return (
     <footer className="bg-secondary text-secondary-foreground">
-      <div className="container mx-auto py-12 px-4 md:px-6">
+      <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-col gap-4">
             <Link href="/" className="flex items-center gap-2" aria-label="AuraGrove Home">
