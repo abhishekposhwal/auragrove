@@ -91,6 +91,13 @@ export function ProductDetailClient({ product }: { product: Product }) {
          
           <Button size="lg" className="w-full max-w-xs" onClick={handleAddToCart}>Add to Cart</Button>
 
+          <Separator />
+          
+          <div>
+            <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
+             <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+          </div>
+
            <div className="grid grid-cols-2 gap-4 text-sm max-w-md">
              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
               <Truck className="h-5 w-5 text-muted-foreground" />
@@ -103,18 +110,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </div>
         <div className="space-y-6">
-           <Tabs defaultValue="description" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="description">Product Description</TabsTrigger>
-                <TabsTrigger value="details">Details & Certs</TabsTrigger>
+           <Tabs defaultValue="details" className="w-full">
+              <TabsList>
+                <TabsTrigger value="details">Details & Certifications</TabsTrigger>
               </TabsList>
-              <TabsContent value="description">
-                  <Card>
-                      <CardContent className="pt-6">
-                          <p className="text-base leading-relaxed">{product.description}</p>
-                      </CardContent>
-                  </Card>
-              </TabsContent>
               <TabsContent value="details">
                 <Card>
                       <CardContent className="pt-6 grid grid-cols-1 gap-4">
