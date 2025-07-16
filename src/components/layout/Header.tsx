@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Leaf, ShoppingCart, User, Menu, X, Users } from 'lucide-react';
+import { Leaf, ShoppingCart, User, Menu, X, Users, Store, Sparkles, Info, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -10,17 +10,17 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 
 const navLinks = [
-  { href: '/shop', label: 'Shop' },
-  { href: '/inspiration', label: 'Inspiration' },
-  { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/shop', label: 'Shop', icon: <Store /> },
+  { href: '/inspiration', label: 'Inspiration', icon: <Sparkles /> },
+  { href: '/about', label: 'About', icon: <Info /> },
+  { href: '/blog', label: 'Blog', icon: <Newspaper /> },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user] = useAuthState(auth);
 
-  const allNavLinks = user ? [...navLinks, { href: '/community', label: 'Community' }] : navLinks;
+  const allNavLinks = user ? [...navLinks, { href: '/community', label: 'Community', icon: <Users /> }] : navLinks;
 
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 w-full border-b">
@@ -31,8 +31,9 @@ export function Header() {
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-lg font-medium">
           {allNavLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="text-muted-foreground transition-colors hover:text-foreground">
-              {link.label}
+            <Link key={link.href} href={link.href} className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground">
+              {link.icon}
+              <span>{link.label}</span>
             </Link>
           ))}
         </nav>
@@ -61,8 +62,9 @@ export function Header() {
         >
           <nav className="flex flex-col items-center gap-6 py-8">
             {allNavLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="text-xl font-medium text-muted-foreground transition-colors hover:text-foreground" onClick={() => setIsMenuOpen(false)}>
-                {link.label}
+              <Link key={link.href} href={link.href} className="flex items-center gap-2 text-xl font-medium text-muted-foreground transition-colors hover:text-foreground" onClick={() => setIsMenuOpen(false)}>
+                {link.icon}
+                <span>{link.label}</span>
               </Link>
             ))}
           </nav>
