@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Leaf, Menu, ShoppingCart, User, Users, Sparkles, Info, Newspaper, Store } from 'lucide-react';
+import { Leaf, Menu, ShoppingCart, User, Users, Sparkles, Info, Newspaper, Store, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
@@ -12,6 +12,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
 import { useEffect, useState } from 'react';
+import { useWishlist } from '@/context/WishlistContext';
 
 const navLinks = [
   { href: "/shop", label: "Shop", icon: <Store className="h-5 w-5" /> },
@@ -21,11 +22,15 @@ const navLinks = [
 ];
 
 const communityLink = { href: "/community", label: "Community", icon: <Users className="h-5 w-5" /> };
+const wishlistLink = { href: "/wishlist", label: "Wishlist", icon: <Heart className="h-5 w-5" /> };
+
 
 export function Header() {
   const [user] = useAuthState(auth);
   const { getCartItemCount } = useCart();
+  const { wishlist } = useWishlist();
   const cartItemCount = getCartItemCount();
+  const wishlistCount = wishlist.length;
   const pathname = usePathname();
   const [isClient, setIsClient] = useState(false);
 
@@ -37,7 +42,7 @@ export function Header() {
     ? [...navLinks, communityLink]
     : navLinks;
 
-  const mobileNavLinks = user ? [...navLinks, communityLink] : navLinks;
+  const mobileNavLinks = user ? [...navLinks, communityLink, wishlistLink] : [...navLinks, wishlistLink];
 
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 w-full border-b">
@@ -60,7 +65,15 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/wishlist" aria-label="Wishlist" className="relative">
+              <Heart className="h-6 w-6" />
+              {wishlistCount > 0 && (
+                 <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{wishlistCount}</Badge>
+              )}
+            </Link>
+          </Button>
           <Button variant="ghost" size="icon" asChild>
             <Link href="/cart" aria-label="Shopping Cart" className="relative">
               <ShoppingCart className="h-6 w-6" />

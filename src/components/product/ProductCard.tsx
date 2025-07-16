@@ -6,10 +6,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { Product } from '@/lib/types';
-import { Leaf, Star, ShoppingCart } from 'lucide-react';
+import { Leaf, Star, ShoppingCart, Heart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '../ui/toast';
+import { useWishlist } from '@/context/WishlistContext';
+import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
   product: Product;
@@ -18,6 +20,8 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const isInWishlist = wishlist.some(item => item.id === product.id);
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -29,6 +33,26 @@ export function ProductCard({ product }: ProductCardProps) {
         action: <ToastAction asChild altText="View cart"><Link href="/cart">View cart</Link></ToastAction>,
     });
   };
+
+  const handleWishlistToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInWishlist) {
+      removeFromWishlist(product.id);
+      toast({
+          title: "Removed from wishlist",
+          description: `"${product.name}" has been removed from your wishlist.`,
+      });
+    } else {
+      addToWishlist(product);
+      toast({
+          title: "Added to wishlist!",
+          description: `"${product.name}" has been added to your wishlist.`,
+          action: <ToastAction asChild altText="View wishlist"><Link href="/wishlist">View wishlist</Link></ToastAction>,
+      });
+    }
+  };
+
 
   return (
     <Card className="w-full h-full flex flex-col overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -43,9 +67,14 @@ export function ProductCard({ product }: ProductCardProps) {
             data-ai-hint={`${product.category.toLowerCase()} product`}
           />
         </Link>
-        <Badge variant="secondary" className="absolute top-2 right-2 flex items-center gap-1">
-          <Leaf className="h-3 w-3" /> {product.greenScore}/10
-        </Badge>
+        <div className="absolute top-2 right-2 flex flex-col gap-2">
+            <Button size="icon" variant="secondary" className="rounded-full h-9 w-9" onClick={handleWishlistToggle}>
+                <Heart className={cn("h-5 w-5", isInWishlist && "text-destructive fill-destructive")} />
+            </Button>
+            <Badge variant="secondary" className="flex items-center gap-1">
+              <Leaf className="h-3 w-3" /> {product.greenScore}/10
+            </Badge>
+        </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
         <div className="flex justify-between items-start gap-2">

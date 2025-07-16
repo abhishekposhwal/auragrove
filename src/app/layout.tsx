@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/CartContext';
 import { Manrope } from 'next/font/google';
 import { ProfileProvider } from '@/context/ProfileContext';
+import { WishlistProvider } from '@/context/WishlistContext';
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
@@ -23,16 +24,18 @@ export default function RootLayout({
     <html lang="en" className={`${manrope.variable} light`}>
       <body className="font-body antialiased">
         <ProfileProvider>
-          <CartProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-24">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <Toaster />
-          </CartProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-24">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+              <Toaster />
+            </CartProvider>
+          </WishlistProvider>
         </ProfileProvider>
       </body>
     </html>

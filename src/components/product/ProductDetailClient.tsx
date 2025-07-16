@@ -9,18 +9,22 @@ import { Separator } from '@/components/ui/separator';
 import { ToastAction } from "@/components/ui/toast";
 import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
-import { Star, Leaf, CheckCircle2 } from 'lucide-react';
+import { Star, Leaf, CheckCircle2, Heart } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ReviewForm } from './ReviewForm';
+import { useWishlist } from '@/context/WishlistContext';
+import { cn } from '@/lib/utils';
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [reviews, setReviews] = useState<Review[]>(product.reviews.items);
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const isInWishlist = wishlist.some(item => item.id === product.id);
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -29,6 +33,23 @@ export function ProductDetailClient({ product }: { product: Product }) {
         description: `"${product.name}" has been added to your cart.`,
         action: <ToastAction asChild altText="View cart"><Link href="/cart">View cart</Link></ToastAction>,
     });
+  };
+
+  const handleWishlistToggle = () => {
+    if (isInWishlist) {
+      removeFromWishlist(product.id);
+      toast({
+          title: "Removed from wishlist",
+          description: `"${product.name}" has been removed from your wishlist.`,
+      });
+    } else {
+      addToWishlist(product);
+      toast({
+          title: "Added to wishlist!",
+          description: `"${product.name}" has been added to your wishlist.`,
+          action: <ToastAction asChild altText="View wishlist"><Link href="/wishlist">View wishlist</Link></ToastAction>,
+      });
+    }
   };
 
   const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date'>) => {
@@ -136,8 +157,12 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     
                     <p className="text-3xl font-bold text-primary">₹{product.price.toFixed(2)}</p>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex-col gap-2">
                   <Button size="lg" className="w-full hover:bg-primary/90" onClick={handleAddToCart}>Add to Cart</Button>
+                  <Button size="lg" variant="outline" className="w-full" onClick={handleWishlistToggle}>
+                      <Heart className={cn("mr-2 h-5 w-5", isInWishlist && "text-destructive fill-destructive")} />
+                      {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                  </Button>
                 </CardFooter>
             </Card>
         </div>
