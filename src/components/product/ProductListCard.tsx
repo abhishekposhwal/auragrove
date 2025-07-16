@@ -57,7 +57,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
 
   return (
     <Card className="w-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col sm:flex-row">
-        <div className="sm:w-1/3">
+        <div className="sm:w-1/3 relative">
             <Link href={`/product/${product.id}`} className="block h-full">
                 <Image
                     src={product.images[0]}
@@ -68,6 +68,9 @@ export function ProductListCard({ product }: ProductListCardProps) {
                     data-ai-hint={`${product.category.toLowerCase()} product`}
                 />
             </Link>
+            <Button size="icon" variant="secondary" className="absolute top-2 right-2 rounded-full h-9 w-9" onClick={handleWishlistToggle}>
+                <Heart className={cn("h-5 w-5", isInWishlist && "text-destructive fill-destructive")} />
+            </Button>
         </div>
         <div className="p-4 flex flex-col flex-1 sm:w-2/3">
             <div className='flex-grow'>
@@ -98,9 +101,6 @@ export function ProductListCard({ product }: ProductListCardProps) {
                 <Button onClick={handleAddToCart} className="w-full">
                     <ShoppingCart className="mr-2 h-4 w-4" />
                     Buy
-                </Button>
-                 <Button size="icon" variant="ghost" className="w-full sm:w-auto" onClick={handleWishlistToggle}>
-                    <Heart className={cn("h-5 w-5", isInWishlist && "text-destructive fill-destructive")} />
                 </Button>
             </div>
         </div>
