@@ -56,12 +56,12 @@ export default function ShopPage() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
-      <h1 className="text-4xl font-bold mb-8 font-headline text-center text-secondary-foreground">Shop Our Collection</h1>
+      <h1 className="text-4xl font-bold mb-8 font-headline text-center">Shop Our Collection</h1>
       <div className="grid md:grid-cols-4 gap-8">
         <aside className="md:col-span-1">
           <Card>
             <CardHeader>
-              <CardTitle className="text-secondary-foreground">Filters</CardTitle>
+              <CardTitle>Filters</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
@@ -139,7 +139,7 @@ export default function ShopPage() {
           </div>
           {filteredProducts.length === 0 && (
             <div className="text-center py-16">
-              <h2 className="text-2xl font-semibold text-secondary-foreground">No Products Found</h2>
+              <h2 className="text-2xl font-semibold">No Products Found</h2>
               <p className="text-muted-foreground mt-2">Try adjusting your filters.</p>
             </div>
           )}

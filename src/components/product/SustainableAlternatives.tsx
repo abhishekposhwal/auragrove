@@ -39,7 +39,7 @@ export default function SustainableAlternatives({ product }: SustainableAlternat
   return (
     <section className="space-y-8 text-center">
       <div className="flex flex-col items-center space-y-4">
-        <h2 className="text-3xl font-bold font-headline text-secondary-foreground">Looking for Greener Options?</h2>
+        <h2 className="text-3xl font-bold font-headline">Looking for Greener Options?</h2>
         <p className="max-w-2xl text-muted-foreground">
           Let our AI assistant suggest some even more sustainable alternatives to the {`"${product.name}"`}.
         </p>
