@@ -57,7 +57,7 @@ export function Header() {
              <Link 
               key={link.href}
               href={link.href}
-              className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 ${pathname === link.href ? 'bg-muted text-primary' : 'hover:bg-muted/50 hover:text-primary text-muted-foreground'}`}
+              className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 ${pathname === link.href ? 'bg-muted text-primary' : 'hover:bg-muted/50 hover:text-primary text-muted-foreground hover:-translate-y-0.5'}`}
             >
               {link.icon}
               <span className="ml-2">{link.label}</span>
