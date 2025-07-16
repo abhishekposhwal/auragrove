@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { ToastAction } from "@/components/ui/toast";
 import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
-import { Star, Leaf, Award, Truck, Recycle, Tag, Building, CheckCircle2 } from 'lucide-react';
+import { Star, Leaf, Truck, Recycle, CheckCircle2 } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
@@ -44,78 +44,36 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="py-12">
-      <Card>
-        <CardContent className="p-0">
-          <Carousel className="w-full max-w-4xl mx-auto">
-            <CarouselContent>
-              {product.images.map((image, index) => (
-                <CarouselItem key={index}>
-                    <Image
-                      src={image}
-                      alt={`${product.name} - image ${index + 1}`}
-                      width={1200}
-                      height={675}
-                      className="w-full aspect-video object-cover rounded-t-lg"
-                      data-ai-hint="sustainable product lifestyle"
-                    />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
-          </Carousel>
-        </CardContent>
-      </Card>
-
-
-      <div className="text-left my-8">
-        <h1 className="text-2xl md:text-3xl font-bold font-headline">{product.name}</h1>
-        <p className="text-lg text-muted-foreground mt-1">{product.brand}</p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
-        <div className="md:col-span-2 space-y-8">
-           <Card className="bg-transparent border-none shadow-none">
-              <CardHeader className="p-0">
-                  <CardTitle>Description & Details</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 pt-6 px-0">
-                  <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
-                  <Separator />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                      <div className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                          <div>
-                              <h4 className="font-semibold">Category</h4>
-                              <p className="text-muted-foreground">{product.category}</p>
-                          </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                          <div>
-                              <h4 className="font-semibold">Brand</h4>
-                              <p className="text-muted-foreground">{product.brand}</p>
-                          </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                          <div>
-                              <h4 className="font-semibold">Certifications</h4>
-                              <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
-                          </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                          <div>
-                              <h4 className="font-semibold">Carbon Footprint</h4>
-                              <p className="text-muted-foreground">{product.carbonFootprint}</p>
-                          </div>
-                      </div>
-                  </div>
-              </CardContent>
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="md:col-span-1">
+          <Card>
+            <CardContent className="p-0">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {product.images.map((image, index) => (
+                    <CarouselItem key={index}>
+                        <Image
+                          src={image}
+                          alt={`${product.name} - image ${index + 1}`}
+                          width={1200}
+                          height={675}
+                          className="w-full aspect-video object-cover rounded-t-lg"
+                          data-ai-hint="sustainable product lifestyle"
+                        />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-4" />
+                <CarouselNext className="right-4" />
+              </Carousel>
+            </CardContent>
           </Card>
         </div>
         <div className="md:col-span-1 space-y-6">
+            <div className="text-left">
+              <h1 className="text-2xl md:text-3xl font-bold font-headline">{product.name}</h1>
+              <p className="text-lg text-muted-foreground mt-1">{product.brand}</p>
+            </div>
             <Card className="bg-muted">
                 <CardHeader>
                     <CardTitle>Purchase Options</CardTitle>
@@ -150,6 +108,50 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 </CardContent>
             </Card>
         </div>
+      </div>
+
+      <Separator className="my-12" />
+
+      <div className="space-y-8">
+         <Card className="bg-transparent border-none shadow-none">
+            <CardHeader className="p-0">
+                <CardTitle>Description & Details</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 pt-6 px-0">
+                <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+                <Separator />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                    <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Category</h4>
+                            <p className="text-muted-foreground">{product.category}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Brand</h4>
+                            <p className="text-muted-foreground">{product.brand}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Certifications</h4>
+                            <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Carbon Footprint</h4>
+                            <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                        </div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
       </div>
       
       <Separator className="my-12" />
