@@ -12,10 +12,10 @@ export default function Home() {
       <section>
         <div className="container mx-auto grid md:grid-cols-2 items-center gap-8 px-4 md:px-6 py-12 md:py-24">
           <div className="space-y-6 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tight text-primary-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tight text-secondary-foreground">
               Live Sustainably, Shop Beautifully.
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
+            <p className="text-lg md:text-xl text-secondary-foreground">
               Discover a curated collection of eco-friendly and ethically-made products for a conscious lifestyle.
             </p>
             <Button size="lg" asChild>
