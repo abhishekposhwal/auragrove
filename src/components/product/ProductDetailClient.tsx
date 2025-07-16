@@ -122,16 +122,15 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     <CardTitle>Purchase Options</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
                         <div className="flex items-center gap-1">
-                        <Star className="h-5 w-5 text-accent" fill="currentColor" />
-                        <span className="font-medium">{product.reviews.rating}</span>
-                        <span className="text-muted-foreground">({reviews.length} reviews)</span>
+                            <Star className="h-5 w-5 text-accent" fill="currentColor" />
+                            <span className="font-medium">{product.reviews.rating}</span>
+                            <span className="text-muted-foreground">({reviews.length} reviews)</span>
                         </div>
-                        <Separator orientation="vertical" className="h-6" />
                         <div className="flex items-center gap-2">
-                        <Leaf className="h-5 w-5 text-green-600" />
-                        <span className="font-medium">Green Score: {product.greenScore}/10</span>
+                            <Leaf className="h-5 w-5 text-green-600" />
+                            <span className="font-medium">Green Score: {product.greenScore}/10</span>
                         </div>
                     </div>
                     
@@ -139,14 +138,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     
                     <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
                     
-                    <div className="grid grid-cols-1 gap-4 text-sm pt-4">
-                        <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                        <Truck className="h-5 w-5 text-muted-foreground" />
-                        <span>Carbon-neutral shipping</span>
+                    <div className="space-y-3 text-sm pt-4">
+                        <div className="flex items-center gap-2">
+                            <Truck className="h-5 w-5 text-muted-foreground" />
+                            <span>Carbon-neutral shipping</span>
                         </div>
-                        <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                        <Recycle className="h-5 w-5 text-muted-foreground" />
-                        <span>Eco-friendly packaging</span>
+                        <div className="flex items-center gap-2">
+                            <Recycle className="h-5 w-5 text-muted-foreground" />
+                            <span>Eco-friendly packaging</span>
                         </div>
                     </div>
                 </CardContent>
