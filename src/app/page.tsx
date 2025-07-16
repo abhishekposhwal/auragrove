@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { products } from "@/lib/mock-data";
@@ -49,7 +50,7 @@ export default function Home() {
             <div className="md:col-span-2 space-y-4">
                  <h2 className="text-3xl font-bold font-headline">Our Commitment to the Planet</h2>
                  <p className="text-muted-foreground">We believe that every purchase can be a vote for a better world. That's why we partner with brands that prioritize sustainability, ethical production, and high-quality craftsmanship. From carbon-neutral shipping to plastic-free packaging, we're dedicated to minimizing our impact.</p>
-                 <Button variant="outline" asChild>
+                 <Button variant="outline" asChild className="transition-transform duration-300 hover:scale-105">
                      <Link href="/about">Learn More</Link>
                  </Button>
             </div>
