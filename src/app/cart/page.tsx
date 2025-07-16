@@ -65,8 +65,8 @@ export default function CartPage() {
                           </Button>
                        </div>
                        <p className="font-semibold w-20 text-right">₹{(item.price * item.quantity).toFixed(2)}</p>
-                       <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
-                          <Trash2 className="h-5 w-5 text-muted-foreground transition-colors hover:text-destructive" />
+                       <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)} className="group hover:bg-destructive">
+                          <Trash2 className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-destructive-foreground" />
                        </Button>
                     </div>
                   </li>
