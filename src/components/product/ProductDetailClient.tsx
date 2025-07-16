@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { ToastAction } from "@/components/ui/toast";
 import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
-import { Star, Leaf, Award, Truck, Recycle } from 'lucide-react';
+import { Star, Leaf, Award, Truck, Recycle, Tag } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
@@ -53,6 +53,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
         </div>
         <div className="space-y-6">
           <div className="space-y-2">
+             <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Tag className="h-4 w-4" />
+                <span>{product.category}</span>
+            </div>
             <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
             <p className="text-xl text-muted-foreground">{product.brand}</p>
           </div>
@@ -73,19 +77,19 @@ export function ProductDetailClient({ product }: { product: Product }) {
           <p className="text-base leading-relaxed">{product.description}</p>
           
           <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
               <Award className="h-5 w-5 text-accent" />
               <span>Certifications: {product.certifications.join(', ')}</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
               <Leaf className="h-5 w-5 text-green-600" />
               <span>Carbon Footprint: {product.carbonFootprint}</span>
             </div>
-             <div className="flex items-center gap-2">
+             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
               <Truck className="h-5 w-5 text-muted-foreground" />
               <span>Carbon-neutral shipping</span>
             </div>
-             <div className="flex items-center gap-2">
+             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
               <Recycle className="h-5 w-5 text-muted-foreground" />
               <span>Eco-friendly packaging</span>
             </div>
