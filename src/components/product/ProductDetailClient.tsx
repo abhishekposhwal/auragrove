@@ -69,6 +69,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <CarouselNext />
       </Carousel>
 
+      <div className="text-center mb-8">
+        <h1 className="text-4xl md:text-5xl font-bold font-headline">{product.name}</h1>
+        <p className="text-xl text-muted-foreground mt-2">{product.brand}</p>
+      </div>
+
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
         <div className="md:col-span-2 space-y-8">
            <Card>
@@ -112,10 +117,6 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </Card>
         </div>
         <div className="md:col-span-1 space-y-6">
-           <div className="space-y-2">
-            <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
-            <p className="text-xl text-muted-foreground">{product.brand}</p>
-          </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <Star className="h-5 w-5 text-accent" fill="currentColor" />
