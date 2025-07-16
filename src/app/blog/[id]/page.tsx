@@ -1,68 +1,41 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { notFound, useRouter, useSearchParams } from 'next/navigation';
-import { blogPosts as initialBlogPosts } from '@/lib/mock-data';
+import { notFound, useRouter } from 'next/navigation';
+import { blogPosts } from '@/lib/mock-data';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-// A simple client-side cache for generated posts
-const generatedPostCache = new Map<string, any>();
-
 export default function BlogPostPage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [post, setPost] = useState<any | null>(null);
-  const [isGenerated, setIsGenerated] = useState(false);
 
   useEffect(() => {
-    if (params.id === 'new') {
-      const cachedPost = generatedPostCache.get('new');
-      if (cachedPost) {
-        setPost(cachedPost);
-        setIsGenerated(true);
-      } else {
-        // Handle case where user directly navigates to /blog/new
-        // Redirect or show an error
-        const title = searchParams.get('title');
-        const content = searchParams.get('content');
-        const category = searchParams.get('category');
-        
-        if (title && content && category) {
-             const newPost = {
-                id: 'new',
-                title: decodeURIComponent(title),
-                content: decodeURIComponent(content),
-                category: decodeURIComponent(category),
-                description: content.substring(0, 150) + '...',
-                image: "https://placehold.co/1200x600.png",
-                dataAiHint: "sustainable blog",
-                date: new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                }),
-            };
-            setPost(newPost);
-            generatedPostCache.set('new', newPost);
-            setIsGenerated(true);
-        } else {
-            router.push('/blog');
-        }
-      }
-    } else {
-      const foundPost = initialBlogPosts.find(p => p.id.toString() === params.id);
+    const foundPost = blogPosts.find(p => p.id.toString() === params.id);
+    if (foundPost) {
       setPost(foundPost);
+    } else {
+        // We will call notFound() outside useEffect after checking post state
     }
-  }, [params.id, router, searchParams]);
-  
+  }, [params.id]);
+
   if (!post) {
-      // Don't call notFound() immediately, let useEffect handle it
-      return null; 
+      // Let useEffect run once, and if post is still null, show 404.
+      // To avoid flashing 404 on valid pages, we can return null and let useEffect set the post.
+      // But if we're certain the effect has run, we can call notFound.
+      // For simplicity here, if post isn't found after initial check it's likely a 404.
+      // To be safe, we check after the effect. A loading state would be better here.
+      if (typeof window !== 'undefined') { // ensures this doesn't run on server
+        notFound();
+      }
+      return null;
   }
+
+  // The content of a blog post is its description in the mock data
+  const content = post.description;
 
   return (
     <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
@@ -86,11 +59,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
           height={600}
           className="rounded-lg my-8 shadow-lg"
         />
-        {isGenerated ? (
-          <div dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }} />
-        ) : (
-          <p>{post.description}</p>
-        )}
+        <p>{content}</p>
       </article>
     </div>
   );
