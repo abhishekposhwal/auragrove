@@ -160,18 +160,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
-        <Card className="bg-transparent border-none shadow-none">
-            <CardHeader className="p-0">
-                <CardTitle>Customer Reviews</CardTitle>
-                <CardDescription>See what others are saying about this product.</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-                <ProductReviews 
-                    reviews={reviews} 
-                    averageRating={product.reviews.rating}
-                />
-            </CardContent>
-        </Card>
+        <ProductReviews 
+            reviews={reviews} 
+            averageRating={product.reviews.rating}
+        />
         <Card className="bg-transparent border-none shadow-none">
             <CardHeader className="p-0">
                 <CardTitle>Write a Review</CardTitle>
