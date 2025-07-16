@@ -85,110 +85,114 @@ export default function AccountPage() {
 
   if (user) {
     return (
-       <div className="container mx-auto max-w-2xl px-4 md:px-6 py-12">
-        <div className="space-y-8">
-            <Card>
-                <CardHeader className="text-center">
-                    <UserIcon className="mx-auto h-16 w-16 mb-4 text-primary" />
-                    <CardTitle>Welcome Back!</CardTitle>
-                    <CardDescription>
-                        You are logged in as {user.email}.
-                    </CardDescription>
-                </CardHeader>
-                <CardFooter className="flex-col gap-4">
-                     <Button asChild className="w-full">
-                        <Link href="/community">Go to Community</Link>
-                    </Button>
-                    <Button onClick={signOut} className="w-full" variant="outline">Sign Out</Button>
-                </CardFooter>
-            </Card>
-
-            <Card>
-                <CardHeader>
-                    <div className="flex justify-between items-center">
-                        <CardTitle>Your Profile</CardTitle>
-                        {!isEditing && (
-                             <Button variant="ghost" size="icon" onClick={() => { setTempProfile(profile); setIsEditing(true); }}>
-                                <Edit className="h-5 w-5" />
-                            </Button>
-                        )}
-                    </div>
-                    <CardDescription>Manage your personal information.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {isEditing ? (
-                        <form className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="profile-name">Name</Label>
-                                <Input id="profile-name" value={tempProfile.name} onChange={(e) => setTempProfile({...tempProfile, name: e.target.value})} />
-                            </div>
-                             <div className="space-y-2">
-                                <Label htmlFor="profile-address">Address</Label>
-                                <Input id="profile-address" value={tempProfile.address} onChange={(e) => setTempProfile({...tempProfile, address: e.target.value})} />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                               <div className="space-y-2">
-                                  <Label htmlFor="profile-city">City</Label>
-                                  <Input id="profile-city" value={tempProfile.city} onChange={(e) => setTempProfile({...tempProfile, city: e.target.value})} />
-                              </div>
-                              <div className="space-y-2">
-                                  <Label htmlFor="profile-zip">Zip Code</Label>
-                                  <Input id="profile-zip" value={tempProfile.zip} onChange={(e) => setTempProfile({...tempProfile, zip: e.target.value})} />
-                              </div>
-                            </div>
-                             <div className="space-y-2">
-                                <Label htmlFor="profile-country">Country</Label>
-                                <Input id="profile-country" value={tempProfile.country} onChange={(e) => setTempProfile({...tempProfile, country: e.target.value})} />
-                            </div>
-                             <div className="space-y-2">
-                                <Label htmlFor="profile-contact">Contact Number</Label>
-                                <Input id="profile-contact" value={tempProfile.contact} onChange={(e) => setTempProfile({...tempProfile, contact: e.target.value})} />
-                            </div>
-                        </form>
-                    ) : (
-                        <div className="space-y-4">
-                            <div>
-                                <h4 className="font-semibold">Name</h4>
-                                <p className="text-muted-foreground">{profile.name}</p>
-                            </div>
-                             <div>
-                                <h4 className="font-semibold">Address</h4>
-                                <p className="text-muted-foreground whitespace-pre-wrap">{profile.address}</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <h4 className="font-semibold">City</h4>
-                                    <p className="text-muted-foreground whitespace-pre-wrap">{profile.city}</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold">Zip Code</h4>
-                                    <p className="text-muted-foreground whitespace-pre-wrap">{profile.zip}</p>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold">Country</h4>
-                                <p className="text-muted-foreground whitespace-pre-wrap">{profile.country}</p>
-                            </div>
-                             <div>
-                                <h4 className="font-semibold">Contact Number</h4>
-                                <p className="text-muted-foreground">{profile.contact}</p>
-                            </div>
-                        </div>
-                    )}
-                </CardContent>
-                {isEditing && (
-                    <CardFooter className="justify-end gap-2">
-                         <Button variant="ghost" onClick={handleCancelEdit}>
-                            <XCircle className="mr-2 h-4 w-4" />
-                            Cancel
-                         </Button>
-                         <Button onClick={handleSaveProfile}>
-                            <Save className="mr-2 h-4 w-4" />
-                            Save
-                         </Button>
+       <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
+        <div className="grid md:grid-cols-3 gap-8">
+            <div className="md:col-span-1">
+                <Card>
+                    <CardHeader className="text-center items-center">
+                        <UserIcon className="h-16 w-16 mb-4 text-primary" />
+                        <CardTitle>Welcome Back!</CardTitle>
+                        <CardDescription className="break-all">
+                           {user.email}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardFooter className="flex-col gap-4">
+                        <Button asChild className="w-full">
+                            <Link href="/community">Go to Community</Link>
+                        </Button>
+                        <Button onClick={signOut} className="w-full" variant="outline">Sign Out</Button>
                     </CardFooter>
-                )}
-            </Card>
+                </Card>
+            </div>
+
+            <div className="md:col-span-2">
+                 <Card>
+                    <CardHeader>
+                        <div className="flex justify-between items-center">
+                            <CardTitle>Your Profile</CardTitle>
+                            {!isEditing && (
+                                <Button variant="ghost" size="icon" onClick={() => { setTempProfile(profile); setIsEditing(true); }}>
+                                    <Edit className="h-5 w-5" />
+                                </Button>
+                            )}
+                        </div>
+                        <CardDescription>Manage your personal information.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {isEditing ? (
+                            <form className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="profile-name">Name</Label>
+                                    <Input id="profile-name" value={tempProfile.name} onChange={(e) => setTempProfile({...tempProfile, name: e.target.value})} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="profile-address">Address</Label>
+                                    <Input id="profile-address" value={tempProfile.address} onChange={(e) => setTempProfile({...tempProfile, address: e.target.value})} />
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="profile-city">City</Label>
+                                    <Input id="profile-city" value={tempProfile.city} onChange={(e) => setTempProfile({...tempProfile, city: e.target.value})} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="profile-zip">Zip Code</Label>
+                                    <Input id="profile-zip" value={tempProfile.zip} onChange={(e) => setTempProfile({...tempProfile, zip: e.target.value})} />
+                                </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="profile-country">Country</Label>
+                                    <Input id="profile-country" value={tempProfile.country} onChange={(e) => setTempProfile({...tempProfile, country: e.target.value})} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="profile-contact">Contact Number</Label>
+                                    <Input id="profile-contact" value={tempProfile.contact} onChange={(e) => setTempProfile({...tempProfile, contact: e.target.value})} />
+                                </div>
+                            </form>
+                        ) : (
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="font-semibold">Name</h4>
+                                    <p className="text-muted-foreground">{profile.name}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Address</h4>
+                                    <p className="text-muted-foreground whitespace-pre-wrap">{profile.address}</p>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <h4 className="font-semibold">City</h4>
+                                        <p className="text-muted-foreground whitespace-pre-wrap">{profile.city}</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-semibold">Zip Code</h4>
+                                        <p className="text-muted-foreground whitespace-pre-wrap">{profile.zip}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Country</h4>
+                                    <p className="text-muted-foreground whitespace-pre-wrap">{profile.country}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Contact Number</h4>
+                                    <p className="text-muted-foreground">{profile.contact}</p>
+                                </div>
+                            </div>
+                        )}
+                    </CardContent>
+                    {isEditing && (
+                        <CardFooter className="justify-end gap-2">
+                            <Button variant="ghost" onClick={handleCancelEdit}>
+                                <XCircle className="mr-2 h-4 w-4" />
+                                Cancel
+                            </Button>
+                            <Button onClick={handleSaveProfile}>
+                                <Save className="mr-2 h-4 w-4" />
+                                Save
+                            </Button>
+                        </CardFooter>
+                    )}
+                </Card>
+            </div>
         </div>
       </div>
     )

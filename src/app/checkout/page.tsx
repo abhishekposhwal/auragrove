@@ -97,35 +97,7 @@ export default function CheckoutPage() {
     <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
       <h1 className="text-4xl font-bold mb-8 text-center font-headline">Checkout</h1>
       <div className="grid md:grid-cols-2 gap-12">
-        <div>
-          <Card>
-             <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-                 <div className="space-y-4">
-                    {cart.map(item => (
-                        <div key={item.id} className="flex justify-between items-center">
-                            <div className="flex items-center gap-4">
-                                <Image src={item.images[0]} alt={item.name} width={64} height={64} className="rounded-md" />
-                                <div>
-                                    <p className="font-medium">{item.name}</p>
-                                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
-                                </div>
-                            </div>
-                            <p className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</p>
-                        </div>
-                    ))}
-                    <Separator />
-                    <div className="flex justify-between font-bold text-lg">
-                        <p>Total</p>
-                        <p>₹{getCartTotal().toFixed(2)}</p>
-                    </div>
-                </div>
-            </CardContent>
-          </Card>
-        </div>
-        <div>
+        <div className="order-last md:order-first">
             <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {step === 1 && (
@@ -190,9 +162,9 @@ export default function CheckoutPage() {
                                         {errors.cvc && <p className="text-destructive text-sm">{errors.cvc.message}</p>}
                                     </div>
                                 </div>
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
                                     <Button type="button" variant="outline" onClick={() => setStep(1)}>Back to Shipping</Button>
-                                    <Button type="submit" className="w-full">
+                                    <Button type="submit" className="w-full sm:w-auto">
                                         <Lock className="mr-2 h-4 w-4" />
                                         Pay ₹{getCartTotal().toFixed(2)}
                                     </Button>
@@ -202,6 +174,34 @@ export default function CheckoutPage() {
                     )}
                 </form>
             </FormProvider>
+        </div>
+        <div>
+          <Card>
+             <CardHeader>
+                <CardTitle>Order Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+                 <div className="space-y-4">
+                    {cart.map(item => (
+                        <div key={item.id} className="flex justify-between items-center">
+                            <div className="flex items-center gap-4">
+                                <Image src={item.images[0]} alt={item.name} width={64} height={64} className="rounded-md" />
+                                <div>
+                                    <p className="font-medium">{item.name}</p>
+                                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                                </div>
+                            </div>
+                            <p className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                    ))}
+                    <Separator />
+                    <div className="flex justify-between font-bold text-lg">
+                        <p>Total</p>
+                        <p>₹{getCartTotal().toFixed(2)}</p>
+                    </div>
+                </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
