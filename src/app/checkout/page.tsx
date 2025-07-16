@@ -13,6 +13,9 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { CreditCard, Lock, Truck } from "lucide-react";
+import { useProfile } from "@/context/ProfileContext";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebase/config";
 
 const shippingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -34,6 +37,8 @@ type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
 export default function CheckoutPage() {
   const { cart, getCartTotal, clearCart } = useCart();
+  const { profile } = useProfile();
+  const [user] = useAuthState(auth);
   const router = useRouter();
   const [step, setStep] = useState(1);
   const methods = useForm<CheckoutFormValues>({
@@ -50,13 +55,32 @@ export default function CheckoutPage() {
     }
   });
 
-  const { handleSubmit, trigger, formState: { errors } } = methods;
+  const { handleSubmit, trigger, formState: { errors }, reset } = methods;
 
   useEffect(() => {
     if (cart.length === 0) {
       router.push('/shop');
     }
   }, [cart, router]);
+
+  useEffect(() => {
+    if (user && profile.name) {
+      // Pre-fill form with profile data for logged-in users
+      // A simple split of address into two lines for demonstration
+      const addressParts = profile.address.split(',');
+      const addressLine = addressParts[0] || '';
+      const city = (addressParts[1] || '').trim();
+      
+      reset({
+        name: profile.name,
+        address: addressLine,
+        city: city,
+        // You might need more sophisticated logic for zip and country
+        zip: profile.address.match(/\d{5,6}/)?.[0] || '',
+        country: "India", // Assuming default
+      });
+    }
+  }, [user, profile, reset]);
 
   const handleNext = async () => {
     const isValid = await trigger(Object.keys(shippingSchema.shape) as Array<keyof CheckoutFormValues>);
