@@ -43,7 +43,7 @@ export default function CommunityPage() {
       </div>
 
        <div className="grid md:grid-cols-2 gap-8">
-            <Card>
+            <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                 <CardHeader>
                     <CardTitle>Community Forums</CardTitle>
                     <CardDescription>Discuss topics, ask questions, and share your experiences.</CardDescription>
@@ -53,7 +53,7 @@ export default function CommunityPage() {
                     <Button disabled>Go to Forums</Button>
                 </CardContent>
             </Card>
-             <Card>
+             <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                 <CardHeader>
                     <CardTitle>Member-Only Workshops</CardTitle>
                     <CardDescription>Join exclusive workshops on DIY projects, sustainable habits, and more.</CardDescription>
