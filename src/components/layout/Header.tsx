@@ -2,34 +2,59 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, User, Users } from 'lucide-react';
+import { Leaf, Menu, ShoppingCart, User, Users, Sparkles, Info, Newspaper, Store } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useCart } from '@/context/CartContext';
 import { Badge } from '@/components/ui/badge';
-import { SidebarTrigger } from '../ui/sidebar';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { usePathname } from 'next/navigation';
+import { Separator } from '../ui/separator';
+
+const navLinks = [
+  { href: "/shop", label: "Shop", icon: <Store className="h-5 w-5" /> },
+  { href: "/inspiration", label: "Inspiration", icon: <Sparkles className="h-5 w-5" /> },
+  { href: "/about", label: "About", icon: <Info className="h-5 w-5" /> },
+  { href: "/blog", label: "Blog", icon: <Newspaper className="h-5 w-5" /> },
+];
 
 export function Header() {
   const [user] = useAuthState(auth);
   const { getCartItemCount } = useCart();
   const cartItemCount = getCartItemCount();
+  const pathname = usePathname();
+
+  const allNavLinks = user
+    ? [...navLinks, { href: "/community", label: "Community", icon: <Users className="h-5 w-5" /> }]
+    : navLinks;
 
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 w-full border-b">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <div className="flex items-center gap-2">
-           <SidebarTrigger className="md:hidden" />
-           <Link href="/" className="hidden md:flex items-center gap-2 font-headline text-2xl font-bold">
-            AuraGrove
-           </Link>
-        </div>
+        <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold">
+          <Leaf className="h-7 w-7 text-primary" />
+          AuraGrove
+        </Link>
+        
+        <nav className="hidden md:flex items-center gap-6">
+          {allNavLinks.map((link) => (
+            <Link 
+              key={link.href} 
+              href={link.href}
+              className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.href ? 'text-primary' : 'text-muted-foreground'}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/cart" aria-label="Shopping Cart" className="relative">
               <ShoppingCart className="h-6 w-6" />
               {cartItemCount > 0 && (
-                 <Badge className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
+                 <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
               )}
             </Link>
           </Button>
@@ -38,6 +63,35 @@ export function Header() {
               {user ? <Users className="h-6 w-6 text-primary" /> : <User className="h-6 w-6" />}
             </Link>
           </Button>
+           <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <div className="flex flex-col gap-6 p-6">
+                 <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold">
+                    <Leaf className="h-7 w-7 text-primary" />
+                    AuraGrove
+                </Link>
+                <Separator />
+                <nav className="flex flex-col gap-4">
+                  {allNavLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`flex items-center gap-3 rounded-md p-2 text-lg font-medium transition-colors hover:bg-muted ${pathname === link.href ? 'bg-muted text-primary' : 'text-foreground'}`}
+                    >
+                      {link.icon}
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
