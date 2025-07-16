@@ -13,14 +13,18 @@ const firebaseConfig = {
 
 // Initialize Firebase
 let app: FirebaseApp;
+let auth: Auth;
+
 if (firebaseConfig.apiKey) {
     app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    auth = getAuth(app);
 } else {
-    // Provide a dummy app if config is not set, to avoid crashes.
+    // Provide a dummy app and auth object if config is not set, to avoid crashes.
     // This allows the app to run without firebase for development or testing.
     app = {} as FirebaseApp;
+    auth = {
+      onAuthStateChanged: () => () => {},
+    } as Auth;
 }
-
-const auth: Auth = firebaseConfig.apiKey ? getAuth(app) : {} as Auth;
 
 export { app, auth };
