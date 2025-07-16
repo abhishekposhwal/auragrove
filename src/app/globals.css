@@ -76,3 +76,9 @@
     background-image: linear-gradient(to bottom, hsl(var(--secondary)), hsl(var(--background)));
   }
 }
+
+@layer components {
+  .hover\:bg-primary-hover:hover {
+    background-color: hsl(var(--primary) / 0.1);
+  }
+}
