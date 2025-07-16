@@ -155,6 +155,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
+        <ProductReviews 
+          reviews={reviews} 
+          averageRating={product.reviews.rating}
+        />
         <Card>
             <CardHeader>
                 <CardTitle>Write a Review</CardTitle>
@@ -164,11 +168,6 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 <ReviewForm onSubmit={handleAddReview} />
             </CardContent>
         </Card>
-        
-        <ProductReviews 
-          reviews={reviews} 
-          averageRating={product.reviews.rating}
-        />
       </div>
 
     </div>
