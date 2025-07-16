@@ -134,10 +134,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
                         </div>
                     </div>
                     
-                    <p className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-primary">₹{product.price.toFixed(2)}</p>
                 </CardContent>
                 <CardFooter>
-                  <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
+                  <Button size="lg" className="w-full hover:bg-primary/90" onClick={handleAddToCart}>Add to Cart</Button>
                 </CardFooter>
             </Card>
         </div>

@@ -95,13 +95,13 @@ export default function CheckoutPage() {
                                     <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
                                 </div>
                             </div>
-                            <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                     ))}
                     <Separator />
                     <div className="flex justify-between font-bold text-lg">
                         <p>Total</p>
-                        <p>${getCartTotal().toFixed(2)}</p>
+                        <p>₹{getCartTotal().toFixed(2)}</p>
                     </div>
                 </div>
             </CardContent>
@@ -176,7 +176,7 @@ export default function CheckoutPage() {
                                     <Button type="button" variant="outline" onClick={() => setStep(1)}>Back to Shipping</Button>
                                     <Button type="submit" className="w-full">
                                         <Lock className="mr-2 h-4 w-4" />
-                                        Pay ${getCartTotal().toFixed(2)}
+                                        Pay ₹{getCartTotal().toFixed(2)}
                                     </Button>
                                 </div>
                             </CardContent>

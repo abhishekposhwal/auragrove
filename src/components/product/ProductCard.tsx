@@ -52,7 +52,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <Link href={`/product/${product.id}`}>
               <CardTitle className="text-lg font-bold leading-tight hover:text-primary transition-colors">{product.name}</CardTitle>
             </Link>
-            <p className="text-lg font-semibold text-primary">${product.price.toFixed(2)}</p>
+            <p className="text-lg font-semibold text-primary">₹{product.price.toFixed(2)}</p>
         </div>
         <p className="text-sm text-muted-foreground mt-1">{product.brand}</p>
         <div className="flex items-center gap-1 mt-2">
