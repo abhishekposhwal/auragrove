@@ -69,7 +69,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       </Carousel>
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
-        <div className="md:col-span-2 space-y-6">
+        <div className="md:col-span-3 space-y-6">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
             <p className="text-xl text-muted-foreground">{product.brand}</p>
@@ -93,28 +93,17 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
           <Separator />
           
-          <div>
-            <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
-             <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
-          </div>
+          <div className="space-y-8">
+            <div>
+                <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
+                <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+            </div>
 
-           <div className="grid grid-cols-2 gap-4 text-sm max-w-md">
-             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Truck className="h-5 w-5 text-muted-foreground" />
-              <span>Carbon-neutral shipping</span>
-            </div>
-             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Recycle className="h-5 w-5 text-muted-foreground" />
-              <span>Eco-friendly packaging</span>
-            </div>
-          </div>
-        </div>
-        <div className="space-y-6">
-           <Card>
+            <Card>
                 <CardHeader>
                     <CardTitle>Details & Certifications</CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 gap-4">
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex items-start gap-3">
                         <Tag className="h-5 w-5 mt-1 text-primary" />
                         <div>
@@ -145,6 +134,18 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     </div>
                 </CardContent>
             </Card>
+
+             <div className="grid grid-cols-2 gap-4 text-sm max-w-md">
+                <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+                <Truck className="h-5 w-5 text-muted-foreground" />
+                <span>Carbon-neutral shipping</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+                <Recycle className="h-5 w-5 text-muted-foreground" />
+                <span>Eco-friendly packaging</span>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
       
