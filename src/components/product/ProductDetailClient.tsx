@@ -13,8 +13,9 @@ import { Star, Leaf, Award, Truck, Recycle, Tag, Building } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { ReviewForm } from './ReviewForm';
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { addToCart } = useCart();
@@ -153,11 +154,22 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
       <Separator className="my-12" />
 
-      <ProductReviews 
-        reviews={reviews} 
-        averageRating={product.reviews.rating}
-        onAddReview={handleAddReview}
-      />
+      <div className="space-y-8">
+        <Card>
+            <CardHeader>
+                <CardTitle>Write a Review</CardTitle>
+                <CardDescription>Share your thoughts about the product with the community.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <ReviewForm onSubmit={handleAddReview} />
+            </CardContent>
+        </Card>
+        
+        <ProductReviews 
+          reviews={reviews} 
+          averageRating={product.reviews.rating}
+        />
+      </div>
 
     </div>
   );
