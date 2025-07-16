@@ -8,9 +8,9 @@ import { cn } from '@/lib/utils';
 
 const navLinks = [
   { href: '/shop', label: 'Shop' },
+  { href: '/inspiration', label: 'Inspiration' },
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
-  { href: '/account', label: 'Community' },
 ];
 
 export function Header() {
@@ -59,6 +59,9 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+             <Link href="/account" className="text-xl font-medium text-muted-foreground transition-colors hover:text-foreground" onClick={() => setIsMenuOpen(false)}>
+                Community
+              </Link>
           </nav>
         </div>
       )}
