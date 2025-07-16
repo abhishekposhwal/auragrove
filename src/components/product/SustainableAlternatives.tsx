@@ -43,7 +43,7 @@ export default function SustainableAlternatives({ product }: SustainableAlternat
         <p className="max-w-2xl text-muted-foreground">
           Let our AI assistant suggest some even more sustainable alternatives to the {`"${product.name}"`}.
         </p>
-        <Button onClick={handleFindAlternatives} disabled={isLoading} size="lg">
+        <Button onClick={handleFindAlternatives} disabled={isLoading} size="lg" variant="outline">
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

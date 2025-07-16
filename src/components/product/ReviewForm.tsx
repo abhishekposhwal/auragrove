@@ -110,7 +110,7 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit Review</Button>
+        <Button type="submit" variant="outline">Submit Review</Button>
       </form>
     </Form>
   );

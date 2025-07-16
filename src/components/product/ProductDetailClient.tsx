@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { ToastAction } from "@/components/ui/toast";
 import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
-import { Star, Leaf, Award, Truck, Recycle, Tag, Building } from 'lucide-react';
+import { Star, Leaf, Award, Truck, Recycle, Tag, Building, CheckCircle2 } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
@@ -44,34 +44,33 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="py-12">
-      <Carousel className="w-full max-w-4xl mx-auto mb-12">
-        <CarouselContent>
-          {product.images.map((image, index) => (
-            <CarouselItem key={index}>
-              <div className="p-1">
-                <Card>
-                  <CardContent className="flex aspect-video items-center justify-center p-0">
-                     <Image
+      <Card>
+        <CardContent className="p-0">
+          <Carousel className="w-full max-w-4xl mx-auto">
+            <CarouselContent>
+              {product.images.map((image, index) => (
+                <CarouselItem key={index}>
+                    <Image
                       src={image}
                       alt={`${product.name} - image ${index + 1}`}
                       width={1200}
                       height={675}
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full aspect-video object-cover rounded-t-lg"
                       data-ai-hint="sustainable product lifestyle"
                     />
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
+        </CardContent>
+      </Card>
 
-      <div className="text-left mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
-        <p className="text-xl text-muted-foreground mt-2">{product.brand}</p>
+
+      <div className="text-left my-8">
+        <h1 className="text-2xl md:text-3xl font-bold font-headline">{product.name}</h1>
+        <p className="text-lg text-muted-foreground mt-1">{product.brand}</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
@@ -80,33 +79,33 @@ export function ProductDetailClient({ product }: { product: Product }) {
               <CardHeader className="p-0">
                   <CardTitle>Description & Details</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6 pt-6">
+              <CardContent className="space-y-6 pt-6 px-0">
                   <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
                   <Separator />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                       <div className="flex items-start gap-3">
-                          <Tag className="h-5 w-5 mt-1 text-primary" />
+                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                           <div>
                               <h4 className="font-semibold">Category</h4>
                               <p className="text-muted-foreground">{product.category}</p>
                           </div>
                       </div>
                       <div className="flex items-start gap-3">
-                          <Building className="h-5 w-5 mt-1 text-primary" />
+                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                           <div>
                               <h4 className="font-semibold">Brand</h4>
                               <p className="text-muted-foreground">{product.brand}</p>
                           </div>
                       </div>
                       <div className="flex items-start gap-3">
-                          <Award className="h-5 w-5 mt-1 text-primary" />
+                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                           <div>
                               <h4 className="font-semibold">Certifications</h4>
                               <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
                           </div>
                       </div>
                       <div className="flex items-start gap-3">
-                          <Leaf className="h-5 w-5 mt-1 text-primary" />
+                          <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                           <div>
                               <h4 className="font-semibold">Carbon Footprint</h4>
                               <p className="text-muted-foreground">{product.carbonFootprint}</p>
@@ -122,21 +121,21 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     <CardTitle>Purchase Options</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
                         <div className="flex items-center gap-1">
                             <Star className="h-5 w-5 text-accent" fill="currentColor" />
                             <span className="font-medium">{product.reviews.rating}</span>
-                            <span className="text-muted-foreground">({reviews.length} reviews)</span>
+                            <span className="text-muted-foreground text-sm">({reviews.length} reviews)</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Leaf className="h-5 w-5 text-green-600" />
+                            <Leaf className="h-5 w-5 text-primary" />
                             <span className="font-medium">Green Score: {product.greenScore}/10</span>
                         </div>
                     </div>
                     
-                    <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</p>
                     
-                    <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
+                    <Button size="lg" className="w-full" onClick={handleAddToCart} variant="outline">Add to Cart</Button>
                     
                     <div className="space-y-3 text-sm pt-4">
                         <div className="flex items-center gap-2">
@@ -169,7 +168,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 <CardTitle>Write a Review</CardTitle>
                 <CardDescription>Share your thoughts about the product with the community.</CardDescription>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 px-0">
                 <ReviewForm onSubmit={handleAddReview} />
             </CardContent>
         </Card>
