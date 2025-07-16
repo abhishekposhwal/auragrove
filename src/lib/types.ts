@@ -31,6 +31,13 @@ export interface AlternativeProduct {
   carbonFootprint: string;
 }
 
+export interface BlogComment {
+  id: string;
+  author: string;
+  comment: string;
+  date: string;
+}
+
 export interface BlogPost {
   id: number;
   title: string;
@@ -39,4 +46,5 @@ export interface BlogPost {
   date: string;
   image: string;
   dataAiHint: string;
+  comments?: BlogComment[];
 }

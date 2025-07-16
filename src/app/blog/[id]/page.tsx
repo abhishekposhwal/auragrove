@@ -1,3 +1,5 @@
+"use client";
+
 import { notFound } from 'next/navigation';
 import { blogPosts } from '@/lib/mock-data';
 import Image from 'next/image';
@@ -5,16 +7,30 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import type { BlogPost } from '@/lib/types';
+import type { BlogPost, BlogComment } from '@/lib/types';
+import { useState } from 'react';
+import { Separator } from '@/components/ui/separator';
+import { CommentSection } from '@/components/blog/CommentSection';
+import { CommentForm } from '@/components/blog/CommentForm';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 
 export default function BlogPostPage({ params }: { params: { id: string } }) {
   const post: BlogPost | undefined = blogPosts.find(p => p.id.toString() === params.id);
+  const [comments, setComments] = useState<BlogComment[]>(post?.comments || []);
 
   if (!post) {
     notFound();
   }
 
-  // The content of a blog post is its description in the mock data
+  const handleAddComment = (newCommentData: Omit<BlogComment, 'id' | 'date'>) => {
+    const newComment: BlogComment = {
+        id: `c${Date.now()}`,
+        date: new Date().toISOString(),
+        ...newCommentData
+    };
+    setComments(prevComments => [newComment, ...prevComments]);
+  };
+
   const content = post.description;
 
   return (
@@ -41,6 +57,21 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
         />
         <p>{content}</p>
       </article>
+
+      <Separator className="my-12" />
+      
+      <div className="space-y-8">
+        <CommentSection comments={comments} />
+        <Card className="bg-transparent border-none shadow-none">
+            <CardHeader className="p-0">
+                <CardTitle>Leave a Comment</CardTitle>
+                <CardDescription>Share your thoughts on this post.</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-6 px-0">
+                <CommentForm onSubmit={handleAddComment} />
+            </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

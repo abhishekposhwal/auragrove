@@ -179,6 +179,10 @@ export const blogPosts: BlogPost[] = [
     date: 'April 22, 2024',
     image: 'https://placehold.co/600x400.png',
     dataAiHint: 'sustainable kitchen',
+    comments: [
+        { id: 'c1', author: 'EcoWarrior', comment: 'Great tips! I already use beeswax wraps, but I\'m going to start composting now.', date: '2024-04-23' },
+        { id: 'c2', author: 'Sustainable Sam', comment: 'Loved this article. Another tip is to use veggie scraps to make broth!', date: '2024-04-24' },
+    ],
   },
   {
     id: 2,
@@ -188,6 +192,9 @@ export const blogPosts: BlogPost[] = [
     date: 'April 15, 2024',
     image: 'https://placehold.co/600x400.png',
     dataAiHint: 'ethical fashion',
+    comments: [
+        { id: 'c3', author: 'Fashionista', comment: 'This was so informative. I had no idea about some of these certifications.', date: '2024-04-16' },
+    ],
   },
   {
     id: 3,
@@ -197,5 +204,6 @@ export const blogPosts: BlogPost[] = [
     date: 'April 8, 2024',
     image: 'https://placehold.co/600x400.png',
     dataAiHint: 'fashion brand',
+    comments: [],
   },
 ];
