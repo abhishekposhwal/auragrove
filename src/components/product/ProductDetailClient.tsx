@@ -117,7 +117,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </Card>
         </div>
         <div className="md:col-span-1 space-y-6">
-            <Card className="bg-secondary/30">
+            <Card className="bg-muted">
                 <CardHeader>
                     <CardTitle>Purchase Options</CardTitle>
                 </CardHeader>
