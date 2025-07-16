@@ -1,37 +1,17 @@
-"use client"
-
-import { useState, useEffect } from 'react';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { blogPosts } from '@/lib/mock-data';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import type { BlogPost } from '@/lib/types';
 
 export default function BlogPostPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const [post, setPost] = useState<any | null>(null);
-
-  useEffect(() => {
-    const foundPost = blogPosts.find(p => p.id.toString() === params.id);
-    if (foundPost) {
-      setPost(foundPost);
-    } else {
-        // We will call notFound() outside useEffect after checking post state
-    }
-  }, [params.id]);
+  const post: BlogPost | undefined = blogPosts.find(p => p.id.toString() === params.id);
 
   if (!post) {
-      // Let useEffect run once, and if post is still null, show 404.
-      // To avoid flashing 404 on valid pages, we can return null and let useEffect set the post.
-      // But if we're certain the effect has run, we can call notFound.
-      // For simplicity here, if post isn't found after initial check it's likely a 404.
-      // To be safe, we check after the effect. A loading state would be better here.
-      if (typeof window !== 'undefined') { // ensures this doesn't run on server
-        notFound();
-      }
-      return null;
+    notFound();
   }
 
   // The content of a blog post is its description in the mock data
