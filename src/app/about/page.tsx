@@ -7,7 +7,7 @@ export default function AboutPage() {
         <div className="space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold font-headline">Our Mission for a Greener Tomorrow</h1>
           <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
-            At EcoChic, we're passionate about making sustainable living accessible and beautiful. We believe that conscious consumerism is a powerful force for change.
+            At AuraGrove, we're passionate about making sustainable living accessible and beautiful. We believe that conscious consumerism is a powerful force for change.
           </p>
         </div>
         <Image 
@@ -22,7 +22,7 @@ export default function AboutPage() {
           <div className="space-y-4">
             <h2 className="text-3xl font-bold font-headline">From a Small Idea to a Big Impact</h2>
             <p className="text-muted-foreground">
-              EcoChic started with a simple idea: what if every product we buy could contribute positively to the planet? We began by curating a small collection of items from brands that share our values of sustainability, ethical production, and quality craftsmanship.
+              AuraGrove started with a simple idea: what if every product we buy could contribute positively to the planet? We began by curating a small collection of items from brands that share our values of sustainability, ethical production, and quality craftsmanship.
             </p>
             <p className="text-muted-foreground">
               Today, we've grown into a community of conscious shoppers and purpose-driven brands, all working together to create a more sustainable future. Our commitment extends beyond our products to our packaging, shipping, and every aspect of our operations.

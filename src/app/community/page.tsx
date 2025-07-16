@@ -36,7 +36,7 @@ export default function CommunityPage() {
     <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
       <div className="space-y-4 text-center mb-12">
         <Users className="mx-auto h-16 w-16 text-primary" />
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">Welcome to the EcoChic Community</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline">Welcome to the AuraGrove Community</h1>
         <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
           This is a place for our members to connect, share ideas, and support each other on the journey to sustainable living.
         </p>

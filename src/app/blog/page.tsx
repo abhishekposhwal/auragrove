@@ -10,7 +10,7 @@ export default function BlogPage() {
   return (
     <div className="container mx-auto px-4 md:px-6 py-12 md:py-20">
       <div className="space-y-4 text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">EcoChic Blog</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline">AuraGrove Blog</h1>
         <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
           Insights, tips, and stories for a more sustainable life.
         </p>

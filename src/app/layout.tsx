@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'EcoChic',
+  title: 'AuraGrove',
   description: 'Sustainable and Ethical E-Commerce Platform',
 };
 

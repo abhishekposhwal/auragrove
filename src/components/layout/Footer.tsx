@@ -7,9 +7,9 @@ export function Footer() {
       <div className="container mx-auto py-12 px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-2" aria-label="EcoChic Home">
+            <Link href="/" className="flex items-center gap-2" aria-label="AuraGrove Home">
               <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold font-headline">EcoChic</span>
+              <span className="text-2xl font-bold font-headline">AuraGrove</span>
             </Link>
             <p className="text-sm">Your one-stop shop for sustainable and ethical products.</p>
           </div>
@@ -37,7 +37,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t mt-8 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} EcoChic. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} AuraGrove. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
