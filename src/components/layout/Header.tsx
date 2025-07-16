@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
+import { useCart } from '@/context/CartContext';
+import { Badge } from '@/components/ui/badge';
 
 const navLinks = [
   { href: '/shop', label: 'Shop', icon: <Store /> },
@@ -19,6 +21,8 @@ const navLinks = [
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user] = useAuthState(auth);
+  const { getCartItemCount } = useCart();
+  const cartItemCount = getCartItemCount();
 
   const allNavLinks = user ? [...navLinks, { href: '/community', label: 'Community', icon: <Users /> }] : navLinks;
 
@@ -39,8 +43,11 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" asChild>
-            <Link href="/cart" aria-label="Shopping Cart">
+            <Link href="/cart" aria-label="Shopping Cart" className="relative">
               <ShoppingCart className="h-6 w-6" />
+              {cartItemCount > 0 && (
+                 <Badge className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
+              )}
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
