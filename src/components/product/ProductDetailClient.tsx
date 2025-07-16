@@ -9,10 +9,12 @@ import { Separator } from '@/components/ui/separator';
 import { ToastAction } from "@/components/ui/toast";
 import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
-import { Star, Leaf, Award, Truck, Recycle, Tag } from 'lucide-react';
+import { Star, Leaf, Award, Truck, Recycle, Tag, Building } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '../ui/card';
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { addToCart } = useCart();
@@ -53,14 +55,9 @@ export function ProductDetailClient({ product }: { product: Product }) {
         </div>
         <div className="space-y-6">
           <div className="space-y-2">
-             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Tag className="h-4 w-4" />
-                <span>{product.category}</span>
-            </div>
             <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
             <p className="text-xl text-muted-foreground">{product.brand}</p>
           </div>
-          <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <Star className="h-5 w-5 text-accent" fill="currentColor" />
@@ -74,17 +71,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </div>
           </div>
           
-          <p className="text-base leading-relaxed">{product.description}</p>
-          
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Award className="h-5 w-5 text-accent" />
-              <span>Certifications: {product.certifications.join(', ')}</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Leaf className="h-5 w-5 text-green-600" />
-              <span>Carbon Footprint: {product.carbonFootprint}</span>
-            </div>
+          <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
+         
+          <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
+
+           <div className="grid grid-cols-2 gap-4 text-sm">
              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
               <Truck className="h-5 w-5 text-muted-foreground" />
               <span>Carbon-neutral shipping</span>
@@ -94,12 +85,60 @@ export function ProductDetailClient({ product }: { product: Product }) {
               <span>Eco-friendly packaging</span>
             </div>
           </div>
-
-          <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
           
         </div>
       </div>
       
+      <Separator className="my-12" />
+
+      <Tabs defaultValue="description" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="description">Product Description</TabsTrigger>
+          <TabsTrigger value="details">Details & Certifications</TabsTrigger>
+        </TabsList>
+        <TabsContent value="description">
+            <Card>
+                <CardContent className="pt-6">
+                    <p className="text-base leading-relaxed">{product.description}</p>
+                </CardContent>
+            </Card>
+        </TabsContent>
+        <TabsContent value="details">
+           <Card>
+                <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-start gap-3">
+                        <Tag className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Category</h4>
+                            <p className="text-muted-foreground">{product.category}</p>
+                        </div>
+                    </div>
+                     <div className="flex items-start gap-3">
+                        <Building className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Brand</h4>
+                            <p className="text-muted-foreground">{product.brand}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <Award className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Certifications</h4>
+                            <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <Leaf className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Carbon Footprint</h4>
+                            <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </TabsContent>
+      </Tabs>
+
       <Separator className="my-12" />
 
       <SustainableAlternatives product={product} />
