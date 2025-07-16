@@ -12,7 +12,15 @@ export const products: Product[] = [
     carbonFootprint: '2.1 kg CO₂e',
     certifications: ['GOTS', 'Fair Trade'],
     brand: 'EcoThreads',
-    reviews: { rating: 4.8, count: 120 },
+    reviews: {
+      rating: 4.8,
+      count: 120,
+      items: [
+        { id: 'r1', author: 'Jane D.', rating: 5, date: '2024-05-10', comment: 'Incredibly soft and fits perfectly. You can feel the quality. Worth every penny!' },
+        { id: 'r2', author: 'Mike P.', rating: 4, date: '2024-05-12', comment: 'Great t-shirt, very comfortable. I wish it came in more colors though.' },
+        { id: 'r3', author: 'Sarah K.', rating: 5, date: '2024-05-15', comment: 'My new favorite shirt. I love that it\'s ethically made.' },
+      ],
+    },
   },
   {
     id: '2',
@@ -25,7 +33,14 @@ export const products: Product[] = [
     carbonFootprint: '1.5 kg CO₂e',
     certifications: ['Recycled'],
     brand: 'GreenGlass',
-    reviews: { rating: 4.9, count: 85 },
+    reviews: {
+      rating: 4.9,
+      count: 85,
+      items: [
+        { id: 'r4', author: 'Tom W.', rating: 5, date: '2024-04-20', comment: 'These glasses are beautiful and have a nice weight to them. Very high quality.' },
+        { id: 'r5', author: 'Emily R.', rating: 5, date: '2024-04-25', comment: 'I love the subtle green tint. They look great in my kitchen.' },
+      ],
+    },
   },
   {
     id: '3',
@@ -38,7 +53,14 @@ export const products: Product[] = [
     carbonFootprint: '0.1 kg CO₂e',
     certifications: ['FSC Certified Bamboo'],
     brand: 'NatureBrush',
-    reviews: { rating: 4.7, count: 213 },
+    reviews: {
+      rating: 4.7,
+      count: 213,
+      items: [
+        { id: 'r6', author: 'David L.', rating: 5, date: '2024-05-01', comment: 'Good for my teeth and good for the planet. Makes me happy.' },
+        { id: 'r7', author: 'Jessica M.', rating: 4, date: '2024-05-05', comment: 'The bristles are a bit softer than I expected, but it cleans well.' },
+      ],
+    },
   },
   {
     id: '4',
@@ -51,7 +73,11 @@ export const products: Product[] = [
     carbonFootprint: '0.8 kg CO₂e',
     certifications: ['Vegan'],
     brand: 'AuraScents',
-    reviews: { rating: 4.6, count: 98 },
+    reviews: {
+      rating: 4.6,
+      count: 98,
+      items: [],
+    },
   },
   {
     id: '5',
@@ -64,7 +90,11 @@ export const products: Product[] = [
     carbonFootprint: '0.5 kg CO₂e',
     certifications: ['Recycled'],
     brand: 'CarryGreen',
-    reviews: { rating: 5.0, count: 301 },
+    reviews: {
+      rating: 5.0,
+      count: 301,
+      items: [],
+    },
   },
   {
     id: '6',
@@ -77,7 +107,11 @@ export const products: Product[] = [
     carbonFootprint: '4.5 kg CO₂e',
     certifications: ['Organic'],
     brand: 'HempWorks',
-    reviews: { rating: 4.8, count: 55 },
+    reviews: {
+      rating: 4.8,
+      count: 55,
+      items: [],
+    },
   },
    {
     id: '7',
@@ -90,7 +124,11 @@ export const products: Product[] = [
     carbonFootprint: '3.2 kg CO₂e',
     certifications: ['Upcycled'],
     brand: 'ReJean',
-    reviews: { rating: 4.9, count: 42 },
+    reviews: {
+      rating: 4.9,
+      count: 42,
+      items: [],
+    },
   },
   {
     id: '8',
@@ -103,7 +141,11 @@ export const products: Product[] = [
     carbonFootprint: '2.8 kg CO₂e',
     certifications: ['FSC Certified Cork'],
     brand: 'ZenCork',
-    reviews: { rating: 4.7, count: 76 },
+    reviews: {
+      rating: 4.7,
+      count: 76,
+      items: [],
+    },
   },
 ];
 

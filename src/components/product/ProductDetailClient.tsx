@@ -10,6 +10,7 @@ import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
 import { Star, Leaf, Award, Truck, Recycle } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
+import { ProductReviews } from './ProductReviews';
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { addToCart } = useCart();
@@ -85,6 +86,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <SustainableAlternatives product={product} />
+
+      <Separator className="my-12" />
+
+      <ProductReviews reviews={product.reviews.items} averageRating={product.reviews.rating} />
 
     </div>
   );
