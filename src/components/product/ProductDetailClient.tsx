@@ -76,7 +76,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
         <div className="md:col-span-2 space-y-8">
-           <Card>
+           <Card className="bg-transparent border-none shadow-none">
               <CardHeader>
                   <CardTitle>Description & Details</CardTitle>
               </CardHeader>
