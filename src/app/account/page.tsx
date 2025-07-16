@@ -10,9 +10,10 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, User as UserIcon } from "lucide-react";
+import { Loader2, User as UserIcon, Edit, Save, XCircle } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function AccountPage() {
   const [user, loading] = useAuthState(auth);
@@ -34,6 +35,23 @@ export default function AccountPage() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  // State for profile information
+  const [profile, setProfile] = useState({
+    name: "AuraGrove User",
+    address: "123 Green Way, Eco City, 110011",
+    contact: "+91-9876543210",
+  });
+  const [tempProfile, setTempProfile] = useState(profile);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+        // In a real app, you'd fetch this from a database
+        // For now, we'll set a default name if it's not set
+        setProfile(prev => ({...prev, name: user.displayName || prev.name || "AuraGrove User"}));
+    }
+  }, [user]);
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(email, password);
@@ -42,6 +60,17 @@ export default function AccountPage() {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     await signInWithEmailAndPassword(email, password);
+  };
+  
+  const handleSaveProfile = () => {
+    setProfile(tempProfile);
+    setIsEditing(false);
+    // In a real app, you would also save this to your database
+  };
+
+  const handleCancelEdit = () => {
+    setTempProfile(profile);
+    setIsEditing(false);
   };
   
   if (loading || signUpLoading || signInLoading || signOutLoading) {
@@ -54,25 +83,83 @@ export default function AccountPage() {
 
   if (user) {
     return (
-       <div className="container mx-auto max-w-lg px-4 md:px-6 py-12">
-        <Card>
-            <CardHeader className="text-center">
-                <UserIcon className="mx-auto h-16 w-16 mb-4 text-primary" />
-                <CardTitle>Welcome Back!</CardTitle>
-                <CardDescription>
-                    You are logged in as {user.email}.
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p className="text-center text-muted-foreground">Manage your account details, view your orders, and explore our community features.</p>
-            </CardContent>
-            <CardFooter className="flex-col gap-4">
-                 <Button asChild className="w-full">
-                    <Link href="/community">Go to Community</Link>
-                </Button>
-                <Button onClick={signOut} className="w-full" variant="outline">Sign Out</Button>
-            </CardFooter>
-        </Card>
+       <div className="container mx-auto max-w-2xl px-4 md:px-6 py-12">
+        <div className="space-y-8">
+            <Card>
+                <CardHeader className="text-center">
+                    <UserIcon className="mx-auto h-16 w-16 mb-4 text-primary" />
+                    <CardTitle>Welcome Back!</CardTitle>
+                    <CardDescription>
+                        You are logged in as {user.email}.
+                    </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex-col gap-4">
+                     <Button asChild className="w-full">
+                        <Link href="/community">Go to Community</Link>
+                    </Button>
+                    <Button onClick={signOut} className="w-full" variant="outline">Sign Out</Button>
+                </CardFooter>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <div className="flex justify-between items-center">
+                        <CardTitle>Your Profile</CardTitle>
+                        {!isEditing && (
+                             <Button variant="ghost" size="icon" onClick={() => { setTempProfile(profile); setIsEditing(true); }}>
+                                <Edit className="h-5 w-5" />
+                            </Button>
+                        )}
+                    </div>
+                    <CardDescription>Manage your personal information.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    {isEditing ? (
+                        <form className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="profile-name">Name</Label>
+                                <Input id="profile-name" value={tempProfile.name} onChange={(e) => setTempProfile({...tempProfile, name: e.target.value})} />
+                            </div>
+                             <div className="space-y-2">
+                                <Label htmlFor="profile-address">Address</Label>
+                                <Textarea id="profile-address" value={tempProfile.address} onChange={(e) => setTempProfile({...tempProfile, address: e.target.value})} />
+                            </div>
+                             <div className="space-y-2">
+                                <Label htmlFor="profile-contact">Contact Number</Label>
+                                <Input id="profile-contact" value={tempProfile.contact} onChange={(e) => setTempProfile({...tempProfile, contact: e.target.value})} />
+                            </div>
+                        </form>
+                    ) : (
+                        <div className="space-y-4">
+                            <div>
+                                <h4 className="font-semibold">Name</h4>
+                                <p className="text-muted-foreground">{profile.name}</p>
+                            </div>
+                             <div>
+                                <h4 className="font-semibold">Address</h4>
+                                <p className="text-muted-foreground whitespace-pre-wrap">{profile.address}</p>
+                            </div>
+                             <div>
+                                <h4 className="font-semibold">Contact Number</h4>
+                                <p className="text-muted-foreground">{profile.contact}</p>
+                            </div>
+                        </div>
+                    )}
+                </CardContent>
+                {isEditing && (
+                    <CardFooter className="justify-end gap-2">
+                         <Button variant="ghost" onClick={handleCancelEdit}>
+                            <XCircle className="mr-2 h-4 w-4" />
+                            Cancel
+                         </Button>
+                         <Button onClick={handleSaveProfile}>
+                            <Save className="mr-2 h-4 w-4" />
+                            Save
+                         </Button>
+                    </CardFooter>
+                )}
+            </Card>
+        </div>
       </div>
     )
   }
