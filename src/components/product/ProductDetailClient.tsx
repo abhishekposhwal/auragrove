@@ -69,7 +69,49 @@ export function ProductDetailClient({ product }: { product: Product }) {
       </Carousel>
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
-        <div className="md:col-span-3 space-y-6">
+        <div className="md:col-span-2 space-y-8">
+          <div className="space-y-6">
+              <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
+              <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+          </div>
+
+          <Card>
+              <CardHeader>
+                  <CardTitle>Details & Certifications</CardTitle>
+              </CardHeader>
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3">
+                      <Tag className="h-5 w-5 mt-1 text-primary" />
+                      <div>
+                          <h4 className="font-semibold">Category</h4>
+                          <p className="text-muted-foreground">{product.category}</p>
+                      </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                      <Building className="h-5 w-5 mt-1 text-primary" />
+                      <div>
+                          <h4 className="font-semibold">Brand</h4>
+                          <p className="text-muted-foreground">{product.brand}</p>
+                      </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                      <Award className="h-5 w-5 mt-1 text-primary" />
+                      <div>
+                          <h4 className="font-semibold">Certifications</h4>
+                          <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                      </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                      <Leaf className="h-5 w-5 mt-1 text-primary" />
+                      <div>
+                          <h4 className="font-semibold">Carbon Footprint</h4>
+                          <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                      </div>
+                  </div>
+              </CardContent>
+          </Card>
+        </div>
+        <div className="md:col-span-1 space-y-6">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
             <p className="text-xl text-muted-foreground">{product.brand}</p>
@@ -90,61 +132,16 @@ export function ProductDetailClient({ product }: { product: Product }) {
           <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
          
           <Button size="lg" className="w-full max-w-xs" onClick={handleAddToCart}>Add to Cart</Button>
-
-          <Separator />
           
-          <div className="space-y-8">
-            <div>
-                <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
-                <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
-            </div>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle>Details & Certifications</CardTitle>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-start gap-3">
-                        <Tag className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Category</h4>
-                            <p className="text-muted-foreground">{product.category}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <Building className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Brand</h4>
-                            <p className="text-muted-foreground">{product.brand}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <Award className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Certifications</h4>
-                            <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <Leaf className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Carbon Footprint</h4>
-                            <p className="text-muted-foreground">{product.carbonFootprint}</p>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
-
-             <div className="grid grid-cols-2 gap-4 text-sm max-w-md">
-                <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                <Truck className="h-5 w-5 text-muted-foreground" />
-                <span>Carbon-neutral shipping</span>
-                </div>
-                <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                <Recycle className="h-5 w-5 text-muted-foreground" />
-                <span>Eco-friendly packaging</span>
-                </div>
-            </div>
+           <div className="grid grid-cols-2 gap-4 text-sm max-w-md pt-4">
+              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+              <Truck className="h-5 w-5 text-muted-foreground" />
+              <span>Carbon-neutral shipping</span>
+              </div>
+              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+              <Recycle className="h-5 w-5 text-muted-foreground" />
+              <span>Eco-friendly packaging</span>
+              </div>
           </div>
         </div>
       </div>
@@ -156,7 +153,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
-        <ProductReviews 
+         <ProductReviews 
           reviews={reviews} 
           averageRating={product.reviews.rating}
         />
