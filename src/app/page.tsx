@@ -25,9 +25,8 @@ export default function Home() {
           </div>
           <div className="flex justify-center">
             <Image
-              src="https://placehold.co/600x400.png"
+              src="/hero-image.png"
               alt="Sustainable products collage"
-              data-ai-hint="sustainable products"
               width={600}
               height={400}
               className="rounded-lg shadow-2xl"
