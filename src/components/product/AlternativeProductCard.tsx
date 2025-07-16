@@ -10,7 +10,7 @@ export function AlternativeProductCard({ alternative }: AlternativeProductCardPr
   return (
     <Card className="h-full flex flex-col bg-secondary/50 border-primary/50">
       <CardHeader>
-        <CardTitle>{alternative.name}</CardTitle>
+        <CardTitle className="text-secondary-foreground">{alternative.name}</CardTitle>
         <div className="flex items-center gap-4 text-sm font-medium pt-2">
             <div className="flex items-center gap-1 text-primary">
                 <Leaf className="h-4 w-4" />

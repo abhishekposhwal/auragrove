@@ -25,7 +25,7 @@ export function ProductReviews({ reviews, averageRating }: ProductReviewsProps) 
   return (
     <Card className="bg-transparent border-none shadow-none">
       <CardHeader className="p-0">
-        <CardTitle className="text-2xl font-bold font-headline">Customer Reviews</CardTitle>
+        <CardTitle className="text-2xl font-bold font-headline text-secondary-foreground">Customer Reviews</CardTitle>
         {reviews.length > 0 ? (
           <div className="flex items-center gap-2 pt-2">
             <StarRating rating={averageRating} />
@@ -46,7 +46,7 @@ export function ProductReviews({ reviews, averageRating }: ProductReviewsProps) 
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-semibold">{review.author}</p>
+                        <p className="font-semibold text-secondary-foreground">{review.author}</p>
                         <p className="text-sm text-muted-foreground">{new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                       </div>
                       <StarRating rating={review.rating} />

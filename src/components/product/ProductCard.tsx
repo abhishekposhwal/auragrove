@@ -50,7 +50,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardContent className="p-4 flex-grow">
         <div className="flex justify-between items-start gap-2">
             <Link href={`/product/${product.id}`}>
-              <CardTitle className="text-lg font-bold leading-tight hover:text-primary transition-colors">{product.name}</CardTitle>
+              <CardTitle className="text-lg font-bold leading-tight hover:text-primary transition-colors text-secondary-foreground">{product.name}</CardTitle>
             </Link>
             <p className="text-lg font-semibold text-primary">₹{product.price.toFixed(2)}</p>
         </div>

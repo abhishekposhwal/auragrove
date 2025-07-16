@@ -10,7 +10,7 @@ export default function BlogPage() {
   return (
     <div className="container mx-auto px-4 md:px-6 py-12 md:py-20">
       <div className="space-y-4 text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">AuraGrove Blog</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline text-secondary-foreground">AuraGrove Blog</h1>
         <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
           Insights, tips, and stories for a more sustainable life.
         </p>
@@ -32,7 +32,7 @@ export default function BlogPage() {
               </CardHeader>
               <CardContent className="p-6">
                 <Badge variant="outline" className="mb-2">{post.category}</Badge>
-                <CardTitle className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{post.title}</CardTitle>
+                <CardTitle className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors text-secondary-foreground">{post.title}</CardTitle>
                 <CardDescription className="mb-4">{post.description}</CardDescription>
                 <p className="text-sm text-muted-foreground">{post.date}</p>
               </CardContent>

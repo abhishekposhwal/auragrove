@@ -68,7 +68,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         </div>
       </div>
        <div className="mt-8">
-            <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold font-headline text-secondary-foreground">{product.name}</h1>
             <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
         </div>
       
@@ -78,7 +78,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <div className="md:col-span-2 space-y-8">
             <Card className="bg-transparent border-none shadow-none">
                 <CardHeader className="px-0">
-                    <CardTitle>Description & Details</CardTitle>
+                    <CardTitle className="text-secondary-foreground">Description & Details</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6 px-0">
                     <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
@@ -87,28 +87,28 @@ export function ProductDetailClient({ product }: { product: Product }) {
                         <div className="flex items-start gap-3">
                             <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h4 className="font-semibold">Category</h4>
+                                <h4 className="font-semibold text-secondary-foreground">Category</h4>
                                 <p className="text-muted-foreground">{product.category}</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3">
                             <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h4 className="font-semibold">Brand</h4>
+                                <h4 className="font-semibold text-secondary-foreground">Brand</h4>
                                 <p className="text-muted-foreground">{product.brand}</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3">
                             <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h4 className="font-semibold">Certifications</h4>
+                                <h4 className="font-semibold text-secondary-foreground">Certifications</h4>
                                 <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3">
                             <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h4 className="font-semibold">Carbon Footprint</h4>
+                                <h4 className="font-semibold text-secondary-foreground">Carbon Footprint</h4>
                                 <p className="text-muted-foreground">{product.carbonFootprint}</p>
                             </div>
                         </div>
@@ -119,7 +119,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <div className="md:col-span-1 flex flex-col gap-6">
             <Card className="bg-muted">
                 <CardHeader>
-                    <CardTitle>Purchase Options</CardTitle>
+                    <CardTitle className="text-secondary-foreground">Purchase Options</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="flex justify-between items-center">
@@ -156,7 +156,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         />
         <Card className="bg-transparent border-none shadow-none">
             <CardHeader className="p-0">
-                <CardTitle>Write a Review</CardTitle>
+                <CardTitle className="text-secondary-foreground">Write a Review</CardTitle>
                 <CardDescription>Share your thoughts about the product with the community.</CardDescription>
             </CardHeader>
             <CardContent className="pt-6 px-0">
