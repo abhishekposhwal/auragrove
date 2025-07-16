@@ -161,10 +161,18 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
-        <ProductReviews 
-          reviews={reviews} 
-          averageRating={product.reviews.rating}
-        />
+        <Card>
+            <CardHeader>
+                <CardTitle>Customer Reviews</CardTitle>
+                <CardDescription>See what others are saying about this product.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <ProductReviews 
+                    reviews={reviews} 
+                    averageRating={product.reviews.rating}
+                />
+            </CardContent>
+        </Card>
         <Card>
             <CardHeader>
                 <CardTitle>Write a Review</CardTitle>
