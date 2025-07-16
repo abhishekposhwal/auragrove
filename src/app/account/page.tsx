@@ -88,7 +88,7 @@ export default function AccountPage() {
        <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
         <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-1">
-                <Card className="bg-muted/50">
+                <Card className="bg-muted/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <CardHeader className="text-center items-center">
                         <UserIcon className="h-16 w-16 mb-4 text-primary" />
                         <CardTitle>Welcome Back!</CardTitle>
@@ -106,7 +106,7 @@ export default function AccountPage() {
             </div>
 
             <div className="md:col-span-2">
-                 <Card className="bg-muted/50">
+                 <Card className="bg-muted/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <CardHeader>
                         <div className="flex justify-between items-center">
                             <CardTitle>Your Profile</CardTitle>
