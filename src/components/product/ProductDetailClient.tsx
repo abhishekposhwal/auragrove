@@ -13,8 +13,7 @@ import { Star, Leaf, Award, Truck, Recycle, Tag, Building } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 export function ProductDetailClient({ product }: { product: Product }) {
@@ -110,45 +109,41 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </div>
         <div className="space-y-6">
-           <Tabs defaultValue="details" className="w-full">
-              <TabsList>
-                <TabsTrigger value="details">Details & Certifications</TabsTrigger>
-              </TabsList>
-              <TabsContent value="details">
-                <Card>
-                      <CardContent className="pt-6 grid grid-cols-1 gap-4">
-                          <div className="flex items-start gap-3">
-                              <Tag className="h-5 w-5 mt-1 text-primary" />
-                              <div>
-                                  <h4 className="font-semibold">Category</h4>
-                                  <p className="text-muted-foreground">{product.category}</p>
-                              </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                              <Building className="h-5 w-5 mt-1 text-primary" />
-                              <div>
-                                  <h4 className="font-semibold">Brand</h4>
-                                  <p className="text-muted-foreground">{product.brand}</p>
-                              </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                              <Award className="h-5 w-5 mt-1 text-primary" />
-                              <div>
-                                  <h4 className="font-semibold">Certifications</h4>
-                                  <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
-                              </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                              <Leaf className="h-5 w-5 mt-1 text-primary" />
-                              <div>
-                                  <h4 className="font-semibold">Carbon Footprint</h4>
-                                  <p className="text-muted-foreground">{product.carbonFootprint}</p>
-                              </div>
-                          </div>
-                      </CardContent>
-                  </Card>
-              </TabsContent>
-            </Tabs>
+           <Card>
+                <CardHeader>
+                    <CardTitle>Details & Certifications</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 gap-4">
+                    <div className="flex items-start gap-3">
+                        <Tag className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Category</h4>
+                            <p className="text-muted-foreground">{product.category}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <Building className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Brand</h4>
+                            <p className="text-muted-foreground">{product.brand}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <Award className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Certifications</h4>
+                            <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <Leaf className="h-5 w-5 mt-1 text-primary" />
+                        <div>
+                            <h4 className="font-semibold">Carbon Footprint</h4>
+                            <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
       </div>
       
