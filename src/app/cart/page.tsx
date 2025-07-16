@@ -44,7 +44,7 @@ export default function CartPage() {
       </div>
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
-          <Card>
+          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <CardContent className="p-0">
               <ul className="divide-y">
                 {cart.map((item) => (
@@ -76,7 +76,7 @@ export default function CartPage() {
           </Card>
         </div>
         <div className="md:col-span-1">
-          <Card>
+          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <CardHeader>
               <CardTitle>Order Summary</CardTitle>
             </CardHeader>
