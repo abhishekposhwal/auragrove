@@ -13,7 +13,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, User as UserIcon, Edit, Save, XCircle } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
 import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignOut } from "react-firebase-hooks/auth";
 import { useProfile } from "@/context/ProfileContext";
 
@@ -125,7 +124,21 @@ export default function AccountPage() {
                             </div>
                              <div className="space-y-2">
                                 <Label htmlFor="profile-address">Address</Label>
-                                <Textarea id="profile-address" value={tempProfile.address} onChange={(e) => setTempProfile({...tempProfile, address: e.target.value})} />
+                                <Input id="profile-address" value={tempProfile.address} onChange={(e) => setTempProfile({...tempProfile, address: e.target.value})} />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                               <div className="space-y-2">
+                                  <Label htmlFor="profile-city">City</Label>
+                                  <Input id="profile-city" value={tempProfile.city} onChange={(e) => setTempProfile({...tempProfile, city: e.target.value})} />
+                              </div>
+                              <div className="space-y-2">
+                                  <Label htmlFor="profile-zip">Zip Code</Label>
+                                  <Input id="profile-zip" value={tempProfile.zip} onChange={(e) => setTempProfile({...tempProfile, zip: e.target.value})} />
+                              </div>
+                            </div>
+                             <div className="space-y-2">
+                                <Label htmlFor="profile-country">Country</Label>
+                                <Input id="profile-country" value={tempProfile.country} onChange={(e) => setTempProfile({...tempProfile, country: e.target.value})} />
                             </div>
                              <div className="space-y-2">
                                 <Label htmlFor="profile-contact">Contact Number</Label>
@@ -141,6 +154,20 @@ export default function AccountPage() {
                              <div>
                                 <h4 className="font-semibold">Address</h4>
                                 <p className="text-muted-foreground whitespace-pre-wrap">{profile.address}</p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <h4 className="font-semibold">City</h4>
+                                    <p className="text-muted-foreground whitespace-pre-wrap">{profile.city}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Zip Code</h4>
+                                    <p className="text-muted-foreground whitespace-pre-wrap">{profile.zip}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 className="font-semibold">Country</h4>
+                                <p className="text-muted-foreground whitespace-pre-wrap">{profile.country}</p>
                             </div>
                              <div>
                                 <h4 className="font-semibold">Contact Number</h4>

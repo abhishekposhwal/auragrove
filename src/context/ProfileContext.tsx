@@ -5,6 +5,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface Profile {
   name: string;
   address: string;
+  city: string;
+  zip: string;
+  country: string;
   contact: string;
 }
 
@@ -26,7 +29,10 @@ export const useProfile = () => {
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<Profile>({
     name: "AuraGrove User",
-    address: "123 Green Way, Eco City, 110011",
+    address: "123 Green Way",
+    city: "Eco City",
+    zip: "110011",
+    country: "India",
     contact: "+91-9876543210",
   });
 

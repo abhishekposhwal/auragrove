@@ -66,18 +66,12 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (user && profile.name) {
       // Pre-fill form with profile data for logged-in users
-      // A simple split of address into two lines for demonstration
-      const addressParts = profile.address.split(',');
-      const addressLine = addressParts[0] || '';
-      const city = (addressParts[1] || '').trim();
-      
       reset({
         name: profile.name,
-        address: addressLine,
-        city: city,
-        // You might need more sophisticated logic for zip and country
-        zip: profile.address.match(/\d{5,6}/)?.[0] || '',
-        country: "India", // Assuming default
+        address: profile.address,
+        city: profile.city,
+        zip: profile.zip,
+        country: profile.country,
       });
     }
   }, [user, profile, reset]);
