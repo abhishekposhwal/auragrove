@@ -100,7 +100,7 @@ export default function AccountPage() {
                         <Button asChild className="w-full">
                             <Link href="/community">Go to Community</Link>
                         </Button>
-                        <Button onClick={signOut} className="w-full" variant="outline">Sign Out</Button>
+                        <Button onClick={signOut} className="w-full hover:bg-destructive hover:text-destructive-foreground" variant="outline">Sign Out</Button>
                     </CardFooter>
                 </Card>
             </div>
