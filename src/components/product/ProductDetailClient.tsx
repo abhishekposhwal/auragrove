@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { ToastAction } from "@/components/ui/toast";
 import { useCart } from '@/context/CartContext';
 import { useToast } from "@/hooks/use-toast";
-import { Star, Leaf, Truck, Recycle, CheckCircle2 } from 'lucide-react';
+import { Star, Leaf, CheckCircle2 } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
@@ -43,8 +43,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="py-12">
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        <div className="md:col-span-1">
+      <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="md:col-span-2">
           <Card>
             <CardContent className="p-0">
               <Carousel className="w-full">
@@ -67,12 +67,12 @@ export function ProductDetailClient({ product }: { product: Product }) {
               </Carousel>
             </CardContent>
           </Card>
-        </div>
-        <div className="md:col-span-1 flex flex-col gap-6">
-            <div>
+           <div className="mt-6">
               <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
               <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
             </div>
+        </div>
+        <div className="md:col-span-1 flex flex-col gap-6">
             <Card className="bg-muted">
                 <CardHeader>
                     <CardTitle>Purchase Options</CardTitle>
@@ -100,7 +100,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
-         <Card>
+         <Card className="bg-transparent border-none shadow-none">
             <CardHeader>
                 <CardTitle>Description & Details</CardTitle>
             </CardHeader>
