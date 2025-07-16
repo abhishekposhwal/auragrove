@@ -43,34 +43,81 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="py-12">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="md:col-span-2">
+            <Card>
+                <CardContent className="p-0">
+                <Carousel className="w-full">
+                    <CarouselContent>
+                    {product.images.map((image, index) => (
+                        <CarouselItem key={index}>
+                            <Image
+                            src={image}
+                            alt={`${product.name} - image ${index + 1}`}
+                            width={1200}
+                            height={675}
+                            className="w-full aspect-video object-cover rounded-t-lg"
+                            data-ai-hint="sustainable product lifestyle"
+                            />
+                        </CarouselItem>
+                    ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-4" />
+                    <CarouselNext className="right-4" />
+                </Carousel>
+                </CardContent>
+            </Card>
+          </div>
+      </div>
+       <div className="mt-6">
+            <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
+            <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
+        </div>
+
+
+      <Separator className="my-12" />
+
       <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-        <div className="md:col-span-2">
-          <Card>
-            <CardContent className="p-0">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {product.images.map((image, index) => (
-                    <CarouselItem key={index}>
-                        <Image
-                          src={image}
-                          alt={`${product.name} - image ${index + 1}`}
-                          width={1200}
-                          height={675}
-                          className="w-full aspect-video object-cover rounded-t-lg"
-                          data-ai-hint="sustainable product lifestyle"
-                        />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-4" />
-                <CarouselNext className="right-4" />
-              </Carousel>
-            </CardContent>
-          </Card>
-           <div className="mt-6">
-              <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
-              <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
-            </div>
+        <div className="md:col-span-2 space-y-8">
+            <Card className="bg-transparent border-none shadow-none">
+                <CardHeader>
+                    <CardTitle>Description & Details</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+                    <Separator />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Category</h4>
+                                <p className="text-muted-foreground">{product.category}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Brand</h4>
+                                <p className="text-muted-foreground">{product.brand}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Certifications</h4>
+                                <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Carbon Footprint</h4>
+                                <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
         <div className="md:col-span-1 flex flex-col gap-6">
             <Card className="bg-muted">
@@ -95,50 +142,6 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </Card>
             <Button size="lg" className="w-full" onClick={handleAddToCart} variant="outline">Add to Cart</Button>
         </div>
-      </div>
-
-      <Separator className="my-12" />
-
-      <div className="space-y-8">
-         <Card className="bg-transparent border-none shadow-none">
-            <CardHeader>
-                <CardTitle>Description & Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
-                <Separator />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                    <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Category</h4>
-                            <p className="text-muted-foreground">{product.category}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Brand</h4>
-                            <p className="text-muted-foreground">{product.brand}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Certifications</h4>
-                            <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Carbon Footprint</h4>
-                            <p className="text-muted-foreground">{product.carbonFootprint}</p>
-                        </div>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
       </div>
       
       <Separator className="my-12" />
