@@ -1,16 +1,35 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { Product } from '@/lib/types';
-import { Leaf, Star } from 'lucide-react';
+import { Leaf, Star, ShoppingCart } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '../ui/toast';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product);
+    toast({
+        title: "Added to cart!",
+        description: `"${product.name}" has been added to your cart.`,
+        action: <ToastAction asChild altText="View cart"><Link href="/cart">View cart</Link></ToastAction>,
+    });
+  };
+
   return (
     <Card className="w-full h-full flex flex-col overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="p-0 relative">
@@ -42,9 +61,13 @@ export function ProductCard({ product }: ProductCardProps) {
             <span className="text-sm text-muted-foreground">({product.reviews.count} reviews)</span>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <Button asChild className="w-full">
+      <CardFooter className="p-4 pt-0 grid grid-cols-2 gap-2">
+        <Button asChild className="w-full" variant="outline">
           <Link href={`/product/${product.id}`}>View Details</Link>
+        </Button>
+        <Button onClick={handleAddToCart} className="w-full">
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Buy
         </Button>
       </CardFooter>
     </Card>
