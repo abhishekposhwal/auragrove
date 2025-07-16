@@ -41,7 +41,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-12">
+    <div className="py-12">
       <Carousel className="w-full max-w-4xl mx-auto mb-12">
         <CarouselContent>
           {product.images.map((image, index) => (
