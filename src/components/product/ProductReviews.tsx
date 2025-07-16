@@ -23,8 +23,8 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export function ProductReviews({ reviews, averageRating }: ProductReviewsProps) {
   return (
-    <Card>
-      <CardHeader>
+    <Card className="bg-transparent border-none shadow-none">
+      <CardHeader className="p-0">
         <CardTitle className="text-2xl font-bold font-headline">Customer Reviews</CardTitle>
         {reviews.length > 0 ? (
           <div className="flex items-center gap-2 pt-2">
@@ -35,7 +35,7 @@ export function ProductReviews({ reviews, averageRating }: ProductReviewsProps) 
            <CardDescription>No reviews yet. Be the first to share your thoughts!</CardDescription>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 pt-6">
         <div className="space-y-8">
             {reviews.length > 0 ? (
               reviews.map((review) => (

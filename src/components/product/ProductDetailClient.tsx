@@ -77,10 +77,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
         <div className="md:col-span-2 space-y-8">
            <Card className="bg-transparent border-none shadow-none">
-              <CardHeader>
+              <CardHeader className="p-0">
                   <CardTitle>Description & Details</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 pt-6">
                   <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
                   <Separator />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -160,24 +160,24 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
-        <Card>
-            <CardHeader>
+        <Card className="bg-transparent border-none shadow-none">
+            <CardHeader className="p-0">
                 <CardTitle>Customer Reviews</CardTitle>
                 <CardDescription>See what others are saying about this product.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
                 <ProductReviews 
                     reviews={reviews} 
                     averageRating={product.reviews.rating}
                 />
             </CardContent>
         </Card>
-        <Card>
-            <CardHeader>
+        <Card className="bg-transparent border-none shadow-none">
+            <CardHeader className="p-0">
                 <CardTitle>Write a Review</CardTitle>
                 <CardDescription>Share your thoughts about the product with the community.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
                 <ReviewForm onSubmit={handleAddReview} />
             </CardContent>
         </Card>
