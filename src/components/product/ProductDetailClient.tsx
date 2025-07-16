@@ -43,38 +43,36 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="py-12">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="md:col-span-2 lg:col-span-1">
-                <Card>
-                    <Carousel className="w-full">
-                        <CarouselContent>
-                        {product.images.map((image, index) => (
-                            <CarouselItem key={index}>
-                                <Image
-                                src={image}
-                                alt={`${product.name} - image ${index + 1}`}
-                                width={1200}
-                                height={675}
-                                className="w-full aspect-video object-cover"
-                                data-ai-hint="sustainable product lifestyle"
-                                />
-                            </CarouselItem>
-                        ))}
-                        </CarouselContent>
-                        <CarouselPrevious className="left-4" />
-                        <CarouselNext className="right-4" />
-                    </Carousel>
-                </Card>
-                <div className="mt-6">
-                    <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
-                    <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
-                </div>
-            </div>
-             <div className="md:col-span-2 lg:col-span-1">
-                 {/* This column is intentionally empty to push the purchase options down, or can be filled with other content */}
-            </div>
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div>
+          <Card>
+              <Carousel className="w-full">
+                  <CarouselContent>
+                  {product.images.map((image, index) => (
+                      <CarouselItem key={index}>
+                          <Image
+                          src={image}
+                          alt={`${product.name} - image ${index + 1}`}
+                          width={1200}
+                          height={675}
+                          className="w-full aspect-video object-cover"
+                          data-ai-hint="sustainable product lifestyle"
+                          />
+                      </CarouselItem>
+                  ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="left-4" />
+                  <CarouselNext className="right-4" />
+              </Carousel>
+          </Card>
         </div>
 
+        <div>
+            <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
+            <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
+        </div>
+      </div>
+      
       <Separator className="my-12" />
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
@@ -140,7 +138,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     <p className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</p>
                 </CardContent>
                 <CardFooter>
-                  <Button size="lg" className="w-full" onClick={handleAddToCart} variant="outline">Add to Cart</Button>
+                  <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
                 </CardFooter>
             </Card>
         </div>
@@ -151,7 +149,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <SustainableAlternatives product={product} />
 
       <Separator className="my-12" />
-
+      
       <div className="space-y-8">
         <ProductReviews 
             reviews={reviews} 
