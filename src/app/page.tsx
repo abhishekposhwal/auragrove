@@ -18,7 +18,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-muted-foreground">
               Discover a curated collection of eco-friendly and ethically-made products for a conscious lifestyle.
             </p>
-            <Button size="lg" asChild>
+            <Button size="lg" asChild className="transition-transform duration-300 hover:scale-105">
               <Link href="/shop">Explore Products</Link>
             </Button>
           </div>
