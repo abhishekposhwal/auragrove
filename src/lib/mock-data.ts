@@ -1,4 +1,4 @@
-import type { Product } from './types';
+import type { Product, BlogPost } from './types';
 
 export const products: Product[] = [
   {
@@ -126,4 +126,34 @@ export const brands = [
   { name: 'HempWorks', value: 'hempworks' },
   { name: 'ReJean', value: 'rejean' },
   { name: 'ZenCork', value: 'zencork' },
+];
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: 1,
+    title: '10 Simple Swaps for a More Sustainable Kitchen',
+    description: 'Discover easy-to-implement changes that can make your kitchen more eco-friendly, from reusable wraps to composting tips.',
+    category: 'Tips & Tricks',
+    date: 'April 22, 2024',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'sustainable kitchen',
+  },
+  {
+    id: 2,
+    title: 'The Ultimate Guide to Ethical Fashion',
+    description: 'Learn what to look for when shopping for clothes to ensure your wardrobe is as kind to the planet as it is to people.',
+    category: 'Ethical Fashion',
+    date: 'April 15, 2024',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'ethical fashion',
+  },
+  {
+    id: 3,
+    title: 'Brand Spotlight: The Story Behind EcoThreads',
+    description: 'Go behind the scenes with the founders of EcoThreads and learn about their mission to create stylish, sustainable apparel.',
+    category: 'Brand Spotlight',
+    date: 'April 8, 2024',
+    image: 'https://placehold.co/600x400.png',
+    dataAiHint: 'fashion brand',
+  },
 ];
