@@ -106,7 +106,7 @@ export default function AccountPage() {
             </div>
 
             <div className="md:col-span-2">
-                 <Card>
+                 <Card className="bg-muted/50">
                     <CardHeader>
                         <div className="flex justify-between items-center">
                             <CardTitle>Your Profile</CardTitle>
