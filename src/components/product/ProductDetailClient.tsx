@@ -68,7 +68,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </CardContent>
           </Card>
         </div>
-        <div className="md:col-span-1 space-y-6">
+        <div className="md:col-span-1 flex flex-col gap-6">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
               <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
@@ -77,8 +77,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 <CardHeader>
                     <CardTitle>Purchase Options</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
                         <div className="flex items-center gap-1">
                             <Star className="h-5 w-5 text-accent" fill="currentColor" />
                             <span className="font-medium">{product.reviews.rating}</span>
@@ -91,32 +91,20 @@ export function ProductDetailClient({ product }: { product: Product }) {
                     </div>
                     
                     <p className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</p>
-                    
-                    <Button size="lg" className="w-full" onClick={handleAddToCart} variant="outline">Add to Cart</Button>
-                    
-                    <div className="space-y-3 text-sm pt-4">
-                        <div className="flex items-center gap-2">
-                            <Truck className="h-5 w-5 text-muted-foreground" />
-                            <span>Carbon-neutral shipping</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Recycle className="h-5 w-5 text-muted-foreground" />
-                            <span>Eco-friendly packaging</span>
-                        </div>
-                    </div>
                 </CardContent>
             </Card>
+            <Button size="lg" className="w-full" onClick={handleAddToCart} variant="outline">Add to Cart</Button>
         </div>
       </div>
 
       <Separator className="my-12" />
 
       <div className="space-y-8">
-         <Card className="bg-transparent border-none shadow-none">
-            <CardHeader className="p-0">
+         <Card>
+            <CardHeader>
                 <CardTitle>Description & Details</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6 pt-6 px-0">
+            <CardContent className="space-y-6">
                 <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
                 <Separator />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
