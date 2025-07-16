@@ -70,7 +70,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       </Carousel>
 
       <div className="text-left mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">{product.name}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
         <p className="text-xl text-muted-foreground mt-2">{product.brand}</p>
       </div>
 
