@@ -12,7 +12,7 @@ export interface Product {
   description: string;
   category: string;
   price: number;
-  image: string;
+  images: string[];
   greenScore: number;
   carbonFootprint: string;
   certifications: string[];

@@ -35,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardHeader className="p-0 relative">
         <Link href={`/product/${product.id}`} className="block">
           <Image
-            src={product.image}
+            src={product.images[0]}
             alt={product.name}
             width={600}
             height={600}

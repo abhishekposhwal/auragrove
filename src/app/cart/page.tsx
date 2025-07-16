@@ -49,7 +49,7 @@ export default function CartPage() {
               <ul className="divide-y">
                 {cart.map((item) => (
                   <li key={item.id} className="flex items-center p-4">
-                    <Image src={item.image} alt={item.name} width={100} height={100} className="rounded-lg mr-4" />
+                    <Image src={item.images[0]} alt={item.name} width={100} height={100} className="rounded-lg mr-4" />
                     <div className="flex-grow">
                       <h3 className="font-semibold">{item.name}</h3>
                       <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>

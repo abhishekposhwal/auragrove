@@ -15,6 +15,7 @@ import { ProductReviews } from './ProductReviews';
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '../ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { addToCart } = useCart();
@@ -42,16 +43,80 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">
+      <Carousel className="w-full max-w-4xl mx-auto mb-12">
+        <CarouselContent>
+          {product.images.map((image, index) => (
+            <CarouselItem key={index}>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-video items-center justify-center p-0">
+                     <Image
+                      src={image}
+                      alt={`${product.name} - image ${index + 1}`}
+                      width={1200}
+                      height={675}
+                      className="w-full h-full object-cover rounded-lg"
+                      data-ai-hint="sustainable product lifestyle"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
-        <div>
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={800}
-            height={800}
-            className="w-full rounded-lg shadow-lg"
-            data-ai-hint="sustainable product lifestyle"
-          />
+        <div className="space-y-6">
+           <Tabs defaultValue="description" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="description">Product Description</TabsTrigger>
+                <TabsTrigger value="details">Details & Certifications</TabsTrigger>
+              </TabsList>
+              <TabsContent value="description">
+                  <Card>
+                      <CardContent className="pt-6">
+                          <p className="text-base leading-relaxed">{product.description}</p>
+                      </CardContent>
+                  </Card>
+              </TabsContent>
+              <TabsContent value="details">
+                <Card>
+                      <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="flex items-start gap-3">
+                              <Tag className="h-5 w-5 mt-1 text-primary" />
+                              <div>
+                                  <h4 className="font-semibold">Category</h4>
+                                  <p className="text-muted-foreground">{product.category}</p>
+                              </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                              <Building className="h-5 w-5 mt-1 text-primary" />
+                              <div>
+                                  <h4 className="font-semibold">Brand</h4>
+                                  <p className="text-muted-foreground">{product.brand}</p>
+                              </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                              <Award className="h-5 w-5 mt-1 text-primary" />
+                              <div>
+                                  <h4 className="font-semibold">Certifications</h4>
+                                  <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                              </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                              <Leaf className="h-5 w-5 mt-1 text-primary" />
+                              <div>
+                                  <h4 className="font-semibold">Carbon Footprint</h4>
+                                  <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                              </div>
+                          </div>
+                      </CardContent>
+                  </Card>
+              </TabsContent>
+            </Tabs>
         </div>
         <div className="space-y-6">
           <div className="space-y-2">
@@ -85,60 +150,9 @@ export function ProductDetailClient({ product }: { product: Product }) {
               <span>Eco-friendly packaging</span>
             </div>
           </div>
-          
         </div>
       </div>
       
-      <Separator className="my-12" />
-
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="description">Product Description</TabsTrigger>
-          <TabsTrigger value="details">Details & Certifications</TabsTrigger>
-        </TabsList>
-        <TabsContent value="description">
-            <Card>
-                <CardContent className="pt-6">
-                    <p className="text-base leading-relaxed">{product.description}</p>
-                </CardContent>
-            </Card>
-        </TabsContent>
-        <TabsContent value="details">
-           <Card>
-                <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex items-start gap-3">
-                        <Tag className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Category</h4>
-                            <p className="text-muted-foreground">{product.category}</p>
-                        </div>
-                    </div>
-                     <div className="flex items-start gap-3">
-                        <Building className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Brand</h4>
-                            <p className="text-muted-foreground">{product.brand}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <Award className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Certifications</h4>
-                            <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <Leaf className="h-5 w-5 mt-1 text-primary" />
-                        <div>
-                            <h4 className="font-semibold">Carbon Footprint</h4>
-                            <p className="text-muted-foreground">{product.carbonFootprint}</p>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
-        </TabsContent>
-      </Tabs>
-
       <Separator className="my-12" />
 
       <SustainableAlternatives product={product} />
