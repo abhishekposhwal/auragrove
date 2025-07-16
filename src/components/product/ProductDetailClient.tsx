@@ -70,40 +70,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       </Carousel>
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
-        <div className="md:col-span-2 space-y-6">
-           <div className="space-y-2">
-            <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
-            <p className="text-xl text-muted-foreground">{product.brand}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1">
-              <Star className="h-5 w-5 text-accent" fill="currentColor" />
-              <span className="font-medium">{product.reviews.rating}</span>
-              <span className="text-muted-foreground">({reviews.length} reviews)</span>
-            </div>
-            <Separator orientation="vertical" className="h-6" />
-            <div className="flex items-center gap-2">
-              <Leaf className="h-5 w-5 text-green-600" />
-              <span className="font-medium">Green Score: {product.greenScore}/10</span>
-            </div>
-          </div>
-          
-          <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
-         
-          <Button size="lg" className="w-full max-w-xs" onClick={handleAddToCart}>Add to Cart</Button>
-          
-           <div className="grid grid-cols-2 gap-4 text-sm max-w-md pt-4">
-              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Truck className="h-5 w-5 text-muted-foreground" />
-              <span>Carbon-neutral shipping</span>
-              </div>
-              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-              <Recycle className="h-5 w-5 text-muted-foreground" />
-              <span>Eco-friendly packaging</span>
-              </div>
-          </div>
-        </div>
-        <div className="md:col-span-1 space-y-8">
+        <div className="md:col-span-2 space-y-8">
            <div className="space-y-6">
               <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
               <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
@@ -144,6 +111,39 @@ export function ProductDetailClient({ product }: { product: Product }) {
               </CardContent>
           </Card>
         </div>
+        <div className="md:col-span-1 space-y-6">
+           <div className="space-y-2">
+            <h1 className="text-4xl font-bold font-headline">{product.name}</h1>
+            <p className="text-xl text-muted-foreground">{product.brand}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+              <Star className="h-5 w-5 text-accent" fill="currentColor" />
+              <span className="font-medium">{product.reviews.rating}</span>
+              <span className="text-muted-foreground">({reviews.length} reviews)</span>
+            </div>
+            <Separator orientation="vertical" className="h-6" />
+            <div className="flex items-center gap-2">
+              <Leaf className="h-5 w-5 text-green-600" />
+              <span className="font-medium">Green Score: {product.greenScore}/10</span>
+            </div>
+          </div>
+          
+          <p className="text-3xl font-semibold text-primary">${product.price.toFixed(2)}</p>
+         
+          <Button size="lg" className="w-full max-w-xs" onClick={handleAddToCart}>Add to Cart</Button>
+          
+           <div className="grid grid-cols-2 gap-4 text-sm max-w-md pt-4">
+              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+              <Truck className="h-5 w-5 text-muted-foreground" />
+              <span>Carbon-neutral shipping</span>
+              </div>
+              <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+              <Recycle className="h-5 w-5 text-muted-foreground" />
+              <span>Eco-friendly packaging</span>
+              </div>
+          </div>
+        </div>
       </div>
       
       <Separator className="my-12" />
@@ -153,7 +153,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       <Separator className="my-12" />
 
       <div className="space-y-8">
-         <ProductReviews 
+        <ProductReviews 
           reviews={reviews} 
           averageRating={product.reviews.rating}
         />
