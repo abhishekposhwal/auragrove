@@ -66,7 +66,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary">
+          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary transition-transform duration-300 hover:scale-110">
             <Link href="/wishlist" aria-label="Wishlist" className="relative">
               <Heart className="h-6 w-6" />
               {wishlistCount > 0 && (
@@ -74,7 +74,7 @@ export function Header() {
               )}
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary">
+          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary transition-transform duration-300 hover:scale-110">
             <Link href="/cart" aria-label="Shopping Cart" className="relative">
               <ShoppingCart className="h-6 w-6" />
               {cartItemCount > 0 && (
@@ -82,7 +82,7 @@ export function Header() {
               )}
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary">
+          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary transition-transform duration-300 hover:scale-110">
             <Link href="/account" aria-label="My Account">
               {user ? <Users className="h-6 w-6 text-primary" /> : <User className="h-6 w-6" />}
             </Link>
