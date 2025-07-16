@@ -71,41 +71,41 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
       <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
         <div className="md:col-span-2 space-y-8">
-           <div className="space-y-6">
-              <h3 className="text-2xl font-bold font-headline mb-4">Product Description</h3>
-              <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
-          </div>
            <Card>
               <CardHeader>
-                  <CardTitle>Details & Certifications</CardTitle>
+                  <CardTitle>Description & Details</CardTitle>
               </CardHeader>
-              <CardContent className="grid grid-cols-1 gap-4">
-                  <div className="flex items-start gap-3">
-                      <Tag className="h-5 w-5 mt-1 text-primary" />
-                      <div>
-                          <h4 className="font-semibold">Category</h4>
-                          <p className="text-muted-foreground">{product.category}</p>
+              <CardContent className="space-y-6">
+                  <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+                  <Separator />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                      <div className="flex items-start gap-3">
+                          <Tag className="h-5 w-5 mt-1 text-primary" />
+                          <div>
+                              <h4 className="font-semibold">Category</h4>
+                              <p className="text-muted-foreground">{product.category}</p>
+                          </div>
                       </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                      <Building className="h-5 w-5 mt-1 text-primary" />
-                      <div>
-                          <h4 className="font-semibold">Brand</h4>
-                          <p className="text-muted-foreground">{product.brand}</p>
+                      <div className="flex items-start gap-3">
+                          <Building className="h-5 w-5 mt-1 text-primary" />
+                          <div>
+                              <h4 className="font-semibold">Brand</h4>
+                              <p className="text-muted-foreground">{product.brand}</p>
+                          </div>
                       </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                      <Award className="h-5 w-5 mt-1 text-primary" />
-                      <div>
-                          <h4 className="font-semibold">Certifications</h4>
-                          <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                      <div className="flex items-start gap-3">
+                          <Award className="h-5 w-5 mt-1 text-primary" />
+                          <div>
+                              <h4 className="font-semibold">Certifications</h4>
+                              <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                          </div>
                       </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                      <Leaf className="h-5 w-5 mt-1 text-primary" />
-                      <div>
-                          <h4 className="font-semibold">Carbon Footprint</h4>
-                          <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                      <div className="flex items-start gap-3">
+                          <Leaf className="h-5 w-5 mt-1 text-primary" />
+                          <div>
+                              <h4 className="font-semibold">Carbon Footprint</h4>
+                              <p className="text-muted-foreground">{product.carbonFootprint}</p>
+                          </div>
                       </div>
                   </div>
               </CardContent>
