@@ -1,4 +1,4 @@
-import type { Product, BlogPost } from './types';
+import type { Product, BlogPost, ForumPost } from './types';
 
 export const products: Product[] = [
   {
@@ -239,5 +239,39 @@ export const blogPosts: BlogPost[] = [
     image: 'https://placehold.co/600x400.png',
     dataAiHint: 'fashion brand',
     comments: [],
+  },
+];
+
+export let forumPosts: ForumPost[] = [
+  {
+    id: 'fp1',
+    title: 'What are your favorite zero-waste cleaning hacks?',
+    author: 'EcoWarrior',
+    date: '2024-05-20',
+    content: 'I\'m trying to reduce the number of plastic bottles under my sink. I\'ve started using a vinegar and water solution for surfaces, but what do you all use for things like tubs and toilets? Looking for some effective, DIY recipes!',
+    replies: [
+      { id: 'fr1', author: 'Sustainable Sam', date: '2024-05-20', content: 'Baking soda is my go-to! A paste of baking soda and water works wonders on tubs. For toilets, I just sprinkle some in, add a bit of vinegar, let it fizz, and then scrub.' },
+      { id: 'fr2', author: 'Green Thumb', date: '2024-05-21', content: 'I love using citrus peels! I soak lemon and orange peels in vinegar for a couple of weeks. It makes a great all-purpose cleaner that smells amazing and cuts through grease.' },
+    ],
+  },
+  {
+    id: 'fp2',
+    title: 'Best sustainable documentaries to watch?',
+    author: 'MovieBuff',
+    date: '2024-05-18',
+    content: 'Hey everyone, I\'m looking for some inspiring and informative documentaries about sustainability, ethical living, and environmental issues. What are some must-sees that have really impacted you?',
+    replies: [
+      { id: 'fr3', author: 'Jane D.', date: '2024-05-18', content: '"The True Cost" is a must-watch if you\'re interested in the fashion industry. It completely changed the way I shop for clothes.' },
+      { id: 'fr4', author: 'EcoWarrior', date: '2024-05-19', content: 'I second "The True Cost"! Also, "Kiss the Ground" on Netflix is a fantastic and hopeful film about regenerative agriculture.' },
+      { id: 'fr5', author: 'Tom W.', date: '2024-05-19', content: '"My Octopus Teacher" isn\'t strictly about sustainability, but it gives you such a profound connection to the natural world. Highly recommend.' },
+    ],
+  },
+  {
+    id: 'fp3',
+    title: 'Tips for reducing food waste?',
+    author: 'Chef Charlie',
+    date: '2024-05-15',
+    content: 'As someone who loves to cook, I hate seeing food go to waste. Beyond just composting, what are some creative ways you all use up food scraps or leftovers? I\'m trying to get better at meal planning, but any other tips would be awesome.',
+    replies: [],
   },
 ];

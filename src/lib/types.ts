@@ -49,3 +49,19 @@ export interface BlogPost {
   dataAiHint: string;
   comments?: BlogComment[];
 }
+
+export interface ForumReply {
+  id: string;
+  author: string;
+  content: string;
+  date: string;
+}
+
+export interface ForumPost {
+  id: string;
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+  replies: ForumReply[];
+}

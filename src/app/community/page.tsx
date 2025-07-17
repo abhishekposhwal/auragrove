@@ -4,15 +4,19 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase/config";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Loader2, Users } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Loader2, Users, MessageSquare, PlusCircle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { forumPosts } from "@/lib/mock-data";
+import type { ForumPost } from "@/lib/types";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function CommunityPage() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
+  const [posts, setPosts] = useState<ForumPost[]>(forumPosts);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -34,36 +38,48 @@ export default function CommunityPage() {
 
   return (
     <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
-      <div className="space-y-4 text-center mb-12">
-        <Users className="mx-auto h-16 w-16 text-primary" />
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">Welcome to the AuraGrove Community</h1>
-        <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
-          This is a place for our members to connect, share ideas, and support each other on the journey to sustainable living.
-        </p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <div className="space-y-2">
+            <h1 className="text-4xl md:text-5xl font-bold font-headline flex items-center gap-3">
+                <Users className="h-10 w-10 text-primary" />
+                Community Forums
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Discuss topics, ask questions, and share your experiences.
+            </p>
+        </div>
+        <Button asChild>
+          <Link href="/community/new">
+            <PlusCircle className="mr-2 h-5 w-5" />
+            Create New Post
+          </Link>
+        </Button>
       </div>
 
-       <div className="grid md:grid-cols-2 gap-8">
-            <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <CardHeader>
-                    <CardTitle>Community Forums</CardTitle>
-                    <CardDescription>Discuss topics, ask questions, and share your experiences.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-muted-foreground mb-4">Coming soon!</p>
-                    <Button disabled>Go to Forums</Button>
-                </CardContent>
-            </Card>
-             <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <CardHeader>
-                    <CardTitle>Member-Only Workshops</CardTitle>
-                    <CardDescription>Join exclusive workshops on DIY projects, sustainable habits, and more.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                     <p className="text-muted-foreground mb-4">Coming soon!</p>
-                    <Button disabled>View Workshops</Button>
-                </CardContent>
-            </Card>
-        </div>
+       <div className="space-y-6">
+        {posts.map((post) => (
+            <Link href={`/community/${post.id}`} key={post.id} className="block">
+                <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+                    <CardHeader>
+                        <CardTitle className="text-xl md:text-2xl group-hover:text-primary">{post.title}</CardTitle>
+                        <CardDescription className="flex items-center gap-4 pt-2 text-sm">
+                            <div className="flex items-center gap-2">
+                                <Avatar className="h-6 w-6">
+                                    <AvatarFallback>{post.author.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <span>{post.author}</span>
+                            </div>
+                            <span>{new Date(post.date).toLocaleDateString()}</span>
+                        </CardDescription>
+                    </CardHeader>
+                    <CardFooter className="text-sm text-muted-foreground flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4" />
+                        <span>{post.replies.length} {post.replies.length === 1 ? 'Reply' : 'Replies'}</span>
+                    </CardFooter>
+                </Card>
+            </Link>
+        ))}
+       </div>
     </div>
   );
 }
