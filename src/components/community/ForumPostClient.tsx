@@ -52,13 +52,18 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
+    // Find the post in the mock data source and update it
     const postIndex = forumPosts.findIndex(p => p.id === post.id);
     if (postIndex !== -1) {
       forumPosts[postIndex].replies.push(newReply);
     }
     
-    // Update local state to trigger re-render
-    setPost({ ...forumPosts[postIndex] });
+    // Create a deep copy of the post and update state to trigger re-render
+    setPost(prevPost => {
+        const newPostState = JSON.parse(JSON.stringify(prevPost));
+        newPostState.replies.push(newReply);
+        return newPostState;
+    });
 
     toast({
         title: "Reply Posted!",

@@ -35,8 +35,8 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         date: new Date().toISOString(),
         ...newCommentData
     };
-    
-    // Update the mock data source
+
+    // Find the post in the mock data source and update it
     const postIndex = blogPosts.findIndex(p => p.id === post.id);
     if (postIndex !== -1) {
       if (!blogPosts[postIndex].comments) {
@@ -44,11 +44,17 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
       }
       blogPosts[postIndex].comments!.unshift(newComment);
     }
-    
-    // Update local state for immediate feedback
-    const updatedPost = blogPosts[postIndex];
-    setPost({ ...updatedPost });
-    setComments(updatedPost.comments || []);
+
+    // Create a deep copy of the post and update state to trigger re-render
+    setPost(prevPost => {
+        const newPostState = JSON.parse(JSON.stringify(prevPost));
+        if (!newPostState.comments) {
+            newPostState.comments = [];
+        }
+        newPostState.comments.unshift(newComment);
+        setComments(newPostState.comments);
+        return newPostState;
+    });
   };
 
   return (

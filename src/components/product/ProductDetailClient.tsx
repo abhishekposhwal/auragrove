@@ -70,7 +70,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         ...newReviewData
     };
 
-    // Update the mock data source
+    // Find the product in the mock data source and update it
     const productIndex = products.findIndex(p => p.id === product.id);
     if (productIndex !== -1) {
       products[productIndex].reviews.items.unshift(newReview);
@@ -80,10 +80,18 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
       products[productIndex].reviews.rating = parseFloat((totalRating / products[productIndex].reviews.items.length).toFixed(1));
     }
     
-    // Update local state to trigger re-render
-    const updatedProduct = products[productIndex];
-    setProduct({ ...updatedProduct });
-    setReviews(updatedProduct.reviews.items);
+    // Create a deep copy of the product and update state to trigger re-render
+    setProduct(prevProduct => {
+        const newProductState = JSON.parse(JSON.stringify(prevProduct));
+        newProductState.reviews.items.unshift(newReview);
+        newProductState.reviews.count = newProductState.reviews.items.length;
+        
+        const totalRating = newProductState.reviews.items.reduce((acc: number, review: Review) => acc + review.rating, 0);
+        newProductState.reviews.rating = parseFloat((totalRating / newProductState.reviews.items.length).toFixed(1));
+
+        setReviews(newProductState.reviews.items);
+        return newProductState;
+    });
   };
 
 
