@@ -20,7 +20,6 @@ import { blogPosts } from '@/lib/mock-data';
 
 export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
   const [post, setPost] = useState<BlogPost>(initialPost);
-  const [comments, setComments] = useState<BlogComment[]>(post.comments || []);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
 
@@ -52,7 +51,6 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
             newPostState.comments = [];
         }
         newPostState.comments.unshift(newComment);
-        setComments(newPostState.comments);
         return newPostState;
     });
   };
@@ -89,7 +87,7 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
       <Separator className="my-12" />
       
       <div className="space-y-8">
-        <CommentSection comments={comments} />
+        <CommentSection comments={post.comments || []} />
         <Card className="bg-transparent border-none shadow-none">
             <CardHeader className="p-0">
                 <CardTitle>Leave a Comment</CardTitle>

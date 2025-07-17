@@ -27,7 +27,6 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
   const [product, setProduct] = useState<Product>(initialProduct);
   const { addToCart } = useCart();
   const { toast } = useToast();
-  const [reviews, setReviews] = useState<Review[]>(product.reviews.items);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const isInWishlist = wishlist.some(item => item.id === product.id);
   const [user] = useAuthState(auth);
@@ -89,7 +88,6 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         const totalRating = newProductState.reviews.items.reduce((acc: number, review: Review) => acc + review.rating, 0);
         newProductState.reviews.rating = parseFloat((totalRating / newProductState.reviews.items.length).toFixed(1));
 
-        setReviews(newProductState.reviews.items);
         return newProductState;
     });
   };
@@ -180,7 +178,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
                         <div className="flex items-center gap-1">
                             <Star className="h-5 w-5 text-accent" fill="currentColor" />
                             <span className="font-medium">{product.reviews.rating}</span>
-                            <span className="text-muted-foreground text-sm">({reviews.length} reviews)</span>
+                            <span className="text-muted-foreground text-sm">({product.reviews.items.length} reviews)</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Leaf className="h-5 w-5 text-primary" />
@@ -209,7 +207,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
       
       <div className="space-y-8">
         <ProductReviews 
-            reviews={reviews} 
+            reviews={product.reviews.items} 
             averageRating={product.reviews.rating}
         />
         <Card className="bg-transparent border-none shadow-none">
