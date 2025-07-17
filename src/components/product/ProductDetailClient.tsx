@@ -70,21 +70,20 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         ...newReviewData
     };
 
-    // Update local state for immediate feedback
-    setReviews(prevReviews => [newReview, ...prevReviews]);
-
     // Update the mock data source
     const productIndex = products.findIndex(p => p.id === product.id);
     if (productIndex !== -1) {
       products[productIndex].reviews.items.unshift(newReview);
       products[productIndex].reviews.count += 1;
-      // Optional: Recalculate average rating if desired
+      
       const totalRating = products[productIndex].reviews.items.reduce((acc, review) => acc + review.rating, 0);
       products[productIndex].reviews.rating = parseFloat((totalRating / products[productIndex].reviews.items.length).toFixed(1));
     }
     
-    // Update product state to re-render review count and average rating
-    setProduct({...products[productIndex]});
+    // Update local state to trigger re-render
+    const updatedProduct = products[productIndex];
+    setProduct({ ...updatedProduct });
+    setReviews(updatedProduct.reviews.items);
   };
 
 

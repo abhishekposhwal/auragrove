@@ -41,23 +41,24 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
   });
 
   const handleAddReply = (data: ReplyFormValues) => {
-    if (!user) {
+    if (!user || !user.displayName) {
         toast({ variant: "destructive", title: "Error", description: "You must be logged in to reply." });
         return;
     }
     const newReply: ForumReply = {
       id: `r${Date.now()}`,
-      author: user.displayName || "Anonymous User",
+      author: user.displayName,
       date: new Date().toISOString(),
       content: data.content,
     };
     
-    const updatedPost = { ...post, replies: [...post.replies, newReply] };
     const postIndex = forumPosts.findIndex(p => p.id === post.id);
     if (postIndex !== -1) {
-      forumPosts[postIndex] = updatedPost;
+      forumPosts[postIndex].replies.push(newReply);
     }
-    setPost(updatedPost);
+    
+    // Update local state to trigger re-render
+    setPost({ ...forumPosts[postIndex] });
 
     toast({
         title: "Reply Posted!",

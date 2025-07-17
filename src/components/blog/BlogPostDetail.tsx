@@ -36,9 +36,6 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         ...newCommentData
     };
     
-    // Update local state for immediate feedback
-    setComments(prevComments => [newComment, ...prevComments]);
-
     // Update the mock data source
     const postIndex = blogPosts.findIndex(p => p.id === post.id);
     if (postIndex !== -1) {
@@ -47,6 +44,11 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
       }
       blogPosts[postIndex].comments!.unshift(newComment);
     }
+    
+    // Update local state for immediate feedback
+    const updatedPost = blogPosts[postIndex];
+    setPost({ ...updatedPost });
+    setComments(updatedPost.comments || []);
   };
 
   return (
