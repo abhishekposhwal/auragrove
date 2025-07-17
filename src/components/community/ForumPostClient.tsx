@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useLocalStorage } from '@/hooks/use-local-storage';
+import { forumPosts as initialForumPosts } from '@/lib/mock-data';
 
 const replySchema = z.object({
   content: z.string().min(5, "Reply must be at least 5 characters.").max(1000, "Reply cannot exceed 1000 characters."),
@@ -25,20 +26,16 @@ const replySchema = z.object({
 type ReplyFormValues = z.infer<typeof replySchema>;
 
 export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
-  const [post, setPost] = useState<ForumPost>(initialPost);
+  const [storedPosts, setStoredPosts] = useLocalStorage<ForumPost[]>('forumPosts', initialForumPosts);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
-  const [storedPosts, setStoredPosts] = useLocalStorage<ForumPost[]>('forumPosts', []);
 
   useEffect(() => {
     setIsClient(true);
-    // On the client, find the latest version of this post from localStorage if it exists
-    const storedPost = storedPosts.find(p => p.id === initialPost.id);
-    if (storedPost) {
-        setPost(storedPost);
-    }
-  }, [initialPost.id, storedPosts]);
+  }, []);
+  
+  const post = storedPosts.find(p => p.id === initialPost.id) || initialPost;
 
   const form = useForm<ReplyFormValues>({
     resolver: zodResolver(replySchema),
@@ -58,27 +55,18 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
-    const updatedStoredPosts = [...storedPosts];
-    const postIndex = updatedStoredPosts.findIndex(p => p.id === post.id);
-    
-    let updatedPost: ForumPost;
-
-    if (postIndex > -1) {
-        updatedPost = JSON.parse(JSON.stringify(updatedStoredPosts[postIndex]));
-    } else {
-        updatedPost = JSON.parse(JSON.stringify(initialPost));
-    }
-    
-    updatedPost.replies.unshift(newReply);
+    const updatedStoredPosts = JSON.parse(JSON.stringify(storedPosts));
+    const postIndex = updatedStoredPosts.findIndex((p: ForumPost) => p.id === post.id);
     
     if (postIndex > -1) {
-        updatedStoredPosts[postIndex] = updatedPost;
+        updatedStoredPosts[postIndex].replies.unshift(newReply);
+        setStoredPosts(updatedStoredPosts);
     } else {
-        updatedStoredPosts.push(updatedPost);
+        const postToUpdate = JSON.parse(JSON.stringify(post));
+        postToUpdate.replies.unshift(newReply);
+        const otherPosts = storedPosts.filter(p => p.id !== post.id);
+        setStoredPosts([...otherPosts, postToUpdate]);
     }
-
-    setStoredPosts(updatedStoredPosts);
-    setPost(updatedPost);
 
     toast({
         title: "Reply Posted!",

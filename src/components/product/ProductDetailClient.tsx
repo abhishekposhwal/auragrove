@@ -21,23 +21,18 @@ import { cn } from '@/lib/utils';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useLocalStorage } from '@/hooks/use-local-storage';
+import { products as initialProducts } from '@/lib/mock-data';
 
 export function ProductDetailClient({ product: initialProduct }: { product: Product }) {
-  const [product, setProduct] = useState<Product>(initialProduct);
+  const [storedProducts, setStoredProducts] = useLocalStorage<Product[]>('products', initialProducts);
   const { addToCart } = useCart();
   const { toast } = useToast();
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
-  const isInWishlist = wishlist.some(item => item.id === product.id);
   const [user] = useAuthState(auth);
-  const [storedProducts, setStoredProducts] = useLocalStorage<Product[]>('products', []);
-
-  useEffect(() => {
-    // On client load, check if there's an updated version of this product in localStorage
-    const storedProduct = storedProducts.find(p => p.id === initialProduct.id);
-    if (storedProduct) {
-        setProduct(storedProduct);
-    }
-  }, [initialProduct.id, storedProducts]);
+  
+  // The single source of truth for the product data, derived from storedProducts.
+  const product = storedProducts.find(p => p.id === initialProduct.id) || initialProduct;
+  const isInWishlist = wishlist.some(item => item.id === product.id);
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -78,31 +73,21 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         ...newReviewData
     };
 
-    const updatedStoredProducts = [...storedProducts];
-    const productIndex = updatedStoredProducts.findIndex(p => p.id === product.id);
-
-    let updatedProduct: Product;
-
-    if (productIndex > -1) {
-        updatedProduct = JSON.parse(JSON.stringify(updatedStoredProducts[productIndex]));
-    } else {
-        updatedProduct = JSON.parse(JSON.stringify(initialProduct));
-    }
-    
-    updatedProduct.reviews.items.unshift(newReview);
-    updatedProduct.reviews.count = updatedProduct.reviews.items.length;
-    updatedProduct.reviews.rating = parseFloat(
-        (updatedProduct.reviews.items.reduce((acc, r) => acc + r.rating, 0) / updatedProduct.reviews.count).toFixed(1)
-    );
+    // Create a deep copy of the products array from localStorage
+    const updatedProducts = JSON.parse(JSON.stringify(storedProducts));
+    const productIndex = updatedProducts.findIndex((p: Product) => p.id === product.id);
 
     if (productIndex > -1) {
-        updatedStoredProducts[productIndex] = updatedProduct;
-    } else {
-        updatedStoredProducts.push(updatedProduct);
+        const updatedProduct = updatedProducts[productIndex];
+        updatedProduct.reviews.items.unshift(newReview);
+        updatedProduct.reviews.count = updatedProduct.reviews.items.length;
+        updatedProduct.reviews.rating = parseFloat(
+            (updatedProduct.reviews.items.reduce((acc: number, r: Review) => acc + r.rating, 0) / updatedProduct.reviews.count).toFixed(1)
+        );
+        
+        // Update localStorage with the new array, triggering re-render
+        setStoredProducts(updatedProducts);
     }
-    
-    setStoredProducts(updatedStoredProducts);
-    setProduct(updatedProduct);
   };
 
 

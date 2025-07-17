@@ -7,7 +7,6 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import type { BlogPost, BlogComment } from '@/lib/types';
-import { useState, useEffect } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { CommentSection } from '@/components/blog/CommentSection';
 import { CommentForm } from '@/components/blog/CommentForm';
@@ -16,20 +15,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useToast } from '@/hooks/use-toast';
 import { useLocalStorage } from '@/hooks/use-local-storage';
+import { blogPosts as initialBlogPosts } from '@/lib/mock-data';
 
 export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
-  const [post, setPost] = useState<BlogPost>(initialPost);
+  const [storedPosts, setStoredPosts] = useLocalStorage<BlogPost[]>('blogPosts', initialBlogPosts);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
-  const [storedPosts, setStoredPosts] = useLocalStorage<BlogPost[]>('blogPosts', []);
 
-  useEffect(() => {
-    // Find the latest version of this post from localStorage if it exists
-    const storedPost = storedPosts.find(p => p.id === initialPost.id);
-    if (storedPost) {
-        setPost(storedPost);
-    }
-  }, [initialPost.id, storedPosts]);
+  const post = storedPosts.find(p => p.id === initialPost.id) || initialPost;
 
   const handleAddComment = (newCommentData: Omit<BlogComment, 'id' | 'date' | 'author'>) => {
     if (!user || !user.displayName) {
@@ -44,30 +37,26 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         ...newCommentData
     };
     
-    const updatedStoredPosts = [...storedPosts];
-    const postIndex = updatedStoredPosts.findIndex(p => p.id === post.id);
-
-    let updatedPost: BlogPost;
+    const updatedStoredPosts = JSON.parse(JSON.stringify(storedPosts));
+    const postIndex = updatedStoredPosts.findIndex((p: BlogPost) => p.id === post.id);
 
     if (postIndex > -1) {
-        updatedPost = JSON.parse(JSON.stringify(updatedStoredPosts[postIndex]));
+        const updatedPost = updatedStoredPosts[postIndex];
+        if (!updatedPost.comments) {
+            updatedPost.comments = [];
+        }
+        updatedPost.comments.unshift(newComment);
+        setStoredPosts(updatedStoredPosts);
     } else {
-        updatedPost = JSON.parse(JSON.stringify(initialPost));
+        // This case handles if the post is not in localStorage yet (e.g. from initial mock)
+        const postToUpdate = JSON.parse(JSON.stringify(post));
+         if (!postToUpdate.comments) {
+            postToUpdate.comments = [];
+        }
+        postToUpdate.comments.unshift(newComment);
+        const otherPosts = storedPosts.filter(p => p.id !== post.id);
+        setStoredPosts([...otherPosts, postToUpdate]);
     }
-    
-    if (!updatedPost.comments) {
-        updatedPost.comments = [];
-    }
-    updatedPost.comments.unshift(newComment);
-
-    if (postIndex > -1) {
-        updatedStoredPosts[postIndex] = updatedPost;
-    } else {
-        updatedStoredPosts.push(updatedPost);
-    }
-    
-    setStoredPosts(updatedStoredPosts);
-    setPost(updatedPost);
   };
 
   return (
