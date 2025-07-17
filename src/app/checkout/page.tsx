@@ -12,10 +12,22 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { CreditCard, Lock, Truck } from "lucide-react";
+import { CreditCard, Lock, Truck, CheckCircle2 } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase/config";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import Link from "next/link";
+
 
 const shippingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -41,6 +53,8 @@ export default function CheckoutPage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
   const methods = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -86,7 +100,7 @@ export default function CheckoutPage() {
   const onSubmit = (data: CheckoutFormValues) => {
     console.log("Order submitted", data);
     clearCart();
-    router.push("/confirmation");
+    setIsConfirmationOpen(true);
   };
 
    if (cart.length === 0) {
@@ -94,6 +108,7 @@ export default function CheckoutPage() {
   }
   
   return (
+    <>
     <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
       <h1 className="text-4xl font-bold mb-8 text-center font-headline">Checkout</h1>
       <div className="grid md:grid-cols-2 gap-12">
@@ -205,5 +220,27 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+     <AlertDialog open={isConfirmationOpen} onOpenChange={setIsConfirmationOpen}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+            <div className="flex justify-center">
+                <CheckCircle2 className="h-16 w-16 text-green-500 mb-4" />
+            </div>
+            <AlertDialogTitle className="text-center text-2xl font-bold font-headline">Order Confirmed!</AlertDialogTitle>
+            <AlertDialogDescription className="text-center">
+                Thank you for your purchase. Your journey towards a more sustainable lifestyle is on its way. You'll receive an email confirmation shortly.
+            </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="sm:justify-center">
+                <AlertDialogCancel asChild>
+                    <Link href="/account">View Orders</Link>
+                </AlertDialogCancel>
+                <AlertDialogAction asChild>
+                    <Link href="/shop">Continue Shopping</Link>
+                </AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }
