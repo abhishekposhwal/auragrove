@@ -27,7 +27,7 @@ const shippingSchema = z.object({
 
 const paymentSchema = z.object({
   cardNumber: z.string().regex(/^(?:\d{4} ?){4}$/, "Invalid card number"),
-  expiry: z.string().regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Invalid expiry date"),
+  expiry: z.string().regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Invalid expiry date (MM/YY)"),
   cvc: z.string().regex(/^\d{3,4}$/, "Invalid CVC"),
 });
 
