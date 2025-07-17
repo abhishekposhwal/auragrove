@@ -25,11 +25,11 @@ export default function Home() {
           </div>
           <div className="flex justify-center">
             <Image
-              src="/hero-image.png"
+              src="/hero-image1.png"
               alt="Sustainable products collage"
-              width={600}
-              height={400}
-              className="rounded-lg shadow-2xl"
+              width={700}
+              height={500}
+              // className="rounded-lg shadow-2xl"
             />
           </div>
         </div>

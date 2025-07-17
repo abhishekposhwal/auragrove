@@ -68,7 +68,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <div>
           <Card>
               <Carousel className="w-full">
-                  <CarouselContent>
+                  <CarouselContent className="h-[500px]">
                   {product.images.map((image, index) => (
                       <CarouselItem key={index}>
                           <Image
@@ -76,7 +76,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                           alt={`${product.name} - image ${index + 1}`}
                           width={1200}
                           height={675}
-                          className="w-full aspect-video object-cover"
+                          className="w-full h-full object-contain"
                           data-ai-hint="sustainable product lifestyle"
                           />
                       </CarouselItem>
