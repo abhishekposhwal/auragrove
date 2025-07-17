@@ -26,7 +26,8 @@ const replySchema = z.object({
 type ReplyFormValues = z.infer<typeof replySchema>;
 
 export default function ForumPostPage({ params }: { params: { id: string } }) {
-  const [post, setPost] = useState<ForumPost | undefined>(() => forumPosts.find(p => p.id === params.id));
+  const initialPost = forumPosts.find(p => p.id === params.id);
+  const [post, setPost] = useState<ForumPost | undefined>(initialPost);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
 
