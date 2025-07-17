@@ -62,14 +62,16 @@ export default function CommunityPage() {
                 <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
                     <CardHeader>
                         <CardTitle className="text-xl md:text-2xl group-hover:text-primary">{post.title}</CardTitle>
-                        <CardDescription className="flex items-center gap-4 pt-2 text-sm">
-                            <div className="flex items-center gap-2">
-                                <Avatar className="h-6 w-6">
-                                    <AvatarFallback>{post.author.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <span>{post.author}</span>
-                            </div>
-                            <span>{new Date(post.date).toLocaleDateString()}</span>
+                        <CardDescription asChild>
+                           <div className="flex items-center gap-4 pt-2 text-sm text-muted-foreground">
+                                <div className="flex items-center gap-2">
+                                    <Avatar className="h-6 w-6">
+                                        <AvatarFallback>{post.author.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <span>{post.author}</span>
+                                </div>
+                                <span>{new Date(post.date).toLocaleDateString()}</span>
+                           </div>
                         </CardDescription>
                     </CardHeader>
                     <CardFooter className="text-sm text-muted-foreground flex items-center gap-2">
