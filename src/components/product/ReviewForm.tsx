@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -5,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Star } from 'lucide-react';
@@ -14,7 +14,6 @@ import type { Review } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
 const reviewSchema = z.object({
-  author: z.string().min(2, "Name must be at least 2 characters."),
   rating: z.number().min(1, "Please select a rating.").max(5),
   comment: z.string().min(10, "Comment must be at least 10 characters.").max(500, "Comment cannot exceed 500 characters."),
 });
@@ -22,7 +21,7 @@ const reviewSchema = z.object({
 type ReviewFormValues = z.infer<typeof reviewSchema>;
 
 interface ReviewFormProps {
-  onSubmit: (data: Omit<Review, 'id' | 'date'>) => void;
+  onSubmit: (data: Omit<Review, 'id' | 'date' | 'author'>) => void;
 }
 
 const StarRatingInput = ({ field }: { field: any }) => {
@@ -52,7 +51,6 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
   const form = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
-      author: '',
       rating: 0,
       comment: '',
     },
@@ -71,19 +69,6 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="author"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Your Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Jane Doe" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="rating"
