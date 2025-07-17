@@ -16,8 +16,10 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useToast } from '@/hooks/use-toast';
+import { blogPosts } from '@/lib/mock-data';
 
-export function BlogPostDetail({ post }: { post: BlogPost }) {
+export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
+  const [post, setPost] = useState<BlogPost>(initialPost);
   const [comments, setComments] = useState<BlogComment[]>(post.comments || []);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
@@ -33,7 +35,18 @@ export function BlogPostDetail({ post }: { post: BlogPost }) {
         date: new Date().toISOString(),
         ...newCommentData
     };
+    
+    // Update local state for immediate feedback
     setComments(prevComments => [newComment, ...prevComments]);
+
+    // Update the mock data source
+    const postIndex = blogPosts.findIndex(p => p.id === post.id);
+    if (postIndex !== -1) {
+      if (!blogPosts[postIndex].comments) {
+        blogPosts[postIndex].comments = [];
+      }
+      blogPosts[postIndex].comments!.unshift(newComment);
+    }
   };
 
   return (
