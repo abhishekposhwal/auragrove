@@ -1,14 +1,13 @@
 
 "use client";
 
-import { useRouter } from 'next/navigation';
 import type { ForumPost, ForumReply } from '@/lib/types';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Separator } from '@/components/ui/separator';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -59,11 +58,11 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
     };
     
     // Update the post in the mock data array
-    const updatedPost = forumPosts[postIndex];
-    updatedPost.replies.push(newReply);
+    const updatedPostInMock = forumPosts[postIndex];
+    updatedPostInMock.replies.push(newReply);
     
     // Update the local state with a deep copy of the updated post to trigger a re-render
-    setPost(JSON.parse(JSON.stringify(updatedPost)));
+    setPost(JSON.parse(JSON.stringify(updatedPostInMock)));
 
     toast({
         title: "Reply Posted!",

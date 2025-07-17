@@ -42,14 +42,14 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
     };
 
     // Ensure the comments array exists and add the new comment
-    const updatedPost = blogPosts[postIndex];
-    if (!updatedPost.comments) {
-        updatedPost.comments = [];
+    const updatedPostInMock = blogPosts[postIndex];
+    if (!updatedPostInMock.comments) {
+        updatedPostInMock.comments = [];
     }
-    updatedPost.comments.unshift(newComment);
+    updatedPostInMock.comments.unshift(newComment);
 
     // Update the local state with a deep copy of the updated post to trigger a re-render
-    setPost(JSON.parse(JSON.stringify(updatedPost)));
+    setPost(JSON.parse(JSON.stringify(updatedPostInMock)));
   };
 
   return (

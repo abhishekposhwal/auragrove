@@ -76,14 +76,14 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
     };
 
     // Update the product in the mock data array
-    const updatedProduct = products[productIndex];
-    updatedProduct.reviews.items.unshift(newReview);
-    updatedProduct.reviews.count = updatedProduct.reviews.items.length;
-    const totalRating = updatedProduct.reviews.items.reduce((acc, review) => acc + review.rating, 0);
-    updatedProduct.reviews.rating = parseFloat((totalRating / updatedProduct.reviews.count).toFixed(1));
+    const updatedProductInMock = products[productIndex];
+    updatedProductInMock.reviews.items.unshift(newReview);
+    updatedProductInMock.reviews.count = updatedProductInMock.reviews.items.length;
+    const totalRating = updatedProductInMock.reviews.items.reduce((acc, review) => acc + review.rating, 0);
+    updatedProductInMock.reviews.rating = parseFloat((totalRating / updatedProductInMock.reviews.count).toFixed(1));
     
     // Update the local state with a deep copy of the updated product to trigger a re-render
-    setProduct(JSON.parse(JSON.stringify(updatedProduct)));
+    setProduct(JSON.parse(JSON.stringify(updatedProductInMock)));
   };
 
 
