@@ -25,8 +25,6 @@ export function BlogPostDetail({ post }: { post: BlogPost }) {
     setComments(prevComments => [newComment, ...prevComments]);
   };
 
-  const content = post.description;
-
   return (
     <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
       <Button variant="ghost" asChild className="mb-8">
@@ -49,7 +47,11 @@ export function BlogPostDetail({ post }: { post: BlogPost }) {
           height={600}
           className="rounded-lg my-8 shadow-lg"
         />
-        <p>{content}</p>
+        <div className="space-y-6">
+          {post.content.map((paragraph, index) => (
+            <p key={index} className="text-lg leading-relaxed">{paragraph}</p>
+          ))}
+        </div>
       </article>
 
       <Separator className="my-12" />
