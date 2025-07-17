@@ -11,7 +11,7 @@ export default function AboutPage() {
           </p>
         </div>
         <Image 
-          src="https://placehold.co/1200x500.png"
+          src="/our-mission-image.png"
           alt="Lush green forest"
           data-ai-hint="green forest"
           width={1200}

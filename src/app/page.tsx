@@ -54,7 +54,7 @@ export default function Home() {
                  </Button>
             </div>
             <div className="flex justify-center">
-                <Image src="https://placehold.co/300x300.png" alt="Planet Earth" data-ai-hint="planet earth" width={300} height={300} className="rounded-full" />
+                <Image src="/prioritize-sustainability.png" alt="Planet Earth" data-ai-hint="planet earth" width={300} height={300} className="rounded-full" />
             </div>
         </div>
       </section>

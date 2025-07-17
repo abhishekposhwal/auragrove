@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -44,7 +45,7 @@ export default function InspirationPage() {
         </p>
       </div>
 
-      <Card>
+      <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
         <CardHeader>
           <CardTitle>Describe Your 3D Concept</CardTitle>
           <CardDescription>
