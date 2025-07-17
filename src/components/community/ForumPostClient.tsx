@@ -2,7 +2,6 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { forumPosts } from '@/lib/mock-data';
 import type { ForumPost, ForumReply } from '@/lib/types';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -52,13 +51,6 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
-    // Find the post in the mock data source and update it
-    const postIndex = forumPosts.findIndex(p => p.id === post.id);
-    if (postIndex !== -1) {
-      forumPosts[postIndex].replies.push(newReply);
-    }
-    
-    // Create a deep copy of the post and update state to trigger re-render
     setPost(prevPost => {
         const newPostState = JSON.parse(JSON.stringify(prevPost));
         newPostState.replies.push(newReply);

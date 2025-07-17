@@ -16,7 +16,6 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useToast } from '@/hooks/use-toast';
-import { blogPosts } from '@/lib/mock-data';
 
 export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
   const [post, setPost] = useState<BlogPost>(initialPost);
@@ -35,16 +34,6 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         ...newCommentData
     };
 
-    // Find the post in the mock data source and update it
-    const postIndex = blogPosts.findIndex(p => p.id === post.id);
-    if (postIndex !== -1) {
-      if (!blogPosts[postIndex].comments) {
-        blogPosts[postIndex].comments = [];
-      }
-      blogPosts[postIndex].comments!.unshift(newComment);
-    }
-
-    // Create a deep copy of the post and update state to trigger re-render
     setPost(prevPost => {
         const newPostState = JSON.parse(JSON.stringify(prevPost));
         if (!newPostState.comments) {

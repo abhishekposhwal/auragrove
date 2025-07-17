@@ -21,7 +21,6 @@ import { useWishlist } from '@/context/WishlistContext';
 import { cn } from '@/lib/utils';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
-import { products } from '@/lib/mock-data';
 
 export function ProductDetailClient({ product: initialProduct }: { product: Product }) {
   const [product, setProduct] = useState<Product>(initialProduct);
@@ -68,18 +67,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         date: new Date().toISOString(),
         ...newReviewData
     };
-
-    // Find the product in the mock data source and update it
-    const productIndex = products.findIndex(p => p.id === product.id);
-    if (productIndex !== -1) {
-      products[productIndex].reviews.items.unshift(newReview);
-      products[productIndex].reviews.count += 1;
-      
-      const totalRating = products[productIndex].reviews.items.reduce((acc, review) => acc + review.rating, 0);
-      products[productIndex].reviews.rating = parseFloat((totalRating / products[productIndex].reviews.items.length).toFixed(1));
-    }
     
-    // Create a deep copy of the product and update state to trigger re-render
     setProduct(prevProduct => {
         const newProductState = JSON.parse(JSON.stringify(prevProduct));
         newProductState.reviews.items.unshift(newReview);
