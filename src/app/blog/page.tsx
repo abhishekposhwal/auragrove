@@ -5,25 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { blogPosts as initialBlogPosts } from "@/lib/mock-data";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import { blogPosts } from "@/lib/mock-data";
 import type { BlogPost } from "@/lib/types";
 import { useState } from "react";
 
 export default function BlogPage() {
-  const [storedPosts] = useLocalStorage<BlogPost[]>('blogPosts', []);
   
-  const [blogPosts] = useState<BlogPost[]>(() => {
-    const combined = [...initialBlogPosts];
-    const storedIds = new Set(combined.map(p => p.id));
-    storedPosts.forEach(sp => {
-        if (!storedIds.has(sp.id)) {
-            combined.unshift(sp);
-        }
-    });
-    return combined;
-  });
-
   return (
     <div className="container mx-auto px-4 md:px-6 py-12 md:py-20">
       <div className="space-y-4 text-center mb-12">

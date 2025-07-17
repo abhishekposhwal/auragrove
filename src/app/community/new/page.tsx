@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import { forumPosts } from "@/lib/mock-data";
 import type { ForumPost } from "@/lib/types";
 
 const postSchema = z.object({
@@ -29,7 +29,6 @@ export default function NewPostPage() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
   const { toast } = useToast();
-  const [storedPosts, setStoredPosts] = useLocalStorage<ForumPost[]>('forumPosts', []);
 
   const form = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
@@ -59,8 +58,7 @@ export default function NewPostPage() {
         ...data,
     };
     
-    // Save to localStorage
-    setStoredPosts([...storedPosts, newPost]);
+    forumPosts.unshift(newPost);
     
     toast({
         title: "Post Created!",

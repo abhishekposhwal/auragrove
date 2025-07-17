@@ -17,8 +17,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
-import { useLocalStorage } from '@/hooks/use-local-storage';
-import { forumPosts as initialForumPosts } from '@/lib/mock-data';
 
 const replySchema = z.object({
   content: z.string().min(5, "Reply must be at least 5 characters.").max(1000, "Reply cannot exceed 1000 characters."),
@@ -26,7 +24,7 @@ const replySchema = z.object({
 type ReplyFormValues = z.infer<typeof replySchema>;
 
 export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
-  const [storedPosts, setStoredPosts] = useLocalStorage<ForumPost[]>('forumPosts', initialForumPosts);
+  const [post, setPost] = useState<ForumPost>(initialPost);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
@@ -34,8 +32,6 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
   useEffect(() => {
     setIsClient(true);
   }, []);
-  
-  const post = storedPosts.find(p => p.id === initialPost.id) || initialPost;
 
   const form = useForm<ReplyFormValues>({
     resolver: zodResolver(replySchema),
@@ -55,20 +51,9 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
-    // Create a deep copy to avoid direct mutation
-    const updatedStoredPosts = JSON.parse(JSON.stringify(storedPosts));
-    const postIndex = updatedStoredPosts.findIndex((p: ForumPost) => p.id === post.id);
-    
-    if (postIndex > -1) {
-        updatedStoredPosts[postIndex].replies.unshift(newReply);
-        setStoredPosts(updatedStoredPosts);
-    } else {
-        // This case handles if the post is not in localStorage yet (e.g. from initial mock)
-        const postToUpdate = JSON.parse(JSON.stringify(post));
-        postToUpdate.replies.unshift(newReply);
-        const otherPosts = storedPosts.filter(p => p.id !== post.id);
-        setStoredPosts([...otherPosts, postToUpdate]);
-    }
+    const updatedPost = JSON.parse(JSON.stringify(post));
+    updatedPost.replies.unshift(newReply);
+    setPost(updatedPost);
 
     toast({
         title: "Reply Posted!",

@@ -14,15 +14,12 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useToast } from '@/hooks/use-toast';
-import { useLocalStorage } from '@/hooks/use-local-storage';
-import { blogPosts as initialBlogPosts } from '@/lib/mock-data';
+import { useState } from 'react';
 
 export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
-  const [storedPosts, setStoredPosts] = useLocalStorage<BlogPost[]>('blogPosts', initialBlogPosts);
+  const [post, setPost] = useState<BlogPost>(initialPost);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
-
-  const post = storedPosts.find(p => p.id === initialPost.id) || initialPost;
 
   const handleAddComment = (newCommentData: Omit<BlogComment, 'id' | 'date' | 'author'>) => {
     if (!user || !user.displayName) {
@@ -38,26 +35,12 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
     };
     
     // Create a deep copy to avoid direct mutation of the state
-    const updatedStoredPosts = JSON.parse(JSON.stringify(storedPosts));
-    const postIndex = updatedStoredPosts.findIndex((p: BlogPost) => p.id === post.id);
-
-    if (postIndex > -1) {
-        const updatedPost = updatedStoredPosts[postIndex];
-        if (!updatedPost.comments) {
-            updatedPost.comments = [];
-        }
-        updatedPost.comments.unshift(newComment); // Add new comment to the beginning
-        setStoredPosts(updatedStoredPosts);
-    } else {
-        // This case handles if the post is not in localStorage yet (e.g. from initial mock data)
-        const postToUpdate = JSON.parse(JSON.stringify(post));
-         if (!postToUpdate.comments) {
-            postToUpdate.comments = [];
-        }
-        postToUpdate.comments.unshift(newComment);
-        const otherPosts = storedPosts.filter(p => p.id !== post.id);
-        setStoredPosts([...otherPosts, postToUpdate]);
+    const updatedPost = JSON.parse(JSON.stringify(post));
+    if (!updatedPost.comments) {
+        updatedPost.comments = [];
     }
+    updatedPost.comments.unshift(newComment); // Add new comment to the beginning
+    setPost(updatedPost);
 
     toast({
         title: "Comment Submitted!",

@@ -9,27 +9,19 @@ import { Loader2, Users, MessageSquare, PlusCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { forumPosts as initialForumPosts } from "@/lib/mock-data";
+import { forumPosts } from "@/lib/mock-data";
 import type { ForumPost } from "@/lib/types";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useLocalStorage } from "@/hooks/use-local-storage";
 
 export default function CommunityPage() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
-  const [storedPosts, setStoredPosts] = useLocalStorage<ForumPost[]>('forumPosts', []);
+  const [posts, setPosts] = useState<ForumPost[]>([]);
 
-  // Combine initial mock data with data from local storage
-  const [posts, setPosts] = useState<ForumPost[]>(() => {
-    const combined = [...initialForumPosts];
-    const storedIds = new Set(combined.map(p => p.id));
-    storedPosts.forEach(sp => {
-        if (!storedIds.has(sp.id)) {
-            combined.unshift(sp); // Add new posts to the beginning
-        }
-    });
-    return combined;
-  });
+  useEffect(() => {
+    // A simple way to make the page dynamic, re-fetching on navigation
+    setPosts([...forumPosts]);
+  }, []);
 
   useEffect(() => {
     if (!loading && !user) {

@@ -242,7 +242,7 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export let forumPosts: ForumPost[] = [
+export const forumPosts: ForumPost[] = [
   {
     id: 'fp1',
     title: 'What are your favorite zero-waste cleaning hacks?',

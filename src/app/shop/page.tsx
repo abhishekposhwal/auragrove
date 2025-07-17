@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from 'react';
 import { ProductListCard } from '@/components/product/ProductListCard';
-import { products as initialProducts, categories, brands } from '@/lib/mock-data';
+import { products, categories, brands } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import {
@@ -15,8 +15,6 @@ import {
 } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useLocalStorage } from '@/hooks/use-local-storage';
-import type { Product } from '@/lib/types';
 
 export default function ShopPage() {
   const [filters, setFilters] = useState({
@@ -25,14 +23,6 @@ export default function ShopPage() {
     minGreenScore: 0,
     sortBy: 'popularity',
   });
-  const [storedProducts] = useLocalStorage<Product[]>('products', []);
-
-  // Combine initial products with any updated products from localStorage
-  const products = useMemo(() => {
-    const productMap = new Map(initialProducts.map(p => [p.id, p]));
-    storedProducts.forEach(p => productMap.set(p.id, p));
-    return Array.from(productMap.values());
-  }, [storedProducts]);
 
   const handleFilterChange = (key: keyof typeof filters, value: string | number) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -63,7 +53,7 @@ export default function ShopPage() {
       const scoreMatch = product.greenScore >= filters.minGreenScore;
       return categoryMatch && brandMatch && scoreMatch;
     });
-  }, [filters, products]);
+  }, [filters]);
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
