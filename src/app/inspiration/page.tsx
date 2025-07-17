@@ -45,7 +45,7 @@ export default function InspirationPage() {
         </p>
       </div>
 
-      <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+      <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-gradient-to-br from-secondary/50 to-background/30">
         <CardHeader>
           <CardTitle>Describe Your 3D Concept</CardTitle>
           <CardDescription>
