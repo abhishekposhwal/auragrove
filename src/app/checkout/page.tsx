@@ -136,7 +136,8 @@ export default function CheckoutPage() {
 
 
   const handleNext = async () => {
-    const isValid = await trigger(Object.keys(shippingSchema.shape) as Array<keyof CheckoutFormValues>);
+    const shippingFields: Array<keyof CheckoutFormValues> = ["name", "address", "city", "zip", "country"];
+    const isValid = await trigger(shippingFields);
     if (isValid) {
       setStep(2);
     }
