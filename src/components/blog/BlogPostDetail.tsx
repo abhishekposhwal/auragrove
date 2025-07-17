@@ -44,19 +44,30 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         ...newCommentData
     };
     
-    const updatedPost = { ...post, comments: [...(post.comments || []), newComment] };
-    setPost(updatedPost);
+    const updatedStoredPosts = [...storedPosts];
+    const postIndex = updatedStoredPosts.findIndex(p => p.id === post.id);
 
-    // Find and update the post in the localStorage array
-    const postIndex = storedPosts.findIndex(p => p.id === post.id);
+    let updatedPost: BlogPost;
+
     if (postIndex > -1) {
-        const updatedStoredPosts = [...storedPosts];
-        updatedStoredPosts[postIndex] = updatedPost;
-        setStoredPosts(updatedStoredPosts);
+        updatedPost = JSON.parse(JSON.stringify(updatedStoredPosts[postIndex]));
     } else {
-        // If the post is from initial mock data and not in localStorage yet, add it.
-        setStoredPosts([...storedPosts, updatedPost]);
+        updatedPost = JSON.parse(JSON.stringify(initialPost));
     }
+    
+    if (!updatedPost.comments) {
+        updatedPost.comments = [];
+    }
+    updatedPost.comments.unshift(newComment);
+
+    if (postIndex > -1) {
+        updatedStoredPosts[postIndex] = updatedPost;
+    } else {
+        updatedStoredPosts.push(updatedPost);
+    }
+    
+    setStoredPosts(updatedStoredPosts);
+    setPost(updatedPost);
   };
 
   return (

@@ -58,20 +58,27 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
-    // Update the post in local state and localStorage
-    const updatedPost = { ...post, replies: [...post.replies, newReply] };
-    setPost(updatedPost);
+    const updatedStoredPosts = [...storedPosts];
+    const postIndex = updatedStoredPosts.findIndex(p => p.id === post.id);
+    
+    let updatedPost: ForumPost;
 
-    // Find and update the post in the localStorage array
-    const postIndex = storedPosts.findIndex(p => p.id === post.id);
     if (postIndex > -1) {
-        const updatedStoredPosts = [...storedPosts];
-        updatedStoredPosts[postIndex] = updatedPost;
-        setStoredPosts(updatedStoredPosts);
+        updatedPost = JSON.parse(JSON.stringify(updatedStoredPosts[postIndex]));
     } else {
-        // If the post is from initial mock data and not in localStorage yet, add it.
-        setStoredPosts([...storedPosts, updatedPost]);
+        updatedPost = JSON.parse(JSON.stringify(initialPost));
     }
+    
+    updatedPost.replies.unshift(newReply);
+    
+    if (postIndex > -1) {
+        updatedStoredPosts[postIndex] = updatedPost;
+    } else {
+        updatedStoredPosts.push(updatedPost);
+    }
+
+    setStoredPosts(updatedStoredPosts);
+    setPost(updatedPost);
 
     toast({
         title: "Reply Posted!",

@@ -78,29 +78,31 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         ...newReviewData
     };
 
-    // Create an updated product object
-    const updatedReviews = {
-        items: [newReview, ...product.reviews.items],
-        count: product.reviews.count + 1,
-        rating: parseFloat(
-            ([newReview, ...product.reviews.items].reduce((acc, r) => acc + r.rating, 0) / (product.reviews.count + 1)).toFixed(1)
-        )
-    };
-    const updatedProduct = { ...product, reviews: updatedReviews };
+    const updatedStoredProducts = [...storedProducts];
+    const productIndex = updatedStoredProducts.findIndex(p => p.id === product.id);
 
-    // Update local state to trigger re-render
-    setProduct(updatedProduct);
+    let updatedProduct: Product;
 
-    // Find and update the product in the localStorage array
-    const productIndex = storedProducts.findIndex(p => p.id === product.id);
     if (productIndex > -1) {
-        const updatedStoredProducts = [...storedProducts];
-        updatedStoredProducts[productIndex] = updatedProduct;
-        setStoredProducts(updatedStoredProducts);
+        updatedProduct = JSON.parse(JSON.stringify(updatedStoredProducts[productIndex]));
     } else {
-        // If the product is from initial mock data and not in localStorage yet, add it.
-        setStoredProducts([...storedProducts, updatedProduct]);
+        updatedProduct = JSON.parse(JSON.stringify(initialProduct));
     }
+    
+    updatedProduct.reviews.items.unshift(newReview);
+    updatedProduct.reviews.count = updatedProduct.reviews.items.length;
+    updatedProduct.reviews.rating = parseFloat(
+        (updatedProduct.reviews.items.reduce((acc, r) => acc + r.rating, 0) / updatedProduct.reviews.count).toFixed(1)
+    );
+
+    if (productIndex > -1) {
+        updatedStoredProducts[productIndex] = updatedProduct;
+    } else {
+        updatedStoredProducts.push(updatedProduct);
+    }
+    
+    setStoredProducts(updatedStoredProducts);
+    setProduct(updatedProduct);
   };
 
 
@@ -189,7 +191,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
                         <div className="flex items-center gap-1">
                             <Star className="h-5 w-5 text-accent" fill="currentColor" />
                             <span className="font-medium">{product.reviews.rating}</span>
-                            <span className="text-muted-foreground text-sm">({product.reviews.items.length} reviews)</span>
+                            <span className="text-muted-foreground text-sm">({product.reviews.count} reviews)</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Leaf className="h-5 w-5 text-primary" />
