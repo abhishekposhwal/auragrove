@@ -7,7 +7,7 @@ export const products: Product[] = [
     description: 'A soft, comfortable t-shirt made from 100% organic cotton, grown without harmful pesticides.',
     category: 'Apparel',
     price: 1999,
-    images: ['/cotton-eco-threads.png', 'https://placehold.co/1200x675.png', 'https://placehold.co/1200x675.png'],
+    images: ['/cotton-eco-threads1.png', '/cotton-eco-threads2.png', '/cotton-eco-threads3.png'],
     greenScore: 9,
     carbonFootprint: '2.1 kg CO₂e',
     certifications: ['GOTS', 'Fair Trade'],
