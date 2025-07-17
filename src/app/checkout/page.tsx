@@ -31,15 +31,12 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 
-const shippingSchema = z.object({
+const checkoutSchema = z.object({
   name: z.string().min(2, "Name is required"),
   address: z.string().min(5, "Address is required"),
   city: z.string().min(2, "City is required"),
   zip: z.string().min(5, "Zip code is required"),
   country: z.string().min(2, "Country is required"),
-});
-
-const paymentSchema = z.object({
   paymentMethod: z.enum(["card", "upi", "cod"]),
   cardNumber: z.string().optional(),
   expiry: z.string().optional(),
@@ -78,9 +75,6 @@ const paymentSchema = z.object({
     message: "Invalid UPI ID",
     path: ["upiId"],
 });
-
-
-const checkoutSchema = shippingSchema.merge(paymentSchema);
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
