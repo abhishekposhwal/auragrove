@@ -1,4 +1,4 @@
-# AuraGrove - EcoChic E-Commerce Platform
+# AuraGrove - E-Commerce Platform
 
 Welcome to AuraGrove, a modern e-commerce application built with a focus on sustainability and ethical products. This project serves as a showcase for a beautiful, responsive, and feature-rich online store.
 
