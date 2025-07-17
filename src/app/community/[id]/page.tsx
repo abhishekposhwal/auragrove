@@ -31,6 +31,11 @@ export default function ForumPostPage({ params }: { params: { id: string } }) {
   const [post, setPost] = useState<ForumPost | undefined>(initialPost);
   const [user] = useAuthState(auth);
   const { toast } = useToast();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const form = useForm<ReplyFormValues>({
     resolver: zodResolver(replySchema),
@@ -89,7 +94,7 @@ export default function ForumPostPage({ params }: { params: { id: string } }) {
                     </Avatar>
                     <span className="font-semibold text-card-foreground">{post.author}</span>
                 </div>
-                <span>{new Date(post.date).toLocaleString()}</span>
+                {isClient && <span>{new Date(post.date).toLocaleString()}</span>}
             </div>
         </CardHeader>
         <CardContent>
@@ -113,7 +118,7 @@ export default function ForumPostPage({ params }: { params: { id: string } }) {
                             </Avatar>
                             <p className="font-semibold">{reply.author}</p>
                         </div>
-                        <p className="text-sm text-muted-foreground">{new Date(reply.date).toLocaleString()}</p>
+                        {isClient && <p className="text-sm text-muted-foreground">{new Date(reply.date).toLocaleString()}</p>}
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">{reply.content}</p>
