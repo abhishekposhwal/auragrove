@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, User as UserIcon, Edit, Save, XCircle } from "lucide-react";
-import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignOut } from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignOut, useUpdateProfile } from "react-firebase-hooks/auth";
 import { useProfile } from "@/context/ProfileContext";
 
 export default function AccountPage() {
@@ -31,6 +31,7 @@ export default function AccountPage() {
     signInError,
   ] = useSignInWithEmailAndPassword(auth);
   const [signOut, signOutLoading] = useSignOut(auth);
+  const [updateProfile, updatingProfile] = useUpdateProfile(auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -56,7 +57,10 @@ export default function AccountPage() {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(email, password);
+    const newUser = await createUserWithEmailAndPassword(email, password);
+    if (newUser) {
+      await updateProfile({ displayName: name });
+    }
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -75,7 +79,7 @@ export default function AccountPage() {
     setIsEditing(false);
   };
   
-  if (loading || signUpLoading || signInLoading || signOutLoading) {
+  if (loading || signUpLoading || signInLoading || signOutLoading || updatingProfile) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loader2 className="h-16 w-16 animate-spin" />
