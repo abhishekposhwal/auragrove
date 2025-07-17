@@ -16,6 +16,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useToast } from '@/hooks/use-toast';
+import { blogPosts } from '@/lib/mock-data';
 
 export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
   const [post, setPost] = useState<BlogPost>(initialPost);
@@ -27,6 +28,12 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         toast({ variant: "destructive", title: "Error", description: "You must be logged in to comment." });
         return;
     }
+
+    // Find the post in the main mock data array
+    const postIndex = blogPosts.findIndex(p => p.id === post.id);
+    if (postIndex === -1) return;
+
+    // Create the new comment
     const newComment: BlogComment = {
         id: `c${Date.now()}`,
         author: user.displayName,
@@ -34,14 +41,15 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         ...newCommentData
     };
 
-    setPost(prevPost => {
-        const newPostState = JSON.parse(JSON.stringify(prevPost));
-        if (!newPostState.comments) {
-            newPostState.comments = [];
-        }
-        newPostState.comments.unshift(newComment);
-        return newPostState;
-    });
+    // Ensure the comments array exists and add the new comment
+    const updatedPost = blogPosts[postIndex];
+    if (!updatedPost.comments) {
+        updatedPost.comments = [];
+    }
+    updatedPost.comments.unshift(newComment);
+
+    // Update the local state with a deep copy of the updated post to trigger a re-render
+    setPost(JSON.parse(JSON.stringify(updatedPost)));
   };
 
   return (

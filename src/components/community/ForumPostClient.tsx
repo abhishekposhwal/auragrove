@@ -18,6 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
+import { forumPosts } from '@/lib/mock-data';
 
 const replySchema = z.object({
   content: z.string().min(5, "Reply must be at least 5 characters.").max(1000, "Reply cannot exceed 1000 characters."),
@@ -44,6 +45,12 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
         toast({ variant: "destructive", title: "Error", description: "You must be logged in to reply." });
         return;
     }
+
+    // Find the post in the main mock data array
+    const postIndex = forumPosts.findIndex(p => p.id === post.id);
+    if (postIndex === -1) return;
+    
+    // Create the new reply
     const newReply: ForumReply = {
       id: `r${Date.now()}`,
       author: user.displayName,
@@ -51,11 +58,12 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
-    setPost(prevPost => {
-        const newPostState = JSON.parse(JSON.stringify(prevPost));
-        newPostState.replies.push(newReply);
-        return newPostState;
-    });
+    // Update the post in the mock data array
+    const updatedPost = forumPosts[postIndex];
+    updatedPost.replies.push(newReply);
+    
+    // Update the local state with a deep copy of the updated post to trigger a re-render
+    setPost(JSON.parse(JSON.stringify(updatedPost)));
 
     toast({
         title: "Reply Posted!",

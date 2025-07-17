@@ -21,6 +21,7 @@ import { useWishlist } from '@/context/WishlistContext';
 import { cn } from '@/lib/utils';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
+import { products } from '@/lib/mock-data';
 
 export function ProductDetailClient({ product: initialProduct }: { product: Product }) {
   const [product, setProduct] = useState<Product>(initialProduct);
@@ -61,23 +62,28 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         toast({ variant: "destructive", title: "Error", description: "You must be logged in to post a review." });
         return;
     }
+    
+    // Find the product in the main mock data array
+    const productIndex = products.findIndex(p => p.id === product.id);
+    if (productIndex === -1) return;
+
+    // Create the new review
     const newReview: Review = {
         id: `r${Date.now()}`,
         author: user.displayName,
         date: new Date().toISOString(),
         ...newReviewData
     };
-    
-    setProduct(prevProduct => {
-        const newProductState = JSON.parse(JSON.stringify(prevProduct));
-        newProductState.reviews.items.unshift(newReview);
-        newProductState.reviews.count = newProductState.reviews.items.length;
-        
-        const totalRating = newProductState.reviews.items.reduce((acc: number, review: Review) => acc + review.rating, 0);
-        newProductState.reviews.rating = parseFloat((totalRating / newProductState.reviews.items.length).toFixed(1));
 
-        return newProductState;
-    });
+    // Update the product in the mock data array
+    const updatedProduct = products[productIndex];
+    updatedProduct.reviews.items.unshift(newReview);
+    updatedProduct.reviews.count = updatedProduct.reviews.items.length;
+    const totalRating = updatedProduct.reviews.items.reduce((acc, review) => acc + review.rating, 0);
+    updatedProduct.reviews.rating = parseFloat((totalRating / updatedProduct.reviews.count).toFixed(1));
+    
+    // Update the local state with a deep copy of the updated product to trigger a re-render
+    setProduct(JSON.parse(JSON.stringify(updatedProduct)));
   };
 
 
