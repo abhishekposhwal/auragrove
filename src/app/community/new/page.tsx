@@ -11,10 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { PlusCircle } from "lucide-react";
+import { ArrowLeft, PlusCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { forumPosts } from "@/lib/mock-data";
 import type { ForumPost } from "@/lib/types";
+import Link from "next/link";
 
 const postSchema = z.object({
   author: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name cannot exceed 50 characters."),
@@ -56,6 +57,12 @@ export default function NewPostPage() {
 
   return (
     <div className="container mx-auto max-w-2xl px-4 md:px-6 py-12">
+      <Button variant="ghost" asChild className="mb-8">
+        <Link href="/community">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Forums
+        </Link>
+      </Button>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-3xl">
