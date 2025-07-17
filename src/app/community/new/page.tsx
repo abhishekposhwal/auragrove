@@ -9,16 +9,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/lib/firebase/config";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Loader2, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { forumPosts } from "@/lib/mock-data";
 import type { ForumPost } from "@/lib/types";
 
 const postSchema = z.object({
+  author: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name cannot exceed 50 characters."),
   title: z.string().min(5, "Title must be at least 5 characters.").max(100, "Title cannot exceed 100 characters."),
   content: z.string().min(10, "Content must be at least 10 characters.").max(2000, "Content cannot exceed 2000 characters."),
 });
@@ -26,33 +24,21 @@ const postSchema = z.object({
 type PostFormValues = z.infer<typeof postSchema>;
 
 export default function NewPostPage() {
-  const [user, loading] = useAuthState(auth);
   const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
     defaultValues: {
+      author: "",
       title: "",
       content: "",
     },
   });
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/account');
-    }
-  }, [user, loading, router]);
   
   const handleFormSubmit = (data: PostFormValues) => {
-    if (!user || !user.displayName) {
-        toast({ variant: "destructive", title: "Error", description: "You must be logged in to post." });
-        return;
-    }
-    
     const newPost: ForumPost = {
         id: `fp${Date.now()}`,
-        author: user.displayName,
         date: new Date().toISOString(),
         replies: [],
         ...data,
@@ -66,18 +52,6 @@ export default function NewPostPage() {
     });
     router.push('/community');
   };
-  
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="h-16 w-16 animate-spin" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <div className="container mx-auto max-w-2xl px-4 md:px-6 py-12">
@@ -102,6 +76,19 @@ export default function NewPostPage() {
                     <FormLabel>Post Title</FormLabel>
                     <FormControl>
                       <Input placeholder="What's your discussion topic?" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="author"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Your Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

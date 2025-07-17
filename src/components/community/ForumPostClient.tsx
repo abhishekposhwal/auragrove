@@ -14,18 +14,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/lib/firebase/config';
+import { forumPosts } from '@/lib/mock-data';
 
 const replySchema = z.object({
+  author: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name cannot exceed 50 characters."),
   content: z.string().min(5, "Reply must be at least 5 characters.").max(1000, "Reply cannot exceed 1000 characters."),
 });
 type ReplyFormValues = z.infer<typeof replySchema>;
 
 export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
   const [post, setPost] = useState<ForumPost>(initialPost);
-  const [user] = useAuthState(auth);
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
 
@@ -35,26 +35,28 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
 
   const form = useForm<ReplyFormValues>({
     resolver: zodResolver(replySchema),
-    defaultValues: { content: '' },
+    defaultValues: { author: '', content: '' },
   });
 
   const handleAddReply = (data: ReplyFormValues) => {
-    if (!user || !user.displayName) {
-        toast({ variant: "destructive", title: "Error", description: "You must be logged in to reply." });
-        return;
-    }
-    
     const newReply: ForumReply = {
       id: `r${Date.now()}`,
-      author: user.displayName,
       date: new Date().toISOString(),
-      content: data.content,
+      ...data,
     };
     
-    const updatedPost = JSON.parse(JSON.stringify(post));
-    updatedPost.replies.unshift(newReply);
+    const updatedPost = {
+      ...post,
+      replies: [newReply, ...post.replies],
+    };
     setPost(updatedPost);
 
+    // Update the main mock data array
+    const postIndex = forumPosts.findIndex(p => p.id === initialPost.id);
+    if (postIndex !== -1) {
+        forumPosts[postIndex].replies.unshift(newReply);
+    }
+    
     toast({
         title: "Reply Posted!",
         description: "Thank you for contributing to the discussion.",
@@ -126,33 +128,37 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
                 <CardTitle>Leave a Reply</CardTitle>
             </CardHeader>
             <CardContent className="pt-6 px-0">
-                {user ? (
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleAddReply)} className="space-y-4">
-                            <FormField
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(handleAddReply)} className="space-y-4">
+                        <FormField
                             control={form.control}
-                            name="content"
+                            name="author"
                             render={({ field }) => (
                                 <FormItem>
-                                <FormLabel>Your Reply</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Share your thoughts..." rows={5} {...field} />
-                                </FormControl>
-                                <FormMessage />
+                                    <FormLabel>Your Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter your name" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
-                            />
-                            <Button type="submit" variant="outline">Submit Reply</Button>
-                        </form>
-                    </Form>
-                ) : (
-                    <div className="text-center p-8 border-dashed border-2 rounded-lg">
-                        <p className="text-muted-foreground">You must be logged in to reply.</p>
-                        <Button asChild variant="link" className="mt-2">
-                           <Link href="/account">Log In or Sign Up</Link>
-                        </Button>
-                    </div>
-                )}
+                        />
+                        <FormField
+                        control={form.control}
+                        name="content"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Your Reply</FormLabel>
+                            <FormControl>
+                                <Textarea placeholder="Share your thoughts..." rows={5} {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                        <Button type="submit" variant="outline">Submit Reply</Button>
+                    </form>
+                </Form>
             </CardContent>
         </Card>
       </div>

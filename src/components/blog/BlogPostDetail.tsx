@@ -11,36 +11,35 @@ import { Separator } from '@/components/ui/separator';
 import { CommentSection } from '@/components/blog/CommentSection';
 import { CommentForm } from '@/components/blog/CommentForm';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/lib/firebase/config';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { blogPosts } from '@/lib/mock-data';
 
 export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
   const [post, setPost] = useState<BlogPost>(initialPost);
-  const [user] = useAuthState(auth);
   const { toast } = useToast();
 
-  const handleAddComment = (newCommentData: Omit<BlogComment, 'id' | 'date' | 'author'>) => {
-    if (!user || !user.displayName) {
-        toast({ variant: "destructive", title: "Error", description: "You must be logged in to comment." });
-        return;
-    }
-
+  const handleAddComment = (newCommentData: Omit<BlogComment, 'id' | 'date'>) => {
     const newComment: BlogComment = {
         id: `c${Date.now()}`,
-        author: user.displayName,
         date: new Date().toISOString(),
         ...newCommentData
     };
-    
-    // Create a deep copy to avoid direct mutation of the state
-    const updatedPost = JSON.parse(JSON.stringify(post));
-    if (!updatedPost.comments) {
-        updatedPost.comments = [];
-    }
-    updatedPost.comments.unshift(newComment); // Add new comment to the beginning
+
+    const updatedPost = {
+      ...post,
+      comments: [newComment, ...(post.comments || [])],
+    };
     setPost(updatedPost);
+
+    // Update the main mock data array
+    const postIndex = blogPosts.findIndex(p => p.id === initialPost.id);
+    if (postIndex !== -1) {
+        if (!blogPosts[postIndex].comments) {
+            blogPosts[postIndex].comments = [];
+        }
+        blogPosts[postIndex].comments!.unshift(newComment);
+    }
 
     toast({
         title: "Comment Submitted!",
@@ -87,16 +86,7 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
                 <CardDescription>Share your thoughts on this post.</CardDescription>
             </CardHeader>
             <CardContent className="pt-6 px-0">
-               {user ? (
-                 <CommentForm onSubmit={handleAddComment} />
-               ) : (
-                <div className="text-center p-8 border-dashed border-2 rounded-lg">
-                    <p className="text-muted-foreground">You must be logged in to leave a comment.</p>
-                    <Button asChild variant="link" className="mt-2">
-                        <Link href="/account">Log In or Sign Up</Link>
-                    </Button>
-                </div>
-               )}
+               <CommentForm onSubmit={handleAddComment} />
             </CardContent>
         </Card>
       </div>

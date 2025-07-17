@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,7 @@ import type { Review } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
 const reviewSchema = z.object({
+  author: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name cannot exceed 50 characters."),
   rating: z.number().min(1, "Please select a rating.").max(5),
   comment: z.string().min(10, "Comment must be at least 10 characters.").max(500, "Comment cannot exceed 500 characters."),
 });
@@ -21,7 +23,7 @@ const reviewSchema = z.object({
 type ReviewFormValues = z.infer<typeof reviewSchema>;
 
 interface ReviewFormProps {
-  onSubmit: (data: Omit<Review, 'id' | 'date' | 'author'>) => void;
+  onSubmit: (data: Omit<Review, 'id' | 'date'>) => void;
 }
 
 const StarRatingInput = ({ field }: { field: any }) => {
@@ -51,18 +53,14 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
   const form = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
+      author: '',
       rating: 0,
       comment: '',
     },
   });
-  const { toast } = useToast();
 
   const handleFormSubmit = (data: ReviewFormValues) => {
     onSubmit(data);
-    toast({
-        title: "Review Submitted!",
-        description: "Thank you for your feedback.",
-    });
     form.reset();
   };
 
@@ -77,6 +75,19 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
               <FormLabel>Your Rating</FormLabel>
               <FormControl>
                 <StarRatingInput field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="author"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Your Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

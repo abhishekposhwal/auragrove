@@ -17,16 +17,14 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ReviewForm } from './ReviewForm';
 import { useWishlist } from '@/context/WishlistContext';
 import { cn } from '@/lib/utils';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/lib/firebase/config';
 import { useState } from 'react';
+import { products } from '@/lib/mock-data';
 
 export function ProductDetailClient({ product: initialProduct }: { product: Product }) {
   const [product, setProduct] = useState<Product>(initialProduct);
   const { addToCart } = useCart();
   const { toast } = useToast();
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
-  const [user] = useAuthState(auth);
   
   const isInWishlist = wishlist.some(item => item.id === product.id);
 
@@ -56,29 +54,39 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
     }
   };
 
-  const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date' | 'author'>) => {
-    if (!user || !user.displayName) {
-        toast({ variant: "destructive", title: "Error", description: "You must be logged in to post a review." });
-        return;
-    }
-    
+  const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date'>) => {
     const newReview: Review = {
         id: `r${Date.now()}`,
-        author: user.displayName,
         date: new Date().toISOString(),
         ...newReviewData
     };
 
-    // Create a deep copy of the product to avoid mutation
-    const updatedProduct = JSON.parse(JSON.stringify(product));
-
-    updatedProduct.reviews.items.unshift(newReview);
-    updatedProduct.reviews.count = updatedProduct.reviews.items.length;
-    updatedProduct.reviews.rating = parseFloat(
-        (updatedProduct.reviews.items.reduce((acc: number, r: Review) => acc + r.rating, 0) / updatedProduct.reviews.count).toFixed(1)
+    const updatedReviews = [newReview, ...product.reviews.items];
+    const newAverageRating = parseFloat(
+        (updatedReviews.reduce((acc, r) => acc + r.rating, 0) / updatedReviews.length).toFixed(1)
     );
+
+    const updatedProduct: Product = {
+      ...product,
+      reviews: {
+        items: updatedReviews,
+        count: updatedReviews.length,
+        rating: newAverageRating,
+      }
+    };
     
     setProduct(updatedProduct);
+
+    // Update the main mock data array
+    const productIndex = products.findIndex(p => p.id === initialProduct.id);
+    if (productIndex !== -1) {
+      products[productIndex] = updatedProduct;
+    }
+
+    toast({
+        title: "Review Submitted!",
+        description: "Thank you for your feedback.",
+    });
   };
 
 
@@ -205,16 +213,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
                 <CardDescription>Share your thoughts about the product with the community.</CardDescription>
             </CardHeader>
             <CardContent className="pt-6 px-0">
-                {user ? (
-                    <ReviewForm onSubmit={handleAddReview} />
-                ) : (
-                    <div className="text-center p-8 border-dashed border-2 rounded-lg">
-                        <p className="text-muted-foreground">You must be logged in to write a review.</p>
-                        <Button asChild variant="link" className="mt-2">
-                           <Link href="/account">Log In or Sign Up</Link>
-                        </Button>
-                    </div>
-                )}
+                <ReviewForm onSubmit={handleAddReview} />
             </CardContent>
         </Card>
       </div>
