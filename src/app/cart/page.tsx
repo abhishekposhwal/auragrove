@@ -19,7 +19,7 @@ export default function CartPage() {
           <ShoppingCart className="h-10 w-10 text-primary" />
           <h1 className="text-4xl font-bold font-headline">Your Cart</h1>
         </div>
-        <Card className="max-w-2xl mx-auto">
+        <Card className="max-w-2xl mx-auto transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-gradient-to-br from-secondary/50 to-background/30">
           <CardHeader>
             <CardTitle>Cart is Empty</CardTitle>
           </CardHeader>
