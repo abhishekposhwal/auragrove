@@ -12,7 +12,6 @@ import { useToast } from "@/hooks/use-toast";
 import { Star, Leaf, CheckCircle2, Heart } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
-import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ReviewForm } from './ReviewForm';
@@ -73,7 +72,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
         ...newReviewData
     };
 
-    // Create a deep copy of the products array from localStorage
+    // Create a deep copy of the products array from localStorage to avoid mutation
     const updatedProducts = JSON.parse(JSON.stringify(storedProducts));
     const productIndex = updatedProducts.findIndex((p: Product) => p.id === product.id);
 
@@ -85,7 +84,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
             (updatedProduct.reviews.items.reduce((acc: number, r: Review) => acc + r.rating, 0) / updatedProduct.reviews.count).toFixed(1)
         );
         
-        // Update localStorage with the new array, triggering re-render
+        // Update localStorage with the new array, triggering re-render in all components using this hook
         setStoredProducts(updatedProducts);
     }
   };

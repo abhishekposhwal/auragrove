@@ -37,6 +37,7 @@ export function BlogPostDetail({ post: initialPost }: { post: BlogPost }) {
         ...newCommentData
     };
     
+    // Create a deep copy to avoid direct mutation
     const updatedStoredPosts = JSON.parse(JSON.stringify(storedPosts));
     const postIndex = updatedStoredPosts.findIndex((p: BlogPost) => p.id === post.id);
 

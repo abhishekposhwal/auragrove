@@ -55,6 +55,7 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
       content: data.content,
     };
     
+    // Create a deep copy to avoid direct mutation
     const updatedStoredPosts = JSON.parse(JSON.stringify(storedPosts));
     const postIndex = updatedStoredPosts.findIndex((p: ForumPost) => p.id === post.id);
     
@@ -62,6 +63,7 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
         updatedStoredPosts[postIndex].replies.unshift(newReply);
         setStoredPosts(updatedStoredPosts);
     } else {
+        // This case handles if the post is not in localStorage yet (e.g. from initial mock)
         const postToUpdate = JSON.parse(JSON.stringify(post));
         postToUpdate.replies.unshift(newReply);
         const otherPosts = storedPosts.filter(p => p.id !== post.id);
