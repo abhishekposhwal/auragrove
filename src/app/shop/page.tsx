@@ -17,6 +17,7 @@ import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import { AnimatedSection } from '@/components/shared/AnimatedSection';
 
 export default function ShopPage() {
   const initialFilters = {
@@ -65,100 +66,106 @@ export default function ShopPage() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
-      <div className="text-center mb-12">
+      <AnimatedSection className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold">Shop Our Collection</h1>
         <p className="text-lg text-muted-foreground mt-2">Find your next favorite sustainable product.</p>
-      </div>
+      </AnimatedSection>
       <div className="grid lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1">
-          <Card className="sticky top-24">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Filters</CardTitle>
-              <Button variant="ghost" size="sm" onClick={resetFilters}>
-                <X className="h-4 w-4 mr-2" />
-                Reset
-              </Button>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
-                <Select
-                  value={filters.category}
-                  onValueChange={(value) => handleFilterChange('category', value)}
-                >
-                  <SelectTrigger id="category">
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map(c => <SelectItem key={c.value} value={c.value}>{c.name}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
+          <AnimatedSection>
+            <Card className="sticky top-24">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle>Filters</CardTitle>
+                <Button variant="ghost" size="sm" onClick={resetFilters}>
+                  <X className="h-4 w-4 mr-2" />
+                  Reset
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="category">Category</Label>
+                  <Select
+                    value={filters.category}
+                    onValueChange={(value) => handleFilterChange('category', value)}
+                  >
+                    <SelectTrigger id="category">
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map(c => <SelectItem key={c.value} value={c.value}>{c.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="brand">Brand</Label>
-                 <Select
-                  value={filters.brand}
-                  onValueChange={(value) => handleFilterChange('brand', value)}
-                >
-                  <SelectTrigger id="brand">
-                    <SelectValue placeholder="Select a brand" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {brands.map(b => <SelectItem key={b.value} value={b.value.toLowerCase().replace(/ /g, '')}>{b.name}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="brand">Brand</Label>
+                  <Select
+                    value={filters.brand}
+                    onValueChange={(value) => handleFilterChange('brand', value)}
+                  >
+                    <SelectTrigger id="brand">
+                      <SelectValue placeholder="Select a brand" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {brands.map(b => <SelectItem key={b.value} value={b.value.toLowerCase().replace(/ /g, '')}>{b.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="space-y-4">
-                <Label>Min. Green Score: {filters.minGreenScore}</Label>
-                <Slider
-                  value={[filters.minGreenScore]}
-                  max={10}
-                  step={1}
-                  onValueChange={handleSliderChange}
-                />
-              </div>
+                <div className="space-y-4">
+                  <Label>Min. Green Score: {filters.minGreenScore}</Label>
+                  <Slider
+                    value={[filters.minGreenScore]}
+                    max={10}
+                    step={1}
+                    onValueChange={handleSliderChange}
+                  />
+                </div>
 
-              <div className="space-y-3">
-                <Label>Sort By</Label>
-                <RadioGroup 
-                  value={filters.sortBy}
-                  onValueChange={(value) => handleFilterChange('sortBy', value)}
-                  className="space-y-2"
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="popularity" id="popularity" />
-                    <Label htmlFor="popularity" className="font-normal">Popularity</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="score-desc" id="score-desc" />
-                    <Label htmlFor="score-desc" className="font-normal">Green Score (High to Low)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="price-asc" id="price-asc" />
-                    <Label htmlFor="price-asc" className="font-normal">Price (Low to High)</Label>
-                  </div>
-                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="price-desc" id="price-desc" />
-                    <Label htmlFor="price-desc" className="font-normal">Price (High to Low)</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="space-y-3">
+                  <Label>Sort By</Label>
+                  <RadioGroup 
+                    value={filters.sortBy}
+                    onValueChange={(value) => handleFilterChange('sortBy', value)}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="popularity" id="popularity" />
+                      <Label htmlFor="popularity" className="font-normal">Popularity</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="score-desc" id="score-desc" />
+                      <Label htmlFor="score-desc" className="font-normal">Green Score (High to Low)</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="price-asc" id="price-asc" />
+                      <Label htmlFor="price-asc" className="font-normal">Price (Low to High)</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="price-desc" id="price-desc" />
+                      <Label htmlFor="price-desc" className="font-normal">Price (High to Low)</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
         </aside>
         <main className="lg:col-span-3">
           <div className="flex flex-col gap-6">
-            {filteredProducts.map((product) => (
-              <ProductListCard key={product.id} product={product} />
+            {filteredProducts.map((product, index) => (
+              <AnimatedSection key={product.id} delay={index * 0.1}>
+                <ProductListCard product={product} />
+              </AnimatedSection>
             ))}
           </div>
           {filteredProducts.length === 0 && (
-            <div className="text-center py-24 flex flex-col items-center justify-center bg-muted/50 rounded-lg">
-              <h2 className="text-2xl font-semibold">No Products Found</h2>
-              <p className="text-muted-foreground mt-2">Try adjusting your filters or click reset.</p>
-            </div>
+            <AnimatedSection>
+              <div className="text-center py-24 flex flex-col items-center justify-center bg-muted/50 rounded-lg">
+                <h2 className="text-2xl font-semibold">No Products Found</h2>
+                <p className="text-muted-foreground mt-2">Try adjusting your filters or click reset.</p>
+              </div>
+            </AnimatedSection>
           )}
         </main>
       </div>

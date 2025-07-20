@@ -4,6 +4,7 @@ import { products, blogPosts } from "@/lib/mock-data";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Leaf, Truck, Users } from "lucide-react";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
@@ -17,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="space-y-24 md:space-y-32 mb-24 md:mb-32">
-      <section className="container mx-auto px-4 md:px-6 mt-16">
+      <AnimatedSection className="container mx-auto px-4 md:px-6 mt-16">
         <div className="grid lg:grid-cols-2 items-center gap-12">
           <div className="space-y-6 text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
@@ -45,9 +46,9 @@ export default function Home() {
             />
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section className="container mx-auto px-4 md:px-6">
+      <AnimatedSection className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => (
             <div key={index} className="flex flex-col items-center text-center p-6 bg-muted/50 rounded-lg">
@@ -57,9 +58,9 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section className="container mx-auto px-4 md:px-6">
+      <AnimatedSection className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold">Featured Products</h2>
           <p className="text-lg text-muted-foreground max-w-2xl">Handpicked items that our community loves.</p>
@@ -74,9 +75,9 @@ export default function Home() {
                 <Link href="/shop">View All Products <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section className="bg-secondary/40 py-24">
+      <AnimatedSection className="bg-secondary/40 py-24">
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-80 md:h-96 w-full rounded-2xl overflow-hidden shadow-xl">
                  <Image src="https://placehold.co/600x400.png" alt="A person tending to a plant" data-ai-hint="person plant" layout="fill" objectFit="cover" />
@@ -89,9 +90,9 @@ export default function Home() {
                  </Button>
             </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section className="container mx-auto px-4 md:px-6">
+      <AnimatedSection className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold">From the Blog</h2>
           <p className="text-lg text-muted-foreground max-w-2xl">Insights, tips, and stories for a more sustainable life.</p>
@@ -119,7 +120,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </section>
+      </AnimatedSection>
 
     </div>
   );
