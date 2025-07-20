@@ -54,10 +54,11 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
     }
   };
 
-  const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date'>) => {
+  const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date' | 'author'>) => {
     const newReview: Review = {
         id: `r${Date.now()}`,
         date: new Date().toISOString(),
+        author: 'Guest User',
         ...newReviewData
     };
 
