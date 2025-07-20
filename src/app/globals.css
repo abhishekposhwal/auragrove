@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* #FFFFFF - Crisp White */
-    --foreground: 210 25% 25%; /* Darkened Dusty Blue for text */
-    --card: 0 0% 98%; /* Slightly off-white for cards */
-    --card-foreground: 210 25% 25%;
-    --popover: 0 0% 98%;
-    --popover-foreground: 210 25% 25%;
-    --primary: 120 27% 65%; /* #8FBC8F - Sage Green */
-    --primary-foreground: 210 25% 15%; /* Darkest blue on primary */
-    --secondary: 210 25% 54%; /* #6A8CA6 - Dusty Blue */
-    --secondary-foreground: 0 0% 100%; /* White on secondary */
-    --muted: 210 25% 90%; /* Lighter Dusty Blue */
-    --muted-foreground: 210 25% 40%;
-    --accent: 34 50% 75%; /* #FFDAB9 - Soft Peach/Coral */
-    --accent-foreground: 210 25% 15%; /* Darkest blue on accent */
+    --background: 210 15% 95%; /* #F5F5DC Warm Beige - Light Mode */
+    --foreground: 202 14% 26%; /* #36454F Dark Charcoal Grey - Text on Light */
+    --card: 210 15% 100%; /* White card for contrast */
+    --card-foreground: 202 14% 26%;
+    --popover: 210 15% 100%;
+    --popover-foreground: 202 14% 26%;
+    --primary: 180 100% 19%; /* #005F60 Deep Teal */
+    --primary-foreground: 210 15% 95%; /* Warm Beige on primary */
+    --secondary: 0 100% 25%; /* #800000 Rich Burgundy */
+    --secondary-foreground: 210 15% 95%; /* Warm Beige on secondary */
+    --muted: 210 15% 90%; /* Lighter shade of beige/grey */
+    --muted-foreground: 202 14% 40%;
+    --accent: 30 73% 41%; /* #B5651D Burnished Copper */
+    --accent-foreground: 210 15% 95%; /* Warm Beige on accent */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 210 25% 85%; /* Dusty Blue based border */
-    --input: 210 25% 88%; /* Dusty Blue based input */
-    --ring: 120 27% 65%; /* Sage Green */
+    --border: 210 15% 85%;
+    --input: 210 15% 88%;
+    --ring: 180 100% 19%;
     --radius: 0.8rem;
   }
 
   .dark {
-    --background: 210 15% 12%; /* Dark Blue/Slate */
-    --foreground: 210 25% 85%; /* Light Blue/Gray */
-    --card: 210 15% 15%;
-    --card-foreground: 210 25% 85%;
-    --popover: 210 15% 15%;
-    --popover-foreground: 210 25% 85%;
-    --primary: 120 27% 55%; /* Darker Sage Green */
-    --primary-foreground: 210 25% 95%;
-    --secondary: 210 25% 44%; /* Darker Dusty Blue */
-    --secondary-foreground: 210 25% 95%;
-    --muted: 210 15% 20%;
-    --muted-foreground: 210 25% 65%;
-    --accent: 34 50% 65%; /* Darker Soft Peach/Coral */
-    --accent-foreground: 210 15% 10%;
+    --background: 202 14% 20%; /* #29343B - Dark Charcoal variation for background */
+    --foreground: 60 30% 93%; /* #F5F5DC Warm Beige - Text on Dark */
+    --card: 202 14% 26%; /* #36454F Dark Charcoal Grey - Card on Dark */
+    --card-foreground: 60 30% 93%;
+    --popover: 202 14% 26%;
+    --popover-foreground: 60 30% 93%;
+    --primary: 180 100% 25%; /* Brighter Deep Teal for dark mode */
+    --primary-foreground: 60 30% 93%;
+    --secondary: 0 100% 35%; /* Brighter Burgundy for dark mode */
+    --secondary-foreground: 60 30% 93%;
+    --muted: 202 14% 30%;
+    --muted-foreground: 60 30% 70%;
+    --accent: 30 73% 51%; /* Brighter Copper for dark mode */
+    --accent-foreground: 202 14% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 210 15% 25%;
-    --input: 210 15% 22%;
-    --ring: 120 27% 55%;
+    --border: 202 14% 35%;
+    --input: 202 14% 32%;
+    --ring: 180 100% 25%;
   }
 }
 
