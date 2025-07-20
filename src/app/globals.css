@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 48 57% 91%; /* #F5F5DC - Warm Off-White/Cream */
-    --foreground: 210 11% 43%; /* #708090 - Stone Grey (for text) */
-    --card: 48 57% 94%; /* Slightly lighter than background */
-    --card-foreground: 210 11% 23%; /* Darker Stone Grey for card text */
-    --popover: 48 57% 94%;
-    --popover-foreground: 210 11% 23%;
-    --primary: 151 28% 25%; /* #2E4F3E - Deep Forest Green */
-    --primary-foreground: 48 57% 91%; /* Warm Off-White/Cream on primary */
-    --secondary: 27 57% 59%; /* #CD853F - Soft Terracotta */
-    --secondary-foreground: 151 28% 10%; /* Darkest Green on secondary */
-    --muted: 210 11% 85%; /* Lighter Stone Grey */
-    --muted-foreground: 210 11% 40%; /* Stone Grey */
-    --accent: 44 91% 38%; /* #B8860B - Muted Gold/Mustard */
-    --accent-foreground: 48 57% 91%; /* Warm Off-White/Cream on accent */
+    --background: 0 0% 100%; /* #FFFFFF - Crisp White */
+    --foreground: 210 25% 25%; /* Darkened Dusty Blue for text */
+    --card: 0 0% 98%; /* Slightly off-white for cards */
+    --card-foreground: 210 25% 25%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 210 25% 25%;
+    --primary: 120 27% 65%; /* #8FBC8F - Sage Green */
+    --primary-foreground: 210 25% 15%; /* Darkest blue on primary */
+    --secondary: 210 25% 54%; /* #6A8CA6 - Dusty Blue */
+    --secondary-foreground: 0 0% 100%; /* White on secondary */
+    --muted: 210 25% 90%; /* Lighter Dusty Blue */
+    --muted-foreground: 210 25% 40%;
+    --accent: 34 50% 75%; /* #FFDAB9 - Soft Peach/Coral */
+    --accent-foreground: 210 25% 15%; /* Darkest blue on accent */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 210 11% 80%; /* Stone Grey based border */
-    --input: 210 11% 88%; /* Stone Grey based input */
-    --ring: 151 28% 25%; /* Deep Forest Green */
+    --border: 210 25% 85%; /* Dusty Blue based border */
+    --input: 210 25% 88%; /* Dusty Blue based input */
+    --ring: 120 27% 65%; /* Sage Green */
     --radius: 0.8rem;
   }
 
   .dark {
-    --background: 151 15% 10%; /* Dark Green/Slate */
-    --foreground: 48 40% 85%; /* Light Cream */
-    --card: 151 15% 12%;
-    --card-foreground: 48 40% 85%;
-    --popover: 151 15% 12%;
-    --popover-foreground: 48 40% 85%;
-    --primary: 151 28% 45%; /* Lighter Deep Forest Green */
-    --primary-foreground: 48 57% 91%;
-    --secondary: 27 57% 69%; /* Lighter Soft Terracotta */
-    --secondary-foreground: 151 28% 10%;
-    --muted: 151 15% 15%;
-    --muted-foreground: 210 11% 60%;
-    --accent: 44 91% 48%; /* Brighter Muted Gold/Mustard */
-    --accent-foreground: 151 15% 10%;
+    --background: 210 15% 12%; /* Dark Blue/Slate */
+    --foreground: 210 25% 85%; /* Light Blue/Gray */
+    --card: 210 15% 15%;
+    --card-foreground: 210 25% 85%;
+    --popover: 210 15% 15%;
+    --popover-foreground: 210 25% 85%;
+    --primary: 120 27% 55%; /* Darker Sage Green */
+    --primary-foreground: 210 25% 95%;
+    --secondary: 210 25% 44%; /* Darker Dusty Blue */
+    --secondary-foreground: 210 25% 95%;
+    --muted: 210 15% 20%;
+    --muted-foreground: 210 25% 65%;
+    --accent: 34 50% 65%; /* Darker Soft Peach/Coral */
+    --accent-foreground: 210 15% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 151 15% 25%;
-    --input: 151 15% 22%;
-    --ring: 151 28% 45%;
+    --border: 210 15% 25%;
+    --input: 210 15% 22%;
+    --ring: 120 27% 55%;
   }
 }
 
