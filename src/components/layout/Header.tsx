@@ -8,22 +8,20 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase/config';
 import { useCart } from '@/context/CartContext';
 import { Badge } from '@/components/ui/badge';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
 import { useEffect, useState } from 'react';
 import { useWishlist } from '@/context/WishlistContext';
+import { cn } from '@/lib/utils';
 
 const navLinks = [
   { href: "/shop", label: "Shop", icon: <Store className="h-5 w-5" /> },
   { href: "/inspiration", label: "Inspiration", icon: <Sparkles className="h-5 w-5" /> },
   { href: "/about", label: "About", icon: <Info className="h-5 w-5" /> },
   { href: "/blog", label: "Blog", icon: <Newspaper className="h-5 w-5" /> },
+  { href: "/community", label: "Community", icon: <Users className="h-5 w-5" /> },
 ];
-
-const communityLink = { href: "/community", label: "Community", icon: <Users className="h-5 w-5" /> };
-const wishlistLink = { href: "/wishlist", label: "Wishlist", icon: <Heart className="h-5 w-5" /> };
-
 
 export function Header() {
   const [user] = useAuthState(auth);
@@ -38,84 +36,83 @@ export function Header() {
     setIsClient(true);
   }, []);
 
-  const allNavLinks = isClient && user
-    ? [...navLinks, communityLink]
-    : navLinks;
-
-  const mobileNavLinks = user ? [...navLinks, communityLink, wishlistLink] : [...navLinks, wishlistLink];
-
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 w-full border-b">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold">
           <Leaf className="h-7 w-7 text-primary" />
-          AuraGrove
+          <span>EcoChic</span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-1">
-          {allNavLinks.map((link) => (
-             <Link 
-              key={link.href}
-              href={link.href}
-              className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 ${pathname === link.href ? 'bg-muted text-primary' : 'hover:bg-muted/50 hover:text-primary text-muted-foreground hover:-translate-y-0.5'}`}
-            >
-              {link.icon}
-              <span className="ml-2">{link.label}</span>
-            </Link>
+        <nav className="hidden md:flex items-center gap-2">
+          {navLinks.map((link) => (
+             <Button key={link.href} variant="ghost" asChild className={cn("text-muted-foreground", pathname === link.href && "text-primary")}>
+              <Link 
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            </Button>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary transition-transform duration-300 hover:scale-110">
+          <Button variant="ghost" size="icon" asChild>
             <Link href="/wishlist" aria-label="Wishlist" className="relative">
-              <Heart className="h-6 w-6" />
-              {wishlistCount > 0 && (
-                 <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{wishlistCount}</Badge>
+              <Heart className="h-5 w-5" />
+              {isClient && wishlistCount > 0 && (
+                 <Badge variant="destructive" className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs">{wishlistCount}</Badge>
               )}
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary transition-transform duration-300 hover:scale-110">
+          <Button variant="ghost" size="icon" asChild>
             <Link href="/cart" aria-label="Shopping Cart" className="relative">
-              <ShoppingCart className="h-6 w-6" />
-              {cartItemCount > 0 && (
-                 <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{cartItemCount}</Badge>
+              <ShoppingCart className="h-5 w-5" />
+              {isClient && cartItemCount > 0 && (
+                 <Badge variant="destructive" className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs">{cartItemCount}</Badge>
               )}
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/10 hover:text-primary transition-transform duration-300 hover:scale-110">
+          <Button variant="ghost" size="icon" asChild>
             <Link href="/account" aria-label="My Account">
-              {user ? <Users className="h-6 w-6 text-primary" /> : <User className="h-6 w-6" />}
+              <User className="h-5 w-5" />
             </Link>
           </Button>
-           <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <div className="flex flex-col gap-6 p-6">
-                 <Link href="/" className="flex items-center gap-2 font-headline text-2xl font-bold">
-                    <Leaf className="h-7 w-7 text-primary" />
-                    AuraGrove
-                </Link>
-                <Separator />
-                <nav className="flex flex-col gap-4">
-                  {mobileNavLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`flex items-center gap-3 rounded-md p-2 text-lg font-medium transition-colors hover:bg-primary-hover hover:text-primary ${pathname === link.href ? 'bg-muted text-primary' : 'text-foreground'}`}
-                    >
-                      {link.icon}
-                      {link.label}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            </SheetContent>
-          </Sheet>
+           <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle navigation menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px]">
+                <div className="flex flex-col gap-6 p-6 pt-12">
+                  <Link href="/" className="flex items-center gap-2 text-xl font-bold mb-4">
+                      <Leaf className="h-7 w-7 text-primary" />
+                      <span>EcoChic</span>
+                  </Link>
+                  <Separator />
+                  <nav className="flex flex-col gap-2">
+                    {navLinks.map((link) => (
+                      <SheetClose asChild key={link.href}>
+                        <Link
+                          href={link.href}
+                          className={cn(
+                            "flex items-center gap-3 rounded-md p-3 text-base font-medium transition-colors hover:bg-muted",
+                            pathname === link.href ? 'bg-muted text-primary' : 'text-foreground'
+                          )}
+                        >
+                          {link.icon}
+                          {link.label}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
+           </div>
         </div>
       </div>
     </header>

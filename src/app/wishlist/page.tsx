@@ -13,20 +13,19 @@ export default function WishlistPage() {
 
   if (wishlist.length === 0) {
     return (
-      <div className="container mx-auto px-4 md:px-6 py-12">
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <Heart className="h-10 w-10 text-primary" />
-          <h1 className="text-4xl font-bold font-headline">Your Wishlist</h1>
-        </div>
-        <Card className="max-w-2xl mx-auto transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-gradient-to-br from-secondary/50 to-background/30">
+      <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
+        <Card className="max-w-2xl mx-auto text-center">
           <CardHeader>
-            <CardTitle>Your Wishlist is Empty</CardTitle>
+            <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit">
+              <Heart className="h-12 w-12 text-primary" />
+            </div>
+            <CardTitle className="mt-4">Your Wishlist is Empty</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">You haven't added any items to your wishlist yet. Browse our collection to find something you love!</p>
+            <p className="text-muted-foreground">You haven't added any items yet. Browse our collection to find something you love!</p>
           </CardContent>
-          <CardFooter>
-            <Button asChild>
+          <CardFooter className="justify-center">
+            <Button asChild size="lg">
               <Link href="/shop">Explore Products</Link>
             </Button>
           </CardFooter>
@@ -36,10 +35,11 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-12">
-      <div className="flex items-center justify-center gap-4 mb-8">
-        <Heart className="h-10 w-10 text-primary" />
-        <h1 className="text-4xl font-bold font-headline">Your Wishlist</h1>
+    <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
+      <div className="flex flex-col items-center text-center gap-4 mb-12">
+        <Heart className="h-12 w-12 text-primary" />
+        <h1 className="text-4xl md:text-5xl font-bold">Your Wishlist</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">Your curated collection of future-friendly favorites.</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {wishlist.map((product) => (

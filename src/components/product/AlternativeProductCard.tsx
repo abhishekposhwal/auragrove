@@ -8,15 +8,15 @@ interface AlternativeProductCardProps {
 
 export function AlternativeProductCard({ alternative }: AlternativeProductCardProps) {
   return (
-    <Card className="h-full flex flex-col bg-gradient-to-br from-secondary/50 to-background/30 border-primary/50">
+    <Card className="h-full flex flex-col bg-background">
       <CardHeader>
-        <CardTitle className="text-secondary-foreground">{alternative.name}</CardTitle>
-        <div className="flex items-center gap-4 text-sm font-medium pt-2">
-            <div className="flex items-center gap-1 text-primary">
+        <CardTitle className="text-xl text-foreground">{alternative.name}</CardTitle>
+        <div className="flex items-center gap-4 text-sm text-muted-foreground font-medium pt-2">
+            <div className="flex items-center gap-1.5 text-primary">
                 <Leaf className="h-4 w-4" />
-                <span>Green Score: {alternative.greenScore}/10</span>
+                <span>Score: {alternative.greenScore}/10</span>
             </div>
-            <p>~{alternative.carbonFootprint}</p>
+            <span>~{alternative.carbonFootprint}</span>
         </div>
       </CardHeader>
       <CardContent className="flex-grow">

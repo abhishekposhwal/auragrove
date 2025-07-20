@@ -15,14 +15,18 @@ import {
 } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
 
 export default function ShopPage() {
-  const [filters, setFilters] = useState({
+  const initialFilters = {
     category: 'all',
     brand: 'all',
     minGreenScore: 0,
     sortBy: 'popularity',
-  });
+  };
+  
+  const [filters, setFilters] = useState(initialFilters);
 
   const handleFilterChange = (key: keyof typeof filters, value: string | number) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -30,6 +34,10 @@ export default function ShopPage() {
   
   const handleSliderChange = (value: number[]) => {
     handleFilterChange('minGreenScore', value[0]);
+  }
+
+  const resetFilters = () => {
+    setFilters(initialFilters);
   }
 
   const filteredProducts = useMemo(() => {
@@ -56,13 +64,20 @@ export default function ShopPage() {
   }, [filters]);
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-8">
-      <h1 className="text-4xl font-bold mb-8 font-headline text-center">Shop Our Collection</h1>
-      <div className="grid md:grid-cols-4 gap-8">
-        <aside className="md:col-span-1">
-          <Card>
-            <CardHeader>
+    <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold">Shop Our Collection</h1>
+        <p className="text-lg text-muted-foreground mt-2">Find your next favorite sustainable product.</p>
+      </div>
+      <div className="grid lg:grid-cols-4 gap-8">
+        <aside className="lg:col-span-1">
+          <Card className="sticky top-24">
+            <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>Filters</CardTitle>
+              <Button variant="ghost" size="sm" onClick={resetFilters}>
+                <X className="h-4 w-4 mr-2" />
+                Reset
+              </Button>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
@@ -95,53 +110,54 @@ export default function ShopPage() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <Label>Min. Green Score: {filters.minGreenScore}</Label>
                 <Slider
-                  defaultValue={[0]}
+                  value={[filters.minGreenScore]}
                   max={10}
                   step={1}
                   onValueChange={handleSliderChange}
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label>Sort By</Label>
                 <RadioGroup 
                   value={filters.sortBy}
                   onValueChange={(value) => handleFilterChange('sortBy', value)}
+                  className="space-y-2"
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="popularity" id="popularity" />
-                    <Label htmlFor="popularity">Popularity</Label>
+                    <Label htmlFor="popularity" className="font-normal">Popularity</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="score-desc" id="score-desc" />
-                    <Label htmlFor="score-desc">Green Score (High to Low)</Label>
+                    <Label htmlFor="score-desc" className="font-normal">Green Score (High to Low)</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="price-asc" id="price-asc" />
-                    <Label htmlFor="price-asc">Price (Low to High)</Label>
+                    <Label htmlFor="price-asc" className="font-normal">Price (Low to High)</Label>
                   </div>
                    <div className="flex items-center space-x-2">
                     <RadioGroupItem value="price-desc" id="price-desc" />
-                    <Label htmlFor="price-desc">Price (High to Low)</Label>
+                    <Label htmlFor="price-desc" className="font-normal">Price (High to Low)</Label>
                   </div>
                 </RadioGroup>
               </div>
             </CardContent>
           </Card>
         </aside>
-        <main className="md:col-span-3">
+        <main className="lg:col-span-3">
           <div className="flex flex-col gap-6">
             {filteredProducts.map((product) => (
               <ProductListCard key={product.id} product={product} />
             ))}
           </div>
           {filteredProducts.length === 0 && (
-            <div className="text-center py-16">
+            <div className="text-center py-24 flex flex-col items-center justify-center bg-muted/50 rounded-lg">
               <h2 className="text-2xl font-semibold">No Products Found</h2>
-              <p className="text-muted-foreground mt-2">Try adjusting your filters.</p>
+              <p className="text-muted-foreground mt-2">Try adjusting your filters or click reset.</p>
             </div>
           )}
         </main>

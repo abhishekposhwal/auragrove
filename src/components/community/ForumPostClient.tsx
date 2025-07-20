@@ -51,7 +51,6 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
     };
     setPost(updatedPost);
 
-    // Update the main mock data array
     const postIndex = forumPosts.findIndex(p => p.id === initialPost.id);
     if (postIndex !== -1) {
         forumPosts[postIndex].replies.unshift(newReply);
@@ -65,7 +64,7 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 md:px-6 py-12">
+    <div className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24">
       <Button variant="ghost" asChild className="mb-8">
         <Link href="/community">
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -75,61 +74,61 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
 
       <Card>
         <CardHeader>
-            <CardTitle className="text-2xl md:text-3xl font-bold font-headline">{post.title}</CardTitle>
+            <CardTitle className="text-3xl font-bold">{post.title}</CardTitle>
             <div className="flex items-center gap-4 pt-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                     <Avatar className="h-8 w-8">
                         <AvatarFallback>{post.author.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <span className="font-semibold text-card-foreground">{post.author}</span>
+                    <span className="font-semibold text-foreground">{post.author}</span>
                 </div>
                 {isClient && <span>{new Date(post.date).toLocaleString()}</span>}
             </div>
         </CardHeader>
         <CardContent>
-            <p className="text-base leading-relaxed whitespace-pre-wrap">{post.content}</p>
+            <p className="text-lg leading-relaxed whitespace-pre-wrap">{post.content}</p>
         </CardContent>
       </Card>
       
-      <Separator className="my-8" />
+      <Separator className="my-12" />
       
       <div className="space-y-8">
-        <h2 className="text-2xl font-bold font-headline">Replies ({post.replies.length})</h2>
+        <h2 className="text-2xl font-bold">Replies ({post.replies.length})</h2>
         
         {post.replies.length > 0 ? (
             <div className="space-y-6">
             {post.replies.map((reply) => (
                 <Card key={reply.id} className="bg-muted/50">
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                         <div className="flex items-center gap-3">
-                            <Avatar className="h-8 w-8">
-                                <AvatarFallback>{reply.author.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <p className="font-semibold">{reply.author}</p>
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between pb-4">
+                            <div className="flex items-center gap-3">
+                                <Avatar className="h-8 w-8">
+                                    <AvatarFallback>{reply.author.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <p className="font-semibold">{reply.author}</p>
+                            </div>
+                            {isClient && <p className="text-sm text-muted-foreground">{new Date(reply.date).toLocaleString()}</p>}
                         </div>
-                        {isClient && <p className="text-sm text-muted-foreground">{new Date(reply.date).toLocaleString()}</p>}
-                    </CardHeader>
-                    <CardContent>
                         <p className="text-muted-foreground">{reply.content}</p>
                     </CardContent>
                 </Card>
             ))}
             </div>
         ) : (
-            <div className="text-center text-muted-foreground py-8">
+            <div className="text-center text-muted-foreground py-8 bg-muted/50 rounded-lg">
                 <p>No replies yet. Be the first to join the conversation!</p>
             </div>
         )}
 
-        <Separator />
+        <Separator className="my-12" />
         
-        <Card className="bg-transparent border-none shadow-none">
-            <CardHeader className="p-0">
+        <Card>
+            <CardHeader>
                 <CardTitle>Leave a Reply</CardTitle>
             </CardHeader>
-            <CardContent className="pt-6 px-0">
+            <CardContent>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleAddReply)} className="space-y-4">
+                    <form onSubmit={form.handleSubmit(handleAddReply)} className="space-y-6">
                         <FormField
                             control={form.control}
                             name="author"
@@ -156,7 +155,7 @@ export function ForumPostClient({ post: initialPost }: { post: ForumPost }) {
                             </FormItem>
                         )}
                         />
-                        <Button type="submit" variant="outline">Submit Reply</Button>
+                        <Button type="submit">Submit Reply</Button>
                     </form>
                 </Form>
             </CardContent>

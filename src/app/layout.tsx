@@ -4,14 +4,19 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/CartContext';
-import { Manrope } from 'next/font/google';
+import { PT_Sans } from 'next/font/google';
 import { ProfileProvider } from '@/context/ProfileContext';
 import { WishlistProvider } from '@/context/WishlistContext';
+import { cn } from '@/lib/utils';
 
-const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
+const ptSans = PT_Sans({ 
+  subsets: ['latin'], 
+  weight: ['400', '700'],
+  variable: '--font-sans' 
+});
 
 export const metadata: Metadata = {
-  title: 'AuraGrove',
+  title: 'EcoChic',
   description: 'Sustainable and Ethical E-Commerce Platform',
 };
 
@@ -21,14 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} light`}>
-      <body className="font-body antialiased">
+    <html lang="en" className={cn("light", ptSans.variable)}>
+      <body className="font-sans antialiased">
         <ProfileProvider>
           <WishlistProvider>
             <CartProvider>
               <div className="flex flex-col min-h-screen">
                 <Header />
-                <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-24">
+                <main className="flex-grow">
                   {children}
                 </main>
                 <Footer />
