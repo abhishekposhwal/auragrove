@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%; /* #F5F5F5 - Light Grey */
-    --foreground: 210 10% 23%; /* #333B42 - Charcoal */
-    --card: 0 0% 100%;
-    --card-foreground: 210 10% 23%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 10% 23%;
-    --primary: 190 36% 45%; /* #4A919E - Deep Teal */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 190 20% 94%;
-    --secondary-foreground: 190 20% 30%;
-    --muted: 190 20% 97%;
-    --muted-foreground: 210 10% 45%;
-    --accent: 42 45% 57%; /* #C5A661 - Muted Gold */
-    --accent-foreground: 42 30% 25%;
+    --background: 48 57% 91%; /* #F5F5DC - Warm Off-White/Cream */
+    --foreground: 210 11% 43%; /* #708090 - Stone Grey (for text) */
+    --card: 48 57% 94%; /* Slightly lighter than background */
+    --card-foreground: 210 11% 23%; /* Darker Stone Grey for card text */
+    --popover: 48 57% 94%;
+    --popover-foreground: 210 11% 23%;
+    --primary: 151 28% 25%; /* #2E4F3E - Deep Forest Green */
+    --primary-foreground: 48 57% 91%; /* Warm Off-White/Cream on primary */
+    --secondary: 27 57% 59%; /* #CD853F - Soft Terracotta */
+    --secondary-foreground: 151 28% 10%; /* Darkest Green on secondary */
+    --muted: 210 11% 85%; /* Lighter Stone Grey */
+    --muted-foreground: 210 11% 40%; /* Stone Grey */
+    --accent: 44 91% 38%; /* #B8860B - Muted Gold/Mustard */
+    --accent-foreground: 48 57% 91%; /* Warm Off-White/Cream on accent */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 190 20% 90%;
-    --input: 190 20% 92%;
-    --ring: 190 36% 45%;
+    --border: 210 11% 80%; /* Stone Grey based border */
+    --input: 210 11% 88%; /* Stone Grey based input */
+    --ring: 151 28% 25%; /* Deep Forest Green */
     --radius: 0.8rem;
   }
 
   .dark {
-    --background: 210 10% 10%;
-    --foreground: 0 0% 98%;
-    --card: 210 10% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 210 10% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 190 36% 55%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 190 20% 20%;
-    --secondary-foreground: 190 20% 90%;
-    --muted: 190 20% 15%;
-    --muted-foreground: 210 10% 60%;
-    --accent: 42 45% 67%;
-    --accent-foreground: 42 30% 15%;
+    --background: 151 15% 10%; /* Dark Green/Slate */
+    --foreground: 48 40% 85%; /* Light Cream */
+    --card: 151 15% 12%;
+    --card-foreground: 48 40% 85%;
+    --popover: 151 15% 12%;
+    --popover-foreground: 48 40% 85%;
+    --primary: 151 28% 45%; /* Lighter Deep Forest Green */
+    --primary-foreground: 48 57% 91%;
+    --secondary: 27 57% 69%; /* Lighter Soft Terracotta */
+    --secondary-foreground: 151 28% 10%;
+    --muted: 151 15% 15%;
+    --muted-foreground: 210 11% 60%;
+    --accent: 44 91% 48%; /* Brighter Muted Gold/Mustard */
+    --accent-foreground: 151 15% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 190 20% 25%;
-    --input: 190 20% 22%;
-    --ring: 190 36% 55%;
+    --border: 151 15% 25%;
+    --input: 151 15% 22%;
+    --ring: 151 28% 45%;
   }
 }
 
