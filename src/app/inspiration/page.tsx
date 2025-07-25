@@ -37,17 +37,17 @@ export default function InspirationPage() {
   };
 
   return (
-    <div className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24">
+    <div className="container mx-auto max-w-2xl px-4 md:px-6 py-12">
       <div className="space-y-4 text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold">3D Eco-Concept Studio</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline">3D Eco-Concept Studio</h1>
         <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
           Have an idea for a sustainable product? Describe it below and let our AI create a 3D rendering of it!
         </p>
       </div>
 
-      <Card>
+      <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-gradient-to-br from-secondary/50 to-background/30">
         <CardHeader>
-          <CardTitle>Describe Your Concept</CardTitle>
+          <CardTitle>Describe Your 3D Concept</CardTitle>
           <CardDescription>
             For example: "a stylish backpack made from recycled ocean plastic" or "a set of biodegradable bamboo cutlery".
           </CardDescription>
@@ -60,7 +60,7 @@ export default function InspirationPage() {
             rows={4}
             disabled={isLoading}
           />
-          <Button onClick={handleGenerateImage} disabled={isLoading} className="w-full" size="lg">
+          <Button onClick={handleGenerateImage} disabled={isLoading} className="w-full">
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -77,21 +77,21 @@ export default function InspirationPage() {
       </Card>
 
       {error && (
-        <Alert variant="destructive" className="mt-8">
+        <Alert variant="destructive" className="mt-6">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
       {imageUrl && (
-        <div className="mt-12">
-          <h3 className="text-2xl font-bold text-center mb-6">Your 3D Eco-Inspiration!</h3>
-          <div className="rounded-lg overflow-hidden border shadow-lg aspect-square relative">
+        <div className="mt-8">
+          <h3 className="text-2xl font-bold text-center mb-4 font-headline">Your 3D Eco-Inspiration!</h3>
+          <div className="rounded-lg overflow-hidden shadow-xl">
              <Image
                 src={imageUrl}
                 alt={prompt}
-                layout="fill"
-                objectFit="cover"
+                width={800}
+                height={800}
                 className="w-full"
             />
           </div>

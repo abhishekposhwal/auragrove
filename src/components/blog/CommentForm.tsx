@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import type { BlogComment } from '@/lib/types';
+import { useToast } from '@/hooks/use-toast';
 
 const commentSchema = z.object({
   author: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name cannot exceed 50 characters."),
@@ -29,6 +30,7 @@ export function CommentForm({ onSubmit }: CommentFormProps) {
       comment: '',
     },
   });
+  const { toast } = useToast();
 
   const handleFormSubmit = (data: CommentFormValues) => {
     onSubmit(data);
@@ -37,7 +39,7 @@ export function CommentForm({ onSubmit }: CommentFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="author"
@@ -64,7 +66,7 @@ export function CommentForm({ onSubmit }: CommentFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit Comment</Button>
+        <Button type="submit" variant="outline">Submit Comment</Button>
       </form>
     </Form>
   );

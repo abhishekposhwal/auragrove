@@ -4,48 +4,64 @@
 
 @layer base {
   :root {
-    --background: 210 15% 95%; /* #F5F5DC Warm Beige - Light Mode */
-    --foreground: 202 14% 26%; /* #36454F Dark Charcoal Grey - Text on Light */
-    --card: 210 15% 100%; /* White card for contrast */
-    --card-foreground: 202 14% 26%;
-    --popover: 210 15% 100%;
-    --popover-foreground: 202 14% 26%;
-    --primary: 180 100% 19%; /* #005F60 Deep Teal */
-    --primary-foreground: 210 15% 95%; /* Warm Beige on primary */
-    --secondary: 0 100% 25%; /* #800000 Rich Burgundy */
-    --secondary-foreground: 210 15% 95%; /* Warm Beige on secondary */
-    --muted: 210 15% 90%; /* Lighter shade of beige/grey */
-    --muted-foreground: 202 14% 40%;
-    --accent: 30 73% 41%; /* #B5651D Burnished Copper */
-    --accent-foreground: 210 15% 95%; /* Warm Beige on accent */
+    --background: 48 33% 94%; /* #F5F3ED */
+    --foreground: 215 19% 29%; /* #3A475A */
+    --card: 48 33% 98%; /* #FBF9F4 */
+    --card-foreground: 215 19% 29%;
+    --popover: 48 33% 98%;
+    --popover-foreground: 215 19% 29%;
+    --primary: 147 38% 41%; /* #4A8C64 */
+    --primary-foreground: 48 33% 98%;
+    --secondary: 147 38% 90%; /* #D9EAD3 */
+    --secondary-foreground: 147 38% 31%;
+    --muted: 147 38% 94%;
+    --muted-foreground: 215 19% 45%;
+    --accent: 30 29% 51%; /* #A68B7A */
+    --accent-foreground: 48 33% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 210 15% 85%;
-    --input: 210 15% 88%;
-    --ring: 180 100% 19%;
-    --radius: 0.8rem;
+    --border: 147 20% 80%;
+    --input: 147 20% 88%;
+    --ring: 147 38% 41%;
+    --radius: 0.5rem;
+
+    /* Sidebar Variables */
+    --sidebar-background: 48 33% 96%;
+    --sidebar-foreground: 215 19% 29%;
+    --sidebar-border: 147 20% 85%;
+    --sidebar-accent: 147 38% 90%;
+    --sidebar-accent-foreground: 147 38% 21%;
+    --sidebar-ring: 147 38% 41%;
   }
 
   .dark {
-    --background: 202 14% 20%; /* #29343B - Dark Charcoal variation for background */
-    --foreground: 60 30% 93%; /* #F5F5DC Warm Beige - Text on Dark */
-    --card: 202 14% 26%; /* #36454F Dark Charcoal Grey - Card on Dark */
-    --card-foreground: 60 30% 93%;
-    --popover: 202 14% 26%;
-    --popover-foreground: 60 30% 93%;
-    --primary: 180 100% 25%; /* Brighter Deep Teal for dark mode */
-    --primary-foreground: 60 30% 93%;
-    --secondary: 0 100% 35%; /* Brighter Burgundy for dark mode */
-    --secondary-foreground: 60 30% 93%;
-    --muted: 202 14% 30%;
-    --muted-foreground: 60 30% 70%;
-    --accent: 30 73% 51%; /* Brighter Copper for dark mode */
-    --accent-foreground: 202 14% 10%;
+    --background: 215 28% 17%; /* #222B36 */
+    --foreground: 210 40% 98%; /* #FAFBFC */
+    --card: 215 28% 22%; /* #2B3643 */
+    --card-foreground: 210 40% 98%;
+    --popover: 215 28% 22%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 147 38% 61%; /* #7FC09A */
+    --primary-foreground: 147 38% 11%;
+    --secondary: 147 38% 25%;
+    --secondary-foreground: 147 38% 90%;
+    --muted: 147 38% 20%;
+    --muted-foreground: 215 19% 65%;
+    --accent: 30 29% 61%; /* #BFA799 */
+    --accent-foreground: 30 29% 11%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 202 14% 35%;
-    --input: 202 14% 32%;
-    --ring: 180 100% 25%;
+    --border: 147 20% 30%;
+    --input: 147 20% 25%;
+    --ring: 147 38% 61%;
+
+    /* Sidebar Variables */
+    --sidebar-background: 215 28% 19%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-border: 147 20% 25%;
+    --sidebar-accent: 147 38% 25%;
+    --sidebar-accent-foreground: 147 38% 90%;
+    --sidebar-ring: 147 38% 61%;
   }
 }
 
@@ -54,7 +70,18 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply text-foreground;
+    background-color: hsl(var(--background));
+    background-image: linear-gradient(to bottom, hsl(var(--secondary)) 10%, hsl(var(--background)) 50%);
+  }
+  
+  .dark body {
+     background-image: linear-gradient(to bottom, hsl(var(--secondary)) 10%, hsl(var(--background)) 50%);
+  }
+}
+
+@layer components {
+  .hover\:bg-primary-hover:hover {
+    background-color: hsl(var(--primary) / 0.1);
   }
 }

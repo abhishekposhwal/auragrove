@@ -37,41 +37,41 @@ export default function SustainableAlternatives({ product }: SustainableAlternat
   };
 
   return (
-    <section className="text-center bg-muted/50 py-16 rounded-2xl">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center space-y-4">
-          <Sparkles className="h-10 w-10 text-primary" />
-          <h2 className="text-3xl font-bold">Looking for Greener Options?</h2>
-          <p className="max-w-2xl text-muted-foreground">
-            Let our AI assistant suggest some even more sustainable alternatives to the {`"${product.name}"`}.
-          </p>
-          <Button onClick={handleFindAlternatives} disabled={isLoading} size="lg">
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Searching...
-              </>
-            ) : (
-              'Find Sustainable Alternatives'
-            )}
-          </Button>
-        </div>
-
-        {error && (
-          <Alert variant="destructive" className="max-w-3xl mx-auto text-left mt-8">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-
-        {alternatives.length > 0 && (
-          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left mt-12">
-            {alternatives.map((alt, index) => (
-              <AlternativeProductCard key={index} alternative={alt} />
-            ))}
-          </div>
-        )}
+    <section className="space-y-8 text-center">
+      <div className="flex flex-col items-center space-y-4">
+        <h2 className="text-3xl font-bold font-headline">Looking for Greener Options?</h2>
+        <p className="max-w-2xl text-muted-foreground">
+          Let our AI assistant suggest some even more sustainable alternatives to the {`"${product.name}"`}.
+        </p>
+        <Button onClick={handleFindAlternatives} disabled={isLoading} size="lg" variant="outline">
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Searching...
+            </>
+          ) : (
+             <>
+              <Sparkles className="mr-2 h-4 w-4" />
+              Find Sustainable Alternatives
+             </>
+          )}
+        </Button>
       </div>
+
+      {error && (
+        <Alert variant="destructive" className="max-w-3xl mx-auto text-left">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {alternatives.length > 0 && (
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+          {alternatives.map((alt, index) => (
+            <AlternativeProductCard key={index} alternative={alt} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

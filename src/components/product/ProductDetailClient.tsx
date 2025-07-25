@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Star, Leaf, CheckCircle2, Heart } from 'lucide-react';
 import SustainableAlternatives from '@/components/product/SustainableAlternatives';
 import { ProductReviews } from './ProductReviews';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ReviewForm } from './ReviewForm';
 import { useWishlist } from '@/context/WishlistContext';
@@ -54,11 +54,10 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
     }
   };
 
-  const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date' | 'author'>) => {
+  const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date'>) => {
     const newReview: Review = {
         id: `r${Date.now()}`,
         date: new Date().toISOString(),
-        author: 'Guest User',
         ...newReviewData
     };
 
@@ -92,10 +91,10 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
 
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-      <div className="grid lg:grid-cols-2 gap-12">
+    <div className="py-12">
+      <div className="grid lg:grid-cols-1 gap-8 lg:gap-12">
         <div>
-          <Card className="overflow-hidden rounded-lg">
+          <Card>
               <Carousel className="w-full">
                   <CarouselContent className="h-[500px]">
                   {product.images.map((image, index) => (
@@ -105,7 +104,7 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
                           alt={`${product.name} - image ${index + 1}`}
                           width={1200}
                           height={675}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                           data-ai-hint="sustainable product lifestyle"
                           />
                       </CarouselItem>
@@ -116,79 +115,107 @@ export function ProductDetailClient({ product: initialProduct }: { product: Prod
               </Carousel>
           </Card>
         </div>
-        <div className="flex flex-col gap-6">
-          <div className="space-y-4">
-            <p className="text-primary font-semibold">{product.category}</p>
-            <h1 className="text-4xl md:text-5xl font-bold">{product.name}</h1>
-            <p className="text-lg text-muted-foreground">{product.brand}</p>
-          </div>
-          <Card className="bg-muted/50">
-                <CardHeader>
-                    <div className="flex justify-between items-center">
-                        <p className="text-3xl font-bold text-primary">₹{product.price.toFixed(2)}</p>
-                        <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-1 text-sm">
-                                <Star className="h-5 w-5 text-accent" fill="currentColor" />
-                                <span className="font-bold">{product.reviews.rating}</span>
-                                <span className="text-muted-foreground">({product.reviews.count})</span>
+      </div>
+       <div className="mt-8">
+            <h1 className="text-3xl md:text-4xl font-bold font-headline">{product.name}</h1>
+            <p className="text-lg text-muted-foreground mt-2">{product.brand}</p>
+        </div>
+      
+      <Separator className="my-12" />
+
+      <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="md:col-span-2 space-y-8">
+            <Card className="bg-transparent border-none shadow-none">
+                <CardHeader className="px-0">
+                    <CardTitle>Description & Details</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6 px-0">
+                    <p className="text-base leading-relaxed text-muted-foreground">{product.description}</p>
+                    <Separator />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Category</h4>
+                                <p className="text-muted-foreground">{product.category}</p>
                             </div>
-                            <div className="flex items-center gap-1.5 text-sm">
-                                <Leaf className="h-5 w-5 text-primary" />
-                                <span className="font-bold">Green Score: {product.greenScore}/10</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Brand</h4>
+                                <p className="text-muted-foreground">{product.brand}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Certifications</h4>
+                                <p className="text-muted-foreground">{product.certifications.join(', ')}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <h4 className="font-semibold">Carbon Footprint</h4>
+                                <p className="text-muted-foreground">{product.carbonFootprint}</p>
                             </div>
                         </div>
                     </div>
+                </CardContent>
+            </Card>
+        </div>
+        <div className="md:col-span-1 flex flex-col gap-6">
+            <Card className="bg-gradient-to-br from-muted to-background/50">
+                <CardHeader>
+                    <CardTitle>Purchase Options</CardTitle>
                 </CardHeader>
-                <CardFooter className="flex-col sm:flex-row gap-3">
-                  <Button size="lg" className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
+                <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-1">
+                            <Star className="h-5 w-5 text-accent" fill="currentColor" />
+                            <span className="font-medium">{product.reviews.rating}</span>
+                            <span className="text-muted-foreground text-sm">({product.reviews.count} reviews)</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Leaf className="h-5 w-5 text-primary" />
+                            <span className="font-medium">Green Score: {product.greenScore}/10</span>
+                        </div>
+                    </div>
+                    
+                    <p className="text-3xl font-bold text-primary">₹{product.price.toFixed(2)}</p>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                  <Button size="lg" className="w-full hover:bg-primary/90" onClick={handleAddToCart}>Add to Cart</Button>
                   <Button size="lg" variant="outline" className="w-full" onClick={handleWishlistToggle}>
-                      <Heart className={cn("mr-2 h-5 w-5", isInWishlist ? "text-red-500 fill-red-500" : "text-foreground/80")} />
-                      {isInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
+                      <Heart className={cn("mr-2 h-5 w-5", isInWishlist && "text-destructive fill-destructive")} />
+                      {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
                   </Button>
                 </CardFooter>
             </Card>
         </div>
       </div>
-
-      <div className="grid lg:grid-cols-3 gap-12 mt-16">
-        <div className="lg:col-span-2 space-y-8">
-            <div>
-                <h2 className="text-2xl font-bold mb-4">Description</h2>
-                <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-            </div>
-             <div>
-                <h2 className="text-2xl font-bold mb-4">Details</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground">
-                    <p><span className="font-semibold text-foreground">Certifications: </span>{product.certifications.join(', ')}</p>
-                    <p><span className="font-semibold text-foreground">Carbon Footprint: </span>{product.carbonFootprint}</p>
-                </div>
-            </div>
-        </div>
-      </div>
       
-      <Separator className="my-16" />
+      <Separator className="my-12" />
 
       <SustainableAlternatives product={product} />
 
-      <Separator className="my-16" />
+      <Separator className="my-12" />
       
-      <div className="grid lg:grid-cols-3 gap-12">
-         <div className="lg:col-span-2 space-y-8">
-            <ProductReviews 
-                reviews={product.reviews.items} 
-                averageRating={product.reviews.rating}
-            />
-          </div>
-          <div className="space-y-8">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Write a Review</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <ReviewForm onSubmit={handleAddReview} />
-                </CardContent>
-            </Card>
-          </div>
+      <div className="space-y-8">
+        <ProductReviews 
+            reviews={product.reviews.items} 
+            averageRating={product.reviews.rating}
+        />
+        <Card className="bg-transparent border-none shadow-none">
+            <CardHeader className="p-0">
+                <CardTitle>Write a Review</CardTitle>
+                <CardDescription>Share your thoughts about the product with the community.</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-6 px-0">
+                <ReviewForm onSubmit={handleAddReview} />
+            </CardContent>
+        </Card>
       </div>
 
     </div>

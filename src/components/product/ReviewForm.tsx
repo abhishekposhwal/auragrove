@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Review } from '@/lib/types';
+import { useToast } from '@/hooks/use-toast';
 
 const reviewSchema = z.object({
   author: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name cannot exceed 50 characters."),
@@ -37,10 +38,10 @@ const StarRatingInput = ({ field }: { field: any }) => {
           onMouseEnter={() => setHoverRating(star)}
           onMouseLeave={() => setHoverRating(0)}
           className={cn(
-            "h-7 w-7 cursor-pointer transition-colors",
+            "h-6 w-6 cursor-pointer transition-colors",
             (hoverRating || field.value) >= star
               ? 'text-accent fill-accent'
-              : 'text-muted-foreground/30'
+              : 'text-muted-foreground/50'
           )}
         />
       ))}
@@ -65,20 +66,7 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
-         <FormField
-          control={form.control}
-          name="author"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Your Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="rating"
@@ -87,6 +75,19 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
               <FormLabel>Your Rating</FormLabel>
               <FormControl>
                 <StarRatingInput field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="author"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Your Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,7 +106,7 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Submit Review</Button>
+        <Button type="submit" variant="outline">Submit Review</Button>
       </form>
     </Form>
   );

@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Minus, Plus, ShoppingCart, Trash2, ArrowRight } from "lucide-react";
+import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,19 +14,20 @@ export default function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-        <Card className="max-w-2xl mx-auto text-center">
+      <div className="container mx-auto px-4 md:px-6 py-12">
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <ShoppingCart className="h-10 w-10 text-primary" />
+          <h1 className="text-4xl font-bold font-headline">Your Cart</h1>
+        </div>
+        <Card className="max-w-2xl mx-auto transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-gradient-to-br from-secondary/50 to-background/30">
           <CardHeader>
-            <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit">
-              <ShoppingCart className="h-12 w-12 text-primary" />
-            </div>
-            <CardTitle className="mt-4">Your Cart is Empty</CardTitle>
+            <CardTitle>Cart is Empty</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">You haven't added any items to your cart yet. Let's change that!</p>
           </CardContent>
-          <CardFooter className="justify-center">
-            <Button asChild size="lg">
+          <CardFooter>
+            <Button asChild>
               <Link href="/shop">Continue Shopping</Link>
             </Button>
           </CardFooter>
@@ -36,37 +37,35 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold">Your Cart</h1>
-        <p className="text-lg text-muted-foreground mt-2">Review your items and proceed to checkout.</p>
+    <div className="container mx-auto px-4 md:px-6 py-12">
+      <div className="flex items-center justify-center gap-4 mb-8">
+        <ShoppingCart className="h-10 w-10 text-primary" />
+        <h1 className="text-4xl font-bold font-headline">Your Cart</h1>
       </div>
-      <div className="grid lg:grid-cols-3 gap-8 items-start">
-        <div className="lg:col-span-2">
-          <Card>
+      <div className="grid md:grid-cols-3 gap-8">
+        <div className="md:col-span-2">
+          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <CardContent className="p-0">
               <ul className="divide-y">
                 {cart.map((item) => (
-                  <li key={item.id} className="flex items-center p-4 sm:p-6">
-                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-md overflow-hidden mr-6">
-                      <Image src={item.images[0]} alt={item.name} width={128} height={128} className="w-full h-full object-cover" />
-                    </div>
+                  <li key={item.id} className="flex items-center p-4">
+                    <Image src={item.images[0]} alt={item.name} width={100} height={100} className="rounded-lg mr-4" />
                     <div className="flex-grow">
-                      <Link href={`/product/${item.id}`}><h3 className="font-semibold text-lg hover:text-primary">{item.name}</h3></Link>
+                      <h3 className="font-semibold">{item.name}</h3>
                       <p className="text-sm text-muted-foreground">₹{item.price.toFixed(2)}</p>
-                       <div className="flex items-center gap-2 border rounded-full p-1 mt-4 w-fit">
-                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>
+                    </div>
+                    <div className="flex items-center gap-4">
+                       <div className="flex items-center gap-2 border rounded-md p-1">
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>
                               <Minus className="h-4 w-4" />
                           </Button>
-                          <span className="w-8 text-center">{item.quantity}</span>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                          <span>{item.quantity}</span>
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
                               <Plus className="h-4 w-4" />
                           </Button>
                        </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-4 ml-4">
-                       <p className="font-semibold text-lg">₹{(item.price * item.quantity).toFixed(2)}</p>
-                       <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)} className="group rounded-full hover:bg-destructive">
+                       <p className="font-semibold w-20 text-right">₹{(item.price * item.quantity).toFixed(2)}</p>
+                       <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)} className="group hover:bg-destructive">
                           <Trash2 className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-destructive-foreground" />
                        </Button>
                     </div>
@@ -76,13 +75,13 @@ export default function CartPage() {
             </CardContent>
           </Card>
         </div>
-        <div className="lg:col-span-1">
-          <Card className="sticky top-24">
+        <div className="md:col-span-1">
+          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <CardHeader>
               <CardTitle>Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex justify-between text-muted-foreground">
+              <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>₹{getCartTotal().toFixed(2)}</span>
               </div>
@@ -98,7 +97,7 @@ export default function CartPage() {
             </CardContent>
             <CardFooter>
               <Button asChild className="w-full" size="lg">
-                <Link href="/checkout">Proceed to Checkout <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                <Link href="/checkout">Proceed to Checkout</Link>
               </Button>
             </CardFooter>
           </Card>
