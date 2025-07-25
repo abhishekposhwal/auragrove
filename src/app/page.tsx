@@ -1,9 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { products } from "@/lib/mock-data";
 import Link from "next/link";
 import Image from "next/image";
+import { BrandBenefits } from "@/components/BrandBenefits"; // <-- Add this import
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
@@ -34,6 +34,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <BrandBenefits /> {/* <-- Add this line here */}
 
       <section>
         <h2 className="text-3xl font-bold text-center mb-8 font-headline">Featured Products</h2>

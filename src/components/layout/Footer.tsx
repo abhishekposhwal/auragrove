@@ -33,7 +33,20 @@ export function Footer() {
           <div>
             <h3 className="font-bold mb-4">Connect</h3>
             <p>Subscribe to our newsletter for eco-tips and new product alerts.</p>
-            {/* Newsletter form can be added here */}
+            <form className="mt-4 flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                placeholder="Your email"
+                className="px-3 py-2 rounded-md border border-muted focus:outline-none focus:ring-2 focus:ring-primary text-sm flex-1"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold hover:bg-primary/90 transition"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
         <div className="border-t mt-8 pt-6 text-center text-sm">

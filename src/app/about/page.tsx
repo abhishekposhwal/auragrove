@@ -10,16 +10,19 @@ export default function AboutPage() {
             At AuraGrove, we're passionate about making sustainable living accessible and beautiful. We believe that conscious consumerism is a powerful force for change.
           </p>
         </div>
-        <Image 
-          src="/our-mission-image.png"
-          alt="Lush green forest"
-          data-ai-hint="green forest"
-          width={1200}
-          height={500}
-          className="rounded-lg shadow-xl"
-        />
+        <div className="flex justify-center">
+          <Image 
+            src="/our-mission-image.png"
+            alt="Lush green forest"
+            data-ai-hint="green forest"
+            width={1200}
+            height={500}
+            className="rounded-lg shadow-xl"
+            style={{ height: "auto" }}
+          />
+        </div>
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16 text-left items-center">
-          <div className="space-y-4">
+          <div className="space-y-4 md:ml-16">
             <h2 className="text-3xl font-bold font-headline">From a Small Idea to a Big Impact</h2>
             <p className="text-muted-foreground">
               AuraGrove started with a simple idea: what if every product we buy could contribute positively to the planet? We began by curating a small collection of items from brands that share our values of sustainability, ethical production, and quality craftsmanship.
@@ -32,9 +35,10 @@ export default function AboutPage() {
             src="/big-impact-image.png"
             alt="Team working with sustainable materials"
             data-ai-hint="team work"
-            width={500}
+            width={400}
             height={400}
-            className="rounded-lg shadow-md"
+            className="rounded-full shadow-md ml-16 object-cover"
+            style={{ height: "400px", width: "400px" }}
           />
         </div>
       </div>

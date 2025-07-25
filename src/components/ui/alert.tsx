@@ -126,7 +126,53 @@ const AlertDialogCancel = React.forwardRef<
 ))
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
 
+// 1. Simple Alert component
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(
+      "relative w-full rounded-lg border border-border bg-background px-4 py-3 text-sm shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+Alert.displayName = "Alert"
+
+// 2. AlertTitle component
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-semibold leading-none tracking-tight", className)}
+    {...props}
+  />
+))
+AlertTitle.displayName = "AlertTitle"
+
+// 3. AlertDescription component
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-muted-foreground", className)}
+    {...props}
+  />
+))
+AlertDescription.displayName = "AlertDescription"
+
 export {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   AlertDialog,
   AlertDialogPortal,
   AlertDialogOverlay,

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -77,7 +76,7 @@ export default function InspirationPage() {
       </Card>
 
       {error && (
-        <Alert variant="destructive" className="mt-6">
+        <Alert className="mt-6 bg-red-50 border-red-300 text-red-800">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
